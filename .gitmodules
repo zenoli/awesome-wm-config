@@ -1,6 +1,3 @@
-[submodule "submodules/lain"]
-	path = submodules/lain
-	url = git@github.com:lcpz/lain.git
 [submodule "submodules/freedesktop"]
 	path = submodules/freedesktop
 	url = git@github.com:lcpz/awesome-freedesktop.git
