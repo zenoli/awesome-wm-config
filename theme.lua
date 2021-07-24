@@ -6,13 +6,14 @@
 --]]
 
 local gears = require("gears")
-local lain  = require("submodules.lain")
+local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
+local volume = require("widgets.volume")
 
 
 
@@ -28,27 +29,32 @@ theme.taglist_font                              = "Hack Nerd Font"
 theme.fg_normal                                 = "#FEFEFE"
 theme.fg_focus                                  = "#32D6FF"
 theme.fg_urgent                                 = "#C83F11"
-theme.bg_normal                                 = "#222222"
-theme.bg_focus                                  = "#1E2320"
+theme.bg_normal                                 = "#22222290"
+-- theme.bg_normal                                 = "#00000000"
+theme.bg_focus                                  = "#1E232000"
+-- theme.bg_focus                                  = "#00000000"
 theme.bg_urgent                                 = "#3F3F3F"
-theme.taglist_fg_focus                          = "#F6784F"
-theme.tasklist_bg_focus                         = "#222222"
+theme.taglist_fg_focus                          = "#F6784F90"
+theme.tasklist_bg_focus                         = "#22222200"
+theme.tasklist_bg_normal                         = "#00000000"
 theme.tasklist_fg_focus                         = "#F6784F"
-theme.border_width                              = dpi(2)
-theme.border_normal                             = "#3F3F3F"
-theme.border_focus                              = "#6F6F6F"
+theme.border_width                              = dpi(0)
+theme.border_normal                             = "#3F3F3F00"
+-- theme.border_focus                              = "#6F6F6F"
+theme.border_focus                              = theme.bg_focus
 theme.border_marked                             = "#CC9393"
 theme.titlebar_bg_focus                         = "#3F3F3F"
 theme.titlebar_bg_normal                        = "#3F3F3F"
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
-theme.menu_height                               = dpi(16)
-theme.menu_width                                = dpi(140)
+theme.menu_bg_normal = "#22222240"
+theme.menu_height                               = dpi(22)
+theme.menu_width                                = dpi(170)
 theme.menu_submenu_icon                         = theme.icon_dir .. "/submenu.png"
 theme.awesome_icon                              = theme.icon_dir .. "/awesome.png"
-theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel_new.png"
-theme.taglist_squares_unsel                     = theme.icon_dir .. "/square_unsel_new.png"
+theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel.png"
+theme.taglist_squares_unsel                     = theme.icon_dir .. "/square_unsel.png"
 theme.layout_tile                               = theme.icon_dir .. "/layouts/tile.png"
 theme.layout_tileleft                           = theme.icon_dir .. "/layouts/tileleft.png"
 theme.layout_tilebottom                         = theme.icon_dir .. "/layouts/tilebottom.png"
@@ -85,7 +91,7 @@ theme.widget_task                               = theme.icon_dir .. "/widgets/ta
 theme.widget_scissors                           = theme.icon_dir .. "/widgets/scissors.png"
 theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_icon                     = true
-theme.useless_gap                               = 3
+theme.useless_gap                               = 6
 theme.titlebar_close_button_focus               = theme.icon_dir .. "/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.icon_dir .. "/titlebar/close_normal.png"
 theme.titlebar_ontop_button_focus_active        = theme.icon_dir .. "/titlebar/ontop_focus_active.png"
@@ -105,7 +111,7 @@ theme.titlebar_maximized_button_normal_active   = theme.icon_dir .. "/titlebar/m
 theme.titlebar_maximized_button_focus_inactive  = theme.icon_dir .. "/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.icon_dir .. "/titlebar/maximized_normal_inactive.png"
 
-awful.util.tagnames   = {" ", " ", "爵 ", " ", " ", " ", "﬏ ", " ", "祥 ", " ", " ", "1", "2", "3" }
+-- awful.util.tagnames   = {" ", " ", "爵 ", " ", " ", " ", "﬏ ", " ", "祥 ", " ", " ", "1", "2", "3" }
 
 
 m_tag_ids = {
@@ -143,8 +149,8 @@ m_icons[m_tag_ids.tag_2         ] = "2"
 m_icons[m_tag_ids.tag_3         ] = "3"
 
 local l = awful.layout.suit
-local layouts = { 
-    -- l.floating,
+local layouts = {
+    l.floating,
     l.tile,
     l.magnifier,
     l.tile.top,
@@ -152,7 +158,7 @@ local layouts = {
 }
 
 m_tags = {
-    { icon = " " , id = m_tag_ids.tag_home     , layouts = layouts, layout = l.magnifier },
+    { icon = " " , id = m_tag_ids.tag_home     , layouts = layouts, layout = l.floating  },
     { icon = " " , id = m_tag_ids.tag_tmux     , layouts = layouts, layout = l.tile      },
     { icon = "爵 ", id = m_tag_ids.tag_web      , layouts = layouts, layout = l.tile      },
     { icon = " " , id = m_tag_ids.tag_mail     , layouts = layouts, layout = l.tile      },
@@ -162,7 +168,7 @@ m_tags = {
     { icon = " " , id = m_tag_ids.tag_vim      , layouts = layouts, layout = l.tile      },
     { icon = "祥 ", id = m_tag_ids.tag_countdown, layouts = layouts, layout = l.tile      },
     { icon = " " , id = m_tag_ids.tag_calendar , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_pdf      , layouts = layouts, layout = l.tile      },
+    { icon = " " , id = m_tag_ids.tag_pdf      , layouts = layouts, layout = l.fair      },
     { icon = "1"  , id = m_tag_ids.tag_1        , layouts = layouts, layout = l.tile      },
     { icon = "2"  , id = m_tag_ids.tag_2        , layouts = layouts, layout = l.tile      },
     { icon = "3"  , id = m_tag_ids.tag_3        , layouts = layouts, layout = l.tile      }
@@ -182,9 +188,6 @@ local keyboardlayout = awful.widget.keyboardlayout:new()
 -- })
 -- task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
 
--- -- Scissors (xsel copy and paste)
--- local scissors = wibox.widget.imagebox(theme.widget_scissors)
--- scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
 
 -- Mail IMAP check
 --[[ commented because it needs to be set before use
@@ -207,11 +210,11 @@ theme.mail = lain.widget.imap({
 })
 --]]
 
----- ALSA volume
---theme.volume = lain.widget.alsabar({
---    --togglechannel = "IEC958,3",
---    notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
---})
+-- ALSA volume
+-- theme.volume = lain.widget.alsabar({
+--     -- togglechannel = "IEC958,3",
+--     notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
+-- })
 
 ---- MPD
 --local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
@@ -246,6 +249,15 @@ theme.mail = lain.widget.imap({
 --        end
 --    end
 --})
+
+-- Alsa
+local alsa = lain.widget.alsa({
+    cmd = "amixer -D pulse",
+    timeout = 1,
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. volume_now.level))
+    end
+})
 
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
@@ -297,6 +309,7 @@ local tempicon = wibox.widget.imagebox(theme.widget_temp)
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
 local bat = lain.widget.bat({
+    timeout = 1,
     settings = function()
         if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
@@ -340,32 +353,30 @@ local bat = lain.widget.bat({
 -- Separators
 local arrow = separators.arrow_left
 
-function theme.powerline_rl(cr, width, height)
-    local arrow_depth, offset = height/2, 0
+-- function theme.powerline_rl(cr, width, height)
+--     local arrow_depth, offset = height/2, 0
 
-    -- Avoid going out of the (potential) clip area
-    if arrow_depth < 0 then
-        width  =  width + 2*arrow_depth
-        offset = -arrow_depth
-    end
+--     -- Avoid going out of the (potential) clip area
+--     if arrow_depth < 0 then
+--         width  =  width + 2*arrow_depth
+--         offset = -arrow_depth
+--     end
 
-    cr:move_to(offset + arrow_depth         , 0        )
-    cr:line_to(offset + width               , 0        )
-    cr:line_to(offset + width - arrow_depth , height/2 )
-    cr:line_to(offset + width               , height   )
-    cr:line_to(offset + arrow_depth         , height   )
-    cr:line_to(offset                       , height/2 )
+--     cr:move_to(offset + arrow_depth         , 0        )
+--     cr:line_to(offset + width               , 0        )
+--     cr:line_to(offset + width - arrow_depth , height/2 )
+--     cr:line_to(offset + width               , height   )
+--     cr:line_to(offset + arrow_depth         , height   )
+--     cr:line_to(offset                       , height/2 )
 
-    cr:close_path()
-end
+--     cr:close_path()
+-- end
 
-local function pl(widget, bgcolor, padding)
-    return wibox.container.background(wibox.container.margin(widget, dpi(16), dpi(16)), bgcolor, theme.powerline_rl)
-end
+-- local function pl(widget, bgcolor, padding)
+--     return wibox.container.background(wibox.container.margin(widget, dpi(16), dpi(16)), bgcolor, theme.powerline_rl)
+-- end
 
 function theme.at_screen_connect(s)
-    -- Quake application
-    s.quake = lain.util.quake({ app = awful.util.terminal })
 
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
@@ -421,8 +432,20 @@ function theme.at_screen_connect(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             keyboardlayout,
+            -- alsa.widget,
+            -- volume.widget,
             -- -- fs_widget(),
-            arrow(theme.bg_normal, "#777E76"),
+            -- arrow(theme.bg_normal, "#777E76"),
+            -- wibox.container.background(
+            --     wibox.container.margin(
+            --         wibox.widget {
+            --             volume.icon,
+            --             volume.widget,
+            --             layout = wibox.layout.align.horizontal
+            --         }, dpi(2), dpi(3)
+            --     ), "#777E76"
+            -- ),
+            arrow("#FFFFFF00", "#777E76"),
             wibox.container.background(
                 wibox.container.margin(
                     wibox.widget {
@@ -465,9 +488,11 @@ function theme.at_screen_connect(s)
             arrow("#8DAA9A", "#4B696D"),
             wibox.container.background(
                 wibox.container.margin(
-                    volume_widget{
-                        widget_type = 'icon_and_text'
-                    }, dpi(2), dpi(2)
+                    wibox.widget {
+                        volume.icon,
+                        volume.widget,
+                        layout = wibox.layout.align.horizontal
+                    }, dpi(2), dpi(3)
                 ), "#4B696D"
             ),
             wibox.container.background(
