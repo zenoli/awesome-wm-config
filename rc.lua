@@ -11,11 +11,15 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+-- Load theme
+local beautiful         = require("beautiful")
+local theme_path = string.format("%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
+beautiful.init(theme_path)
+
 local gears             = require("gears")
 local awful             = require("awful")
                           require("awful.autofocus")
 local wibox             = require("wibox")
-local beautiful         = require("beautiful")
 local naughty           = require("naughty")
 local lain              = require("lain")
 local menubar           = require("menubar")
@@ -107,7 +111,6 @@ awful.util.tasklist_buttons = gears_table.join(
     end)
 )
 
-beautiful.init(string.format("%s/.config/awesome/theme.lua", os.getenv("HOME")))
 
 -- }}}
 
