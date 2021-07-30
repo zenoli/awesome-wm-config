@@ -26,10 +26,12 @@ local menubar           = require("menubar")
 local freedesktop       = require("freedesktop")
 local hotkeys_popup     = require("awful.hotkeys_popup")
                           require("awful.hotkeys_popup.keys")
-local gears_table           = gears.table
+local gears_table       = gears.table
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local volume_widget     = require('awesome-wm-widgets.volume-widget.volume')
 local volume = require("widgets.volume")
+
+local my_rules          = require("rules")
 
 
 -- }}}
@@ -498,153 +500,24 @@ add_workspace_tag_bindings(m_tag_ids.tag_2,"#" .. 2 + 9, "2")
 add_workspace_tag_bindings(m_tag_ids.tag_3,"#" .. 3 + 9, "3")
 
 
-clientbuttons = gears_table.join(
-    awful.button({ }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-    end),
-    awful.button({ modkey }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
-    end),
-    awful.button({ altkey }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
-    end)
-)
+-- clientbuttons = gears_table.join(
+--     awful.button({ }, 1, function (c)
+--         c:emit_signal("request::activate", "mouse_click", {raise = true})
+--     end),
+--     awful.button({ modkey }, 1, function (c)
+--         c:emit_signal("request::activate", "mouse_click", {raise = true})
+--         awful.mouse.client.move(c)
+--     end),
+--     awful.button({ altkey }, 1, function (c)
+--         c:emit_signal("request::activate", "mouse_click", {raise = true})
+--         awful.mouse.client.resize(c)
+--     end)
+-- )
 
 -- Set keys
 root.keys(globalkeys)
 
--- }}}
-
--- {{{ Rules
-
--- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
-    -- All clients will match this rule.
-    { 
-        rule = { },
-        properties = { 
-            border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
-            focus = awful.client.focus.filter,
-            raise = true,
-            keys = clientkeys,
-            buttons = clientbuttons,
-            screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-            size_hints_honor = false,
-        }
-    },
-
-    -- Floating clients.
-    {
-        rule_any = {
-            instance = {
-                "DTA",  -- Firefox addon DownThemAll.
-                "copyq",  -- Includes session name in class.
-                "pinentry",
-            },
-            class = {
-                "Gnome-calculator",
-                "Arandr",
-                "Blueman-manager",
-                "Gpick",
-                "Kruler",
-                "MessageWin",  -- kalarm.
-                "Sxiv",
-                "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-                "Wpa_gui",
-                "veromix",
-                "xtightvncviewer"
-            },
-
-            -- Note that the name property shown in xprop might be set slightly after creation of the client
-            -- and the name shown there might not match defined rules here.
-            name = {
-                "Event Tester",  -- xev.
-            },
-            role = {
-                "AlarmWindow",  -- Thunderbird's calendar.
-                "ConfigManager",  -- Thunderbird's about:config.
-                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-        },
-        properties = { floating = true }
-    },
-    -- Spawn all pdfs on pdf tag
-    {
-        -- rule_any = {
-        --     class = { "Zathura" },
-        -- },
-        -- callback = function(c)
-        --     if c.tag != m_icons[m_tag_ids.tag_home] do
-        --         c.tag = m_icons[m_tag_ids.tag_pdf
-        --     end
-        -- end
-            -- local t = awful.screen.focused().selected_tag
-        -- properties = {
-        --     tags = { m_icons[m_tag_ids.tag_home], m_icons[m_tag_ids.tag_pdf] },
-        --     focus = true,
-        --     switch_to_tags = true
-        -- }
-    },
-    {
-        rule_any = {
-            type = { "normal", "dialog" }
-        },
-        properties = { titlebars_enabled = false }
-    },
-    {
-        rule_any = {
-            type = { "dialog" }
-        },
-        properties = { titlebars_enabled = false, placement = awful.placement.centered }
-    },
-    {
-        rule_any = {
-            class = { "countdown" }
-        },
-        properties = {
-            placement = awful.placement.centered,
-            -- width = 500,
-            -- height = 350,
-            ontop = true,
-            floating = true,
-            callback = function (c) 
-                local w = 500
-                local h = 350
-                
-                local W = awful.screen.focused().geometry.width
-                local H = awful.screen.focused().geometry.height
-
-                local x = (W - w)/2
-                local y = (H - h)/2
-
-                c:geometry({ x = x, y = y, width = w, height = h })
-            end
-        }
-    },
-    {
-        rule_any = {
-            class = {
-                "wifi", 
-                -- "ranger",
-                "htop",
-                "qutebrowser_edit"
-            }
-        },
-        properties = {
-            placement = awful.placement.centered,
-            ontop = true,
-            callback = function (c) 
-                lain.util.magnify_client(c)
-            end
-        }
-    }
-}
-
--- }}}
+awful.rules.rules = my_rules
 
 -- {{{ Signals
 
