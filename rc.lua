@@ -22,7 +22,7 @@ local menubar           = require("menubar")
 local freedesktop       = require("freedesktop")
 local hotkeys_popup     = require("awful.hotkeys_popup")
                           require("awful.hotkeys_popup.keys")
-local mytable           = awful.util.table or gears.table -- 4.{0,1} compatibility
+local gears_table           = gears.table
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local volume_widget     = require('awesome-wm-widgets.volume-widget.volume')
 local volume = require("widgets.volume")
@@ -83,7 +83,7 @@ local editor       = os.getenv("EDITOR") or "nvim"
 local browser      = "qutebrowser"
 
 
-awful.util.taglist_buttons = mytable.join(
+awful.util.taglist_buttons = gears_table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
     awful.button({ modkey }, 1, function(t)
         if client.focus then client.focus:move_to_tag(t) end
@@ -94,7 +94,7 @@ awful.util.taglist_buttons = mytable.join(
     end)
 )
 
-awful.util.tasklist_buttons = mytable.join(
+awful.util.tasklist_buttons = gears_table.join(
     awful.button({ }, 1, function(c)
         if c == client.focus then
             c.minimized = true
@@ -166,7 +166,7 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 -- {{{ Mouse bindings
 
-root.buttons(mytable.join(
+root.buttons(gears_table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
 
@@ -174,7 +174,7 @@ root.buttons(mytable.join(
 
 -- {{{ Key bindings
 
-globalkeys = mytable.join(
+globalkeys = gears_table.join(
     -- Take a screenshot
     awful.key({ }, "Print", function () awful.util.spawn("gnome-screenshot -i") end),
     awful.key({ altkey }, "Print", function () awful.util.spawn("gnome-screenshot -a") end),
@@ -368,7 +368,7 @@ globalkeys = mytable.join(
     --]]
 )
 
-clientkeys = mytable.join(
+clientkeys = gears_table.join(
     awful.key({ altkey, "Control"   }, "m",      lain.util.magnify_client,
               {description = "magnify client", group = "client"}),
     awful.key({ modkey, "Control" }, "f",
@@ -404,7 +404,7 @@ clientkeys = mytable.join(
 
 
 local function add_tag_bindings(id, key, name, command)
-    globalkeys = mytable.join(globalkeys,
+    globalkeys = gears_table.join(globalkeys,
         awful.key(
             { modkey }, key,
             function ()
@@ -449,7 +449,7 @@ end
 
 
 local function add_workspace_tag_bindings(id, key, name)
-    globalkeys = mytable.join(globalkeys,
+    globalkeys = gears_table.join(globalkeys,
         awful.key(
             { modkey }, key,
             function ()
@@ -495,7 +495,7 @@ add_workspace_tag_bindings(m_tag_ids.tag_2,"#" .. 2 + 9, "2")
 add_workspace_tag_bindings(m_tag_ids.tag_3,"#" .. 3 + 9, "3")
 
 
-clientbuttons = mytable.join(
+clientbuttons = gears_table.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
     end),
@@ -669,7 +669,7 @@ client.connect_signal("request::titlebars", function(c)
 
     -- Default
     -- buttons for the titlebar
-    local buttons = mytable.join(
+    local buttons = gears_table.join(
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
             awful.mouse.client.move(c)
