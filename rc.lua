@@ -1,45 +1,40 @@
---[[
-
-     Awesome WM configuration template
-     github.com/lcpz
-
---]]
-
--- {{{ Required libraries
-
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
 -- Load theme
 local beautiful         = require("beautiful")
-local theme_path = string.format("%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
+local theme_path = string.format(
+    "%s/awesome/theme.lua", 
+    os.getenv("XDG_CONFIG_HOME")
+)
 beautiful.init(theme_path)
 
-local gears             = require("gears")
 local awful             = require("awful")
                           require("awful.autofocus")
 local wibox             = require("wibox")
 local naughty           = require("naughty")
-local lain              = require("lain")
-local menubar           = require("menubar")
 local freedesktop       = require("freedesktop")
 local hotkeys_popup     = require("awful.hotkeys_popup")
                           require("awful.hotkeys_popup.keys")
-local gears_table       = gears.table
-local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
-local volume_widget     = require('awesome-wm-widgets.volume-widget.volume')
-local volume = require("widgets.volume")
 
 local my_rules          = require("rules")
 local global_keys       = require("bindings.global_keys")
 local titlebar_setup    = require("titlebar")
+local gears             = require("gears")
+local gears_table       = gears.table
 
 
--- }}}
+---------------------------------------
+-- Theme initialization
+---------------------------------------
+local theme_path = string.format( "%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
+beautiful.init(theme_path)
 
--- {{{ Error handling
 
+---------------------------------------
+-- Error handling
+---------------------------------------
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -69,56 +64,18 @@ do
     end)
 end
 
--- }}}
 
--- {{{ Autostart windowless processes
-
+---------------------------------------
+-- Autostart windowless processes
+---------------------------------------
 -- This function will run once every time Awesome is started
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
         awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
     end
 end
-
+--
 -- run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
-
-local modkey       = "Mod4"
-local altkey       = "Mod1"
-local terminal     = "alacritty"
-local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
-local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
-local editor       = os.getenv("EDITOR") or "nvim"
-local browser      = "qutebrowser"
-
-
-awful.util.taglist_buttons = gears_table.join(
-    awful.button({ }, 1, function(t) t:view_only() end),
-    awful.button({ modkey }, 1, function(t)
-        if client.focus then client.focus:move_to_tag(t) end
-    end),
-    awful.button({ }, 3, awful.tag.viewtoggle),
-    awful.button({ altkey }, 1, function(t)
-        if client.focus then client.focus:toggle_tag(t) end
-    end)
-)
-
-awful.util.tasklist_buttons = gears_table.join(
-    awful.button({ }, 1, function(c)
-        if c == client.focus then
-            c.minimized = true
-        else
-            c:emit_signal("request::activate", "tasklist", { raise = true })
-        end
-    end),
-    awful.button({ }, 3, function()
-        awful.menu.client_list({ theme = { width = 250 } })
-    end)
-)
-
-
--- }}}
-
--- {{{ Menu
 
 -- Create a launcher widget and a main menu
 local myawesomemenu = {
@@ -140,11 +97,6 @@ local mymainmenu = freedesktop.menu.build {
     }
 }
 
-
--- }}}
-
--- {{{ Screen
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", function(s)
     -- Wallpaper
@@ -158,20 +110,13 @@ screen.connect_signal("property::geometry", function(s)
     end
 end)
 
--- No borders when rearranging only 1 non-floating or maximized client
--- screen.connect_signal("arrange", function (s)
---     for _, c in pairs(s.clients) do
---         c.border_width = 0
---     end
--- end)
-
-
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 
--- }}}
 
--- Set rules, keys and mouse bindings
+---------------------------------------
+-- Rules, keys and mouse bindings
+---------------------------------------
 awful.rules.rules = my_rules
 root.keys(global_keys)
 root.buttons(gears_table.join(
@@ -179,14 +124,14 @@ root.buttons(gears_table.join(
 ))
 
 
--- {{{ Signals
-
+---------------------------------------
+-- Signals
+---------------------------------------
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
-
     if awesome.startup
         and not c.size_hints.user_position
         and not c.size_hints.program_position then
@@ -197,60 +142,12 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", titlebar_setup)
--- client.connect_signal("request::titlebars", function(c)
---     -- Custom
---     if beautiful.titlebar_fun then
---         beautiful.titlebar_fun(c)
---         return
---     end
-
---     -- Default
---     -- buttons for the titlebar
---     local buttons = gears_table.join(
---         awful.button({ }, 1, function()
---             c:emit_signal("request::activate", "titlebar", {raise = true})
---             awful.mouse.client.move(c)
---         end),
---         awful.button({ }, 3, function()
---             c:emit_signal("request::activate", "titlebar", {raise = true})
---             awful.mouse.client.resize(c)
---         end)
---     )
-
---     awful.titlebar(c, { size = 16 }) : setup {
---         { -- Left
---             awful.titlebar.widget.iconwidget(c),
---             buttons = buttons,
---             layout  = wibox.layout.fixed.horizontal
---         },
---         { -- Middle
---             { -- Title
---                 align  = "center",
---                 widget = awful.titlebar.widget.titlewidget(c)
---             },
---             buttons = buttons,
---             layout  = wibox.layout.flex.horizontal
---         },
---         { -- Right
---             awful.titlebar.widget.floatingbutton (c),
---             awful.titlebar.widget.maximizedbutton(c),
---             awful.titlebar.widget.stickybutton   (c),
---             awful.titlebar.widget.ontopbutton    (c),
---             awful.titlebar.widget.closebutton    (c),
---             layout = wibox.layout.fixed.horizontal()
---         },
---         layout = wibox.layout.align.horizontal
---     }
--- end)
-
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- }}}
 
--- {{{ Autostart
-
+---------------------------------------
 -- Autostart
+---------------------------------------
 awful.spawn.with_shell("$HOME/picom/build/src/picom --experimental-backends")
 awful.spawn.with_shell("nitrogen --restore")
--- }}}

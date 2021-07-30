@@ -14,6 +14,8 @@ local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightne
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
 local volume = require("widgets.volume")
+local taglist_buttons = require("bindings.taglist_buttons")
+local tasklist_buttons = require("bindings.tasklist_buttons")
 
 
 
@@ -409,10 +411,10 @@ function theme.at_screen_connect(s)
                            awful.button({}, 4, function () awful.layout.inc( 1) end),
                            awful.button({}, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
+    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = theme.menu_height, bg = theme.bg_normal, fg = theme.fg_normal })
