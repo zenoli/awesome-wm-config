@@ -1,6 +1,7 @@
 local awful             = require("awful")
 local beautiful         = require("beautiful")
 local client_buttons    = require("bindings.client_buttons")
+local client_keys       = require("bindings.client_keys")
 
 local rules = {
     -- All clients will match this rule.
@@ -11,7 +12,7 @@ local rules = {
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
-            keys = clientkeys,
+            keys = client_keys,
             buttons = client_buttons,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap+awful.placement.no_offscreen,
