@@ -569,17 +569,22 @@ awful.rules.rules = {
         },
         properties = { floating = true }
     },
-
-    -- Add titlebars to normal clients and dialogs
+    -- Spawn all pdfs on pdf tag
     {
-        rule_any = {
-            class = { "Zathura" },
-        },
-        properties = {
-            tag = m_icons[m_tag_ids.tag_pdf],
-            focus = true,
-            switch_to_tags = true
-        }
+        -- rule_any = {
+        --     class = { "Zathura" },
+        -- },
+        -- callback = function(c)
+        --     if c.tag != m_icons[m_tag_ids.tag_home] do
+        --         c.tag = m_icons[m_tag_ids.tag_pdf
+        --     end
+        -- end
+            -- local t = awful.screen.focused().selected_tag
+        -- properties = {
+        --     tags = { m_icons[m_tag_ids.tag_home], m_icons[m_tag_ids.tag_pdf] },
+        --     focus = true,
+        --     switch_to_tags = true
+        -- }
     },
     {
         rule_any = {

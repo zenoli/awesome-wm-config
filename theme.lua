@@ -49,7 +49,7 @@ theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 theme.menu_bg_normal = "#22222240"
-theme.menu_height                               = dpi(22)
+theme.menu_height                               = dpi(19)
 theme.menu_width                                = dpi(170)
 theme.menu_submenu_icon                         = theme.icon_dir .. "/submenu.png"
 theme.awesome_icon                              = theme.icon_dir .. "/awesome.png"
@@ -388,7 +388,7 @@ function theme.at_screen_connect(s)
     -- Tags
     -- awful.tag(awful.util.tagnames, s, awful.layout.layouts)
     for _, tag_desc in pairs(m_tags) do
-        selected = tag_desc.id == m_tag_ids.tag_tmux
+        selected = tag_desc.id == m_tag_ids.tag_home
         awful.tag.add(tag_desc.icon, {
             layout = tag_desc.layout,
             layouts = tag_desc.layouts,
@@ -415,7 +415,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(19), bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = theme.menu_height, bg = theme.bg_normal, fg = theme.fg_normal })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -425,7 +425,7 @@ function theme.at_screen_connect(s)
             -- spr,
             s.mytaglist,
             s.mypromptbox,
-            spr,
+            -- spr,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
