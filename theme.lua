@@ -1,10 +1,3 @@
---[[
-
-     Powerarrow Awesome WM theme
-     github.com/lcpz
-
---]]
-
 local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
@@ -32,6 +25,7 @@ theme.fg_normal                                 = "#FEFEFE"
 theme.fg_focus                                  = "#32D6FF"
 theme.fg_urgent                                 = "#C83F11"
 theme.bg_normal                                 = "#22222290"
+theme.bg_systray                                = "#00000000"
 -- theme.bg_normal                                 = "#00000000"
 theme.bg_focus                                  = "#1E232000"
 -- theme.bg_focus                                  = "#00000000"
@@ -156,7 +150,8 @@ local layouts = {
     l.tile,
     l.magnifier,
     l.tile.top,
-    l.fair
+    l.fair,
+    l.max
 }
 
 m_tags = {
@@ -170,7 +165,7 @@ m_tags = {
     { icon = " " , id = m_tag_ids.tag_vim      , layouts = layouts, layout = l.tile      },
     { icon = "祥 ", id = m_tag_ids.tag_countdown, layouts = layouts, layout = l.tile      },
     { icon = " " , id = m_tag_ids.tag_calendar , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_pdf      , layouts = layouts, layout = l.fair      },
+    { icon = " " , id = m_tag_ids.tag_pdf      , layouts = { l.max, l.fair }, layout = l.max },
     { icon = "1"  , id = m_tag_ids.tag_1        , layouts = layouts, layout = l.tile      },
     { icon = "2"  , id = m_tag_ids.tag_2        , layouts = layouts, layout = l.tile      },
     { icon = "3"  , id = m_tag_ids.tag_3        , layouts = layouts, layout = l.tile      }
@@ -418,7 +413,7 @@ function theme.at_screen_connect(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = theme.menu_height, bg = theme.bg_normal, fg = theme.fg_normal })
-
+    s.systray = wibox.widget.systray()
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -432,7 +427,7 @@ function theme.at_screen_connect(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
+            s.systray,
             keyboardlayout,
             -- alsa.widget,
             -- volume.widget,

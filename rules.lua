@@ -1,7 +1,8 @@
-local awful             = require("awful")
-local beautiful         = require("beautiful")
-local client_buttons    = require("bindings.client_buttons")
-local client_keys       = require("bindings.client_keys")
+local awful          = require("awful")
+local beautiful      = require("beautiful")
+local lain           = require("lain")
+local client_buttons = require("bindings.client_buttons")
+local client_keys    = require("bindings.client_keys")
 
 local rules = {
     -- All clients will match this rule.
@@ -56,16 +57,16 @@ local rules = {
         properties = { floating = true }
     },
     -- Spawn all pdfs on pdf tag
-    {
-        rule_any = {
-            class = { "Zathura" },
-        },
-        properties = {
-            tags = { m_icons[m_tag_ids.tag_home], m_icons[m_tag_ids.tag_pdf] },
-            focus = true,
-            switch_to_tags = true
-        }
-    },
+    -- {
+    --     rule_any = {
+    --         class = { "Zathura" },
+    --     },
+    --     properties = {
+    --         tags = { m_icons[m_tag_ids.tag_home], m_icons[m_tag_ids.tag_pdf] },
+    --         focus = true,
+    --         switch_to_tags = true
+    --     }
+    -- },
     {
         rule_any = {
             type = { "normal", "dialog" }
@@ -114,9 +115,10 @@ local rules = {
         properties = {
             placement = awful.placement.centered,
             ontop = true,
-            callback = function (c) 
-                lain.util.magnify_client(c)
-            end
+            floating = true,
+            -- callback = function (c) 
+            --     lain.util.magnify_client(c)
+            -- end
         }
     }
 }

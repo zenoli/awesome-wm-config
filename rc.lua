@@ -5,31 +5,28 @@ pcall(require, "luarocks.loader")
 -- Load theme
 local beautiful         = require("beautiful")
 local theme_path = string.format(
-    "%s/awesome/theme.lua", 
+    "%s/awesome/theme.lua",
     os.getenv("XDG_CONFIG_HOME")
 )
 beautiful.init(theme_path)
 
-local awful             = require("awful")
-                          require("awful.autofocus")
-local wibox             = require("wibox")
-local naughty           = require("naughty")
-local freedesktop       = require("freedesktop")
-local hotkeys_popup     = require("awful.hotkeys_popup")
-                          require("awful.hotkeys_popup.keys")
+local awful          = require("awful")
+                       require("awful.autofocus")
+local naughty        = require("naughty")
 
-local my_rules          = require("rules")
-local global_keys       = require("bindings.global_keys")
-local titlebar_setup    = require("titlebar")
-local gears             = require("gears")
-local gears_table       = gears.table
+local main_menu      = require("main_menu")
+local rules          = require("rules")
+local global_keys    = require("bindings.global_keys")
+local titlebar_setup = require("titlebar")
+local gears          = require("gears")
+local gears_table    = gears.table
 
 
 ---------------------------------------
 -- Theme initialization
 ---------------------------------------
-local theme_path = string.format( "%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
-beautiful.init(theme_path)
+-- local theme_path = string.format( "%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
+-- beautiful.init(theme_path)
 
 
 ---------------------------------------
@@ -77,25 +74,6 @@ end
 --
 -- run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
 
--- Create a launcher widget and a main menu
-local myawesomemenu = {
-    { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "Manual", string.format("%s -e man awesome", terminal) },
-    { "Edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
-    { "Restart", awesome.restart },
-    { "Quit", function() awesome.quit() end },
-}
-
-local mymainmenu = freedesktop.menu.build {
-    before = {
-        { "Awesome", myawesomemenu, beautiful.awesome_icon },
-        -- other triads can be put here
-    },
-    after = {
-        { "Open terminal", terminal },
-        -- other triads can be put here
-    }
-}
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", function(s)
@@ -117,10 +95,10 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 ---------------------------------------
 -- Rules, keys and mouse bindings
 ---------------------------------------
-awful.rules.rules = my_rules
+awful.rules.rules = rules
 root.keys(global_keys)
 root.buttons(gears_table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end)
+    awful.button({ }, 3, function () main_menu:toggle() end)
 ))
 
 

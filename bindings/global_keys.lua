@@ -14,9 +14,9 @@ local gears_table       = gears.table
 
 local global_keys = gears_table.join(
     -- Take a screenshot
-    awful.key( { }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -i") end),
-    awful.key({ keys.alt }, "Print", function () awful.util.spawn("gnome-screenshot -a") end),
-    awful.key({ keys.mod }, "Print", function () awful.util.spawn("gnome-screenshot -w") end),
+    awful.key({          }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -i") end),
+    awful.key({ keys.alt }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -a") end),
+    awful.key({ keys.mod }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -w") end),
 
     -- Show help
     awful.key(
@@ -41,7 +41,7 @@ local global_keys = gears_table.join(
     awful.key(
         { keys.mod }, "j",
         function()
-            if awful.screen.focused().selected_tag.layout == awful.layout.suit.floating then
+            if (awful.screen.focused().selected_tag.layout == awful.layout.suit.floating) or (awful.screen.focused().selected_tag.layout == awful.layout.suit.max) then
                 awful.client.focus.byidx(-1)
             else
                 awful.client.focus.global_bydirection("down")
@@ -53,7 +53,7 @@ local global_keys = gears_table.join(
     awful.key(
         { keys.mod }, "k",
         function()
-            if awful.screen.focused().selected_tag.layout == awful.layout.suit.floating then
+            if (awful.screen.focused().selected_tag.layout == awful.layout.suit.floating) or (awful.screen.focused().selected_tag.layout == awful.layout.suit.max) then
                 awful.client.focus.byidx(1)
             else
                 awful.client.focus.global_bydirection("up")
@@ -267,7 +267,8 @@ local function add_tag_bindings(id, key, name, command)
                 local tag = screen.tags[id]
                 if tag then
                     tag:view_only()
-                    if not next(tag:clients()) then
+                    -- if command then awful.spawn.raise_or_spawn(command) end
+                    if command and not next(tag:clients()) then
                         awful.spawn(command)
                     end
                 end
@@ -304,21 +305,8 @@ end
 
 
 local function add_workspace_tag_bindings(id, key, name)
+    add_tag_bindings(id, key, name)
     global_keys = gears_table.join(global_keys,
-        awful.key(
-            { keys.mod }, key,
-            function ()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[id]
-                if tag then
-                    tag:view_only()
-                    if not next(tag:clients()) then
-                        awful.spawn(command)
-                    end
-                end
-             end,
-            { description = "view " .. name .. " tag" , group = "tag" }
-        ),
         awful.key({ keys.alt }, key,
             function ()
                 if client.focus then
@@ -345,6 +333,7 @@ add_tag_bindings(m_tag_ids.tag_vim, "w", "vimwiki", "alacritty -e tmux new-sessi
 add_tag_bindings(m_tag_ids.tag_countdown, "t", "countdown", "countdown")
 add_tag_bindings(m_tag_ids.tag_calendar, "c", "calendar", "gnome-calendar")
 add_tag_bindings(m_tag_ids.tag_pdf, "p", "pdf")
+
 add_workspace_tag_bindings(m_tag_ids.tag_1,"#" .. 1 + 9, "1")
 add_workspace_tag_bindings(m_tag_ids.tag_2,"#" .. 2 + 9, "2")
 add_workspace_tag_bindings(m_tag_ids.tag_3,"#" .. 3 + 9, "3")

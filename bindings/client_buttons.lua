@@ -5,7 +5,7 @@ local gears_table = gears.table
 
 local client_buttons = gears_table.join(
     awful.button(
-        { }, 1, 
+        { }, 1,
         function (c)
             c:emit_signal("request::activate", "mouse_click", {raise = true})
         end

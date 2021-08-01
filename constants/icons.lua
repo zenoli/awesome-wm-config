@@ -1,7 +1,8 @@
 local icon_dir = os.getenv("HOME") .. "/.config/awesome/icons"
 local layouts_icon_dir = icon_dir .. "/layouts"
 local widgets_icon_dir = icon_dir .. "/widgets"
-icons = {
+
+local icons = {
     layouts = {
         tile          = layouts_icon_dir .. "/tile.png",
         tileleft      = layouts_icon_dir .. "/tileleft.png",
