@@ -1,7 +1,7 @@
 local lain  = require("lain")
 local wibox = require("wibox")
 local spawn = require("awful.spawn")
-local icons = require("constants.icons")
+local icons = require("constants.icon_paths")
 
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.vol)
