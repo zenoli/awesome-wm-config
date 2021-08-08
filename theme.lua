@@ -7,8 +7,10 @@ local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightne
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
 local volume = require("widgets.volume")
+local taglist = require("taglist")
 local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
+local layoutbox_buttons = require("bindings.layoutbox_buttons")
 
 
 
@@ -127,7 +129,6 @@ m_tag_ids = {
     tag_3 = 14
 }
 
-
 m_icons   = {}
 m_icons[m_tag_ids.tag_home      ] = " "
 m_icons[m_tag_ids.tag_tmux      ] = " "
@@ -176,86 +177,6 @@ local markup = lain.util.markup
 local separators = lain.util.separators
 local keyboardlayout = awful.widget.keyboardlayout:new()
 
-
--- -- Taskwarrior
--- local task = wibox.widget.imagebox(theme.widget_task)
--- lain.widget.contrib.task.attach(task, {
---     -- do not colorize output
---     show_cmd = "task | sed -r 's/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g'"
--- })
--- task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
-
-
--- Mail IMAP check
---[[ commented because it needs to be set before use
-local mailicon = wibox.widget.imagebox(theme.widget_mail)
-mailicon:buttons(my_table.join(awful.button({ }, 1, function () awful.spawn(mail) end)))
-theme.mail = lain.widget.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        if mailcount > 0 then
-            widget:set_text(" " .. mailcount .. " ")
-            mailicon:set_image(theme.widget_mail_on)
-        else
-            widget:set_text("")
-            mailicon:set_image(theme.widget_mail)
-        end
-    end
-})
---]]
-
--- ALSA volume
--- theme.volume = lain.widget.alsabar({
---     -- togglechannel = "IEC958,3",
---     notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
--- })
-
----- MPD
---local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
---local mpdicon = wibox.widget.imagebox(theme.widget_music)
---mpdicon:buttons(my_table.join(
---    awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
---    awful.button({ }, 1, function ()
---        os.execute("mpc prev")
---        theme.mpd.update()
---    end),
---    awful.button({ }, 2, function ()
---        os.execute("mpc toggle")
---        theme.mpd.update()
---    end),
---    awful.button({ }, 3, function ()
---        os.execute("mpc next")
---        theme.mpd.update()
---    end)))
---theme.mpd = lain.widget.mpd({
---    settings = function()
---        if mpd_now.state == "play" then
---            artist = " " .. mpd_now.artist .. " "
---            title  = mpd_now.title  .. " "
---            mpdicon:set_image(theme.widget_music_on)
---            widget:set_markup(markup.font(theme.font, markup("#FF8466", artist) .. " " .. title))
---        elseif mpd_now.state == "pause" then
---            widget:set_markup(markup.font(theme.font, " mpd paused "))
---            mpdicon:set_image(theme.widget_music_pause)
---        else
---            widget:set_text("")
---            mpdicon:set_image(theme.widget_music)
---        end
---    end
---})
-
--- Alsa
-local alsa = lain.widget.alsa({
-    cmd = "amixer -D pulse",
-    timeout = 1,
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. volume_now.level))
-    end
-})
-
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
 local mem = lain.widget.mem({
@@ -272,36 +193,13 @@ local cpu = lain.widget.cpu({
     end
 })
 
---[[ Coretemp (lm_sensors, per core)
-local tempwidget = awful.widget.watch({awful.util.shell, '-c', 'sensors | grep Core'}, 30,
-function(widget, stdout)
-    local temps = ""
-    for line in stdout:gmatch("[^\r\n]+") do
-        temps = temps .. line:match("+(%d+).*°C")  .. "° " -- in Celsius
-    end
-    widget:set_markup(markup.font(theme.font, " " .. temps))
-end)
---]]
 -- Coretemp (lain, average)
+local tempicon = wibox.widget.imagebox(theme.widget_temp)
 local temp = lain.widget.temp({
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
     end
 })
---]]
-local tempicon = wibox.widget.imagebox(theme.widget_temp)
-
----- / fs
---local fsicon = wibox.widget.imagebox(theme.widget_hdd)
-----[[ commented because it needs Gio/Glib >= 2.54
---theme.fs = lain.widget.fs({
---    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Terminus 10" },
---    settings = function()
---        local fsp = string.format(" %3.2f %s ", fs_now["/"].free, fs_now["/"].units)
---        widget:set_markup(markup.font(theme.font, fsp))
---    end
---})
-----]]
 
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
@@ -329,49 +227,17 @@ local bat = lain.widget.bat({
 })
 
 ---- Net
---local neticon = wibox.widget.imagebox(theme.widget_net)
---local net = lain.widget.net({
---    settings = function()
---        widget:set_markup(markup.fontfg(theme.font, "#FEFEFE", " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
---    end
---})
+local neticon = wibox.widget.imagebox(theme.widget_net)
+local net = lain.widget.net({
+    settings = function()
+        widget:set_markup(markup.fontfg(theme.font, "#FEFEFE", " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
+    end
+})
 
----- Brigtness
---local brighticon = wibox.widget.imagebox(theme.widget_brightness)
----- If you use xbacklight, comment the line with "light -G" and uncomment the line bellow
----- local brightwidget = awful.widget.watch('xbacklight -get', 0.1,
----- local brightwidget = awful.widget.watch('light -G', 0.1,
---local brightwidget = awful.widget.watch('/home/olivier/.config/zsh/scripts/adjust_brightness.bash -get', 0.1,
---    function(widget, stdout, stderr, exitreason, exitcode)
---        local brightness_level = tonumber(string.format("%.0f", stdout))
---        widget:set_markup(markup.font(theme.font, " " .. brightness_level .. "%"))
---end)
 
 -- Separators
 local arrow = separators.arrow_left
 
--- function theme.powerline_rl(cr, width, height)
---     local arrow_depth, offset = height/2, 0
-
---     -- Avoid going out of the (potential) clip area
---     if arrow_depth < 0 then
---         width  =  width + 2*arrow_depth
---         offset = -arrow_depth
---     end
-
---     cr:move_to(offset + arrow_depth         , 0        )
---     cr:line_to(offset + width               , 0        )
---     cr:line_to(offset + width - arrow_depth , height/2 )
---     cr:line_to(offset + width               , height   )
---     cr:line_to(offset + arrow_depth         , height   )
---     cr:line_to(offset                       , height/2 )
-
---     cr:close_path()
--- end
-
--- local function pl(widget, bgcolor, padding)
---     return wibox.container.background(wibox.container.margin(widget, dpi(16), dpi(16)), bgcolor, theme.powerline_rl)
--- end
 
 function theme.at_screen_connect(s)
 
@@ -384,11 +250,13 @@ function theme.at_screen_connect(s)
 
     -- Tags
     -- awful.tag(awful.util.tagnames, s, awful.layout.layouts)
-    for _, tag_desc in pairs(m_tags) do
-        selected = tag_desc.id == m_tag_ids.tag_home
-        awful.tag.add(tag_desc.icon, {
-            layout = tag_desc.layout,
-            layouts = tag_desc.layouts,
+    -- for _, tag_desc in pairs(m_tags) do
+    for _, tag in pairs(taglist) do
+        -- selected = tag_desc.id == m_tag_ids.tag_home
+        selected = tag.name == "home"
+        awful.tag.add(tag.icon, {
+            layout = tag.layout,
+            layouts = tag.layouts,
             screen = s,
             selected = selected
         })
@@ -399,21 +267,23 @@ function theme.at_screen_connect(s)
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears_table.join(
-                           awful.button({}, 1, function () awful.layout.inc( 1) end),
-                           awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
-                           awful.button({}, 3, function () awful.layout.inc(-1) end),
-                           awful.button({}, 4, function () awful.layout.inc( 1) end),
-                           awful.button({}, 5, function () awful.layout.inc(-1) end)))
+    s.mylayoutbox:buttons(layoutbox_buttons)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = theme.menu_height, bg = theme.bg_normal, fg = theme.fg_normal })
     s.systray = wibox.widget.systray()
+    -- Create the wibox
+    s.mywibox = awful.wibar({
+        position = "top",
+        screen = s,
+        height = theme.menu_height,
+        bg = theme.bg_normal,
+        fg = theme.fg_normal
+    })
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,

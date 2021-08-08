@@ -9,6 +9,7 @@ local volume            = require("widgets.volume")
 local settings          = require("settings")
 local keys              = require("constants.keys")
 local programs          = require("constants.programs")
+local taglist = require("taglist")
 
 local gears_table       = gears.table
 
@@ -322,20 +323,20 @@ local function add_workspace_tag_bindings(id, key, name)
 end
 
 
-add_tag_bindings(m_tag_ids.tag_home, "0", "home")
-add_tag_bindings(m_tag_ids.tag_tmux, "Return", "tmux", "alacritty -e tmux new-session -s main")
-add_tag_bindings(m_tag_ids.tag_web, "b", "web", "qutebrowser")
-add_tag_bindings(m_tag_ids.tag_mail, "m", "mail", "mailspring")
-add_tag_bindings(m_tag_ids.tag_slack, "s", "slack", "slack")
-add_tag_bindings(m_tag_ids.tag_video, "y", "video", "brave-browser")
-add_tag_bindings(m_tag_ids.tag_code, "v", "code", "code")
-add_tag_bindings(m_tag_ids.tag_vim, "w", "vimwiki", "alacritty -e tmux new-session -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'")
-add_tag_bindings(m_tag_ids.tag_countdown, "t", "countdown", "countdown")
-add_tag_bindings(m_tag_ids.tag_calendar, "c", "calendar", "gnome-calendar")
-add_tag_bindings(m_tag_ids.tag_pdf, "p", "pdf")
+-- add_tag_bindings(taglist.ids.home, "0", "home")
+-- add_tag_bindings(taglist.ids.tmux, "Return", "tmux", "alacritty -e tmux new-session -s main")
+-- add_tag_bindings(taglist.ids.web, "b", "web", "qutebrowser")
+-- add_tag_bindings(taglist.ids.mail, "m", "mail", "mailspring")
+-- add_tag_bindings(taglist.ids.slack, "s", "slack", "slack")
+-- add_tag_bindings(taglist.ids.video, "y", "video", "brave-browser")
+-- add_tag_bindings(taglist.ids.code, "v", "code", "code")
+-- add_tag_bindings(taglist.ids.vim, "w", "vimwiki", "alacritty -e tmux new-session -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'")
+-- add_tag_bindings(taglist.ids.countdown, "t", "countdown", "countdown")
+-- add_tag_bindings(taglist.ids.calendar, "c", "calendar", "gnome-calendar")
+-- add_tag_bindings(taglist.ids.pdf, "p", "pdf")
 
-add_workspace_tag_bindings(m_tag_ids.tag_1,"#" .. 1 + 9, "1")
-add_workspace_tag_bindings(m_tag_ids.tag_2,"#" .. 2 + 9, "2")
-add_workspace_tag_bindings(m_tag_ids.tag_3,"#" .. 3 + 9, "3")
+-- add_workspace_tag_bindings(taglist.ids.workspace_1,"#" .. 1 + 9, "1")
+-- add_workspace_tag_bindings(taglist.ids.workspace_2,"#" .. 2 + 9, "2")
+-- add_workspace_tag_bindings(taglist.ids.workspace_3,"#" .. 3 + 9, "3")
 
 return global_keys
