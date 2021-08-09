@@ -7,10 +7,13 @@ local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightne
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
 local volume = require("widgets.volume")
+local layouts = require("layouts")
 local taglist = require("taglist")
+local keys = require("constants.keys")
 local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
 local layoutbox_buttons = require("bindings.layoutbox_buttons")
+local utils = require("utils")
 
 
 
@@ -108,69 +111,8 @@ theme.titlebar_maximized_button_focus_active    = theme.icon_dir .. "/titlebar/m
 theme.titlebar_maximized_button_normal_active   = theme.icon_dir .. "/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_inactive  = theme.icon_dir .. "/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.icon_dir .. "/titlebar/maximized_normal_inactive.png"
-
--- awful.util.tagnames   = {" ", " ", "爵 ", " ", " ", " ", "﬏ ", " ", "祥 ", " ", " ", "1", "2", "3" }
-
-
-m_tag_ids = {
-    tag_home = 1,
-    tag_tmux = 2,
-    tag_web = 3,
-    tag_mail = 4,
-    tag_slack = 5,
-    tag_video = 6,
-    tag_code = 7,
-    tag_vim = 8,
-    tag_countdown = 9,
-    tag_calendar = 10,
-    tag_pdf = 11,
-    tag_1 = 12,
-    tag_2 = 13,
-    tag_3 = 14
-}
-
-m_icons   = {}
-m_icons[m_tag_ids.tag_home      ] = " "
-m_icons[m_tag_ids.tag_tmux      ] = " "
-m_icons[m_tag_ids.tag_web       ] = "爵 "
-m_icons[m_tag_ids.tag_mail      ] = " "
-m_icons[m_tag_ids.tag_slack     ] = " "
-m_icons[m_tag_ids.tag_video     ] = " "
-m_icons[m_tag_ids.tag_code      ] = "﬏ "
-m_icons[m_tag_ids.tag_vim       ] = " "
-m_icons[m_tag_ids.tag_countdown ] = "祥 "
-m_icons[m_tag_ids.tag_calendar  ] = " "
-m_icons[m_tag_ids.tag_pdf       ] = " "
-m_icons[m_tag_ids.tag_1         ] = "1"
-m_icons[m_tag_ids.tag_2         ] = "2"
-m_icons[m_tag_ids.tag_3         ] = "3"
-
-local l = awful.layout.suit
-local layouts = {
-    l.floating,
-    l.tile,
-    l.magnifier,
-    l.tile.top,
-    l.fair,
-    l.max
-}
-
-m_tags = {
-    { icon = " " , id = m_tag_ids.tag_home     , layouts = layouts, layout = l.floating  },
-    { icon = " " , id = m_tag_ids.tag_tmux     , layouts = layouts, layout = l.tile      },
-    { icon = "爵 ", id = m_tag_ids.tag_web      , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_mail     , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_slack    , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_video    , layouts = layouts, layout = l.tile      },
-    { icon = "﬏ " , id = m_tag_ids.tag_code     , layouts = layouts, layout = l.magnifier },
-    { icon = " " , id = m_tag_ids.tag_vim      , layouts = layouts, layout = l.tile      },
-    { icon = "祥 ", id = m_tag_ids.tag_countdown, layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_calendar , layouts = layouts, layout = l.tile      },
-    { icon = " " , id = m_tag_ids.tag_pdf      , layouts = { l.max, l.fair }, layout = l.max },
-    { icon = "1"  , id = m_tag_ids.tag_1        , layouts = layouts, layout = l.tile      },
-    { icon = "2"  , id = m_tag_ids.tag_2        , layouts = layouts, layout = l.tile      },
-    { icon = "3"  , id = m_tag_ids.tag_3        , layouts = layouts, layout = l.tile      }
-}
+theme.n_workspace_tags = 5
+theme.workspace_tag_default_layout = awful.layout.suit.tile
 
 
 local markup = lain.util.markup
@@ -238,6 +180,54 @@ local net = lain.widget.net({
 -- Separators
 local arrow = separators.arrow_left
 
+theme.tag_keys = {}
+-- local function add_tag_bindings(tag, tag_desc)
+--     theme.tag_keys = gears_table.join(theme.tag_keys,
+--         awful.key(
+--             { keys.mod }, tag_desc.key,
+--             function ()
+--                 tag:view_only()
+--                 if tag_desc.command and not next(tag:clients()) then
+--                     awful.spawn(tag_desc.command)
+--                 end
+--              end,
+--             { description = "view " .. tag_desc.name .. " tag" , group = "tag" }
+--         ),
+--         awful.key({ keys.mod, keys.control}, tag_desc.key,
+--             function ()
+--                 awful.tag.viewtoggle(tag)
+--                 local c = client.focus
+--                 if c then
+--                     c:swap(awful.client.getmaster())
+--                 end
+--             end,
+--             { description = "toggle " .. tag_desc.name .. " tag", group = "tag" }
+--         ),
+--         awful.key({ keys.mod, keys.shift}, tag_desc.key,
+--             function ()
+--                 if client.focus then
+--                     client.focus:move_to_tag(tag)
+--                end
+--             end,
+--             { description = "move to " .. tag_desc.name .. " tag", group = "tag" }
+--         )
+--     )
+-- end
+
+
+-- local function add_workspace_tag_bindings(tag, tag_desc)
+--     add_tag_bindings(tag, tag_desc)
+--     theme.tag_keys = gears_table.join(theme.tag_keys,
+--         awful.key({ keys.alt }, tag_desc.key,
+--             function ()
+--                 if client.focus then
+--                     client.focus:toggle_tag(tag)
+--                 end
+--             end,
+--             {description = "toggle focused client on tag " .. tag_desc.name, group = "tag"}
+--         )
+--     )
+-- end
 
 function theme.at_screen_connect(s)
 
@@ -248,18 +238,32 @@ function theme.at_screen_connect(s)
     end
     gears.wallpaper.maximized(wallpaper, s, true)
 
-    -- Tags
-    -- awful.tag(awful.util.tagnames, s, awful.layout.layouts)
-    -- for _, tag_desc in pairs(m_tags) do
-    for _, tag in pairs(taglist) do
-        -- selected = tag_desc.id == m_tag_ids.tag_home
-        selected = tag.name == "home"
-        awful.tag.add(tag.icon, {
-            layout = tag.layout,
-            layouts = tag.layouts,
+    -- Add app specific tags
+    for _, tag_desc in pairs(taglist) do
+        local selected = tag_desc.name == "tmux"
+        local tag = awful.tag.add(tag_desc.icon, {
+            layout = tag_desc.layout,
+            layouts = tag_desc.layouts,
             screen = s,
             selected = selected
         })
+        -- add_tag_bindings(tag, tag_desc)
+        theme.tag_keys = gears_table.join(theme.tag_keys, utils.add_tag_bindings(tag, tag_desc))
+    end
+    -- Add workspace tags
+    for i = 1, theme.n_workspace_tags do
+        local tag = awful.tag.add(tostring(i), {
+            layout = theme.workspace_tag_default_layout,
+            layouts = layouts,
+            screen = s,
+            selected = false
+        })
+        local tag_desc = {
+            name = "workspace " .. tostring(i),
+            key = "#" .. i + 9
+        }
+        -- add_workspace_tag_bindings(tag, tag_desc)
+        theme.tag_keys = gears_table.join(theme.tag_keys, utils.add_workspace_tag_bindings(tag, tag_desc))
     end
 
     -- Create a promptbox for each screen
@@ -299,19 +303,6 @@ function theme.at_screen_connect(s)
             layout = wibox.layout.fixed.horizontal,
             s.systray,
             keyboardlayout,
-            -- alsa.widget,
-            -- volume.widget,
-            -- -- fs_widget(),
-            -- arrow(theme.bg_normal, "#777E76"),
-            -- wibox.container.background(
-            --     wibox.container.margin(
-            --         wibox.widget {
-            --             volume.icon,
-            --             volume.widget,
-            --             layout = wibox.layout.align.horizontal
-            --         }, dpi(2), dpi(3)
-            --     ), "#777E76"
-            -- ),
             arrow("#FFFFFF00", "#777E76"),
             wibox.container.background(
                 wibox.container.margin(
@@ -373,15 +364,6 @@ function theme.at_screen_connect(s)
                     }, dpi(2), dpi(2)
                 ), "#4B696D"
             ),
-            -- wibox.container.background(
-            --     wibox.container.margin(
-            --         wibox.widget {
-            --             nil,
-            --             neticon,
-            --             net.widget,
-            --             layout = wibox.layout.align.horizontal
-            --         }, dpi(3), dpi(3)
-            --     ), "#C0C0A2"),
             arrow("#4B696D", "#CB755B"),
             wibox.container.background(
                 wibox.container.margin(

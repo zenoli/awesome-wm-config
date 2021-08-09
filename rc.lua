@@ -96,6 +96,7 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 -- Rules, keys and mouse bindings
 ---------------------------------------
 awful.rules.rules = rules
+global_keys = gears_table.join(global_keys, beautiful.tag_keys)
 root.keys(global_keys)
 root.buttons(gears_table.join(
     awful.button({ }, 3, function () main_menu:toggle() end)
