@@ -3,17 +3,21 @@ local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
-local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
-local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
-local volume = require("widgets.volume")
 local layouts = require("layouts")
 local taglist = require("taglist")
-local keys = require("constants.keys")
 local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
 local layoutbox_buttons = require("bindings.layoutbox_buttons")
 local utils = require("utils")
+
+-- widgets
+local volume = require("widgets.volume")
+local brightness = require("widgets.brightness")
+local memory = require("widgets.memory")
+local cpu = require("widgets.cpu")
+local temperature = require ("widgets.temperature")
+local battery = require ("widgets.battery")
+local clock = require ("widgets.clock")
 
 
 
@@ -21,11 +25,12 @@ local math, string, os = math, string, os
 local gears_table = gears.table
 
 local theme                                     = {}
+theme.font_size                                 = 9
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome"
 theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/icons"
 theme.wallpaper                                 = theme.dir .. "/default_wallpaper.jpg"
-theme.font                                      = "Terminus 9"
-theme.taglist_font                              = "Hack Nerd Font"
+theme.font                                      = "Terminus "       .. theme.font_size
+theme.taglist_font                              = "Hack Nerd Font " .. theme.font_size
 theme.fg_normal                                 = "#FEFEFE"
 theme.fg_focus                                  = "#32D6FF"
 theme.fg_urgent                                 = "#C83F11"
@@ -40,6 +45,9 @@ theme.tasklist_bg_focus                         = "#22222200"
 theme.tasklist_bg_normal                         = "#00000000"
 theme.tasklist_fg_focus                         = "#F6784F"
 theme.border_width                              = dpi(0)
+theme.notification_icon_size = 30
+theme.notification_border_width = 10
+theme.notification_border_color = "#000000"
 theme.border_normal                             = "#3F3F3F00"
 -- theme.border_focus                              = "#6F6F6F"
 theme.border_focus                              = theme.bg_focus
@@ -119,115 +127,11 @@ local markup = lain.util.markup
 local separators = lain.util.separators
 local keyboardlayout = awful.widget.keyboardlayout:new()
 
--- MEM
-local memicon = wibox.widget.imagebox(theme.widget_mem)
-local mem = lain.widget.mem({
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. mem_now.used .. "MB "))
-    end
-})
-
--- CPU
-local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
-local cpu = lain.widget.cpu({
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
-    end
-})
-
--- Coretemp (lain, average)
-local tempicon = wibox.widget.imagebox(theme.widget_temp)
-local temp = lain.widget.temp({
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
-    end
-})
-
--- Battery
-local baticon = wibox.widget.imagebox(theme.widget_battery)
-local bat = lain.widget.bat({
-    timeout = 1,
-    settings = function()
-        if bat_now.status and bat_now.status ~= "N/A" then
-            if bat_now.ac_status == 1 then
-                widget:set_markup(markup.font(theme.font, " AC "))
-                baticon:set_image(theme.widget_ac)
-                return
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
-                baticon:set_image(theme.widget_battery_empty)
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
-                baticon:set_image(theme.widget_battery_low)
-            else
-                baticon:set_image(theme.widget_battery)
-            end
-            widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
-        else
-            widget:set_markup()
-            baticon:set_image(theme.widget_ac)
-        end
-    end
-})
-
----- Net
-local neticon = wibox.widget.imagebox(theme.widget_net)
-local net = lain.widget.net({
-    settings = function()
-        widget:set_markup(markup.fontfg(theme.font, "#FEFEFE", " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
-    end
-})
-
 
 -- Separators
 local arrow = separators.arrow_left
 
 theme.tag_keys = {}
--- local function add_tag_bindings(tag, tag_desc)
---     theme.tag_keys = gears_table.join(theme.tag_keys,
---         awful.key(
---             { keys.mod }, tag_desc.key,
---             function ()
---                 tag:view_only()
---                 if tag_desc.command and not next(tag:clients()) then
---                     awful.spawn(tag_desc.command)
---                 end
---              end,
---             { description = "view " .. tag_desc.name .. " tag" , group = "tag" }
---         ),
---         awful.key({ keys.mod, keys.control}, tag_desc.key,
---             function ()
---                 awful.tag.viewtoggle(tag)
---                 local c = client.focus
---                 if c then
---                     c:swap(awful.client.getmaster())
---                 end
---             end,
---             { description = "toggle " .. tag_desc.name .. " tag", group = "tag" }
---         ),
---         awful.key({ keys.mod, keys.shift}, tag_desc.key,
---             function ()
---                 if client.focus then
---                     client.focus:move_to_tag(tag)
---                end
---             end,
---             { description = "move to " .. tag_desc.name .. " tag", group = "tag" }
---         )
---     )
--- end
-
-
--- local function add_workspace_tag_bindings(tag, tag_desc)
---     add_tag_bindings(tag, tag_desc)
---     theme.tag_keys = gears_table.join(theme.tag_keys,
---         awful.key({ keys.alt }, tag_desc.key,
---             function ()
---                 if client.focus then
---                     client.focus:toggle_tag(tag)
---                 end
---             end,
---             {description = "toggle focused client on tag " .. tag_desc.name, group = "tag"}
---         )
---     )
--- end
 
 function theme.at_screen_connect(s)
 
@@ -241,14 +145,13 @@ function theme.at_screen_connect(s)
     -- Add app specific tags
     for _, tag_desc in pairs(taglist) do
         local selected = tag_desc.name == "tmux"
+
         local tag = awful.tag.add(tag_desc.icon, {
             layout = tag_desc.layout,
             layouts = tag_desc.layouts,
             screen = s,
             selected = selected
         })
-        -- add_tag_bindings(tag, tag_desc)
-        theme.tag_keys = gears_table.join(theme.tag_keys, utils.add_tag_bindings(tag, tag_desc))
     end
     -- Add workspace tags
     for i = 1, theme.n_workspace_tags do
@@ -262,8 +165,6 @@ function theme.at_screen_connect(s)
             name = "workspace " .. tostring(i),
             key = "#" .. i + 9
         }
-        -- add_workspace_tag_bindings(tag, tag_desc)
-        theme.tag_keys = gears_table.join(theme.tag_keys, utils.add_workspace_tag_bindings(tag, tag_desc))
     end
 
     -- Create a promptbox for each screen
@@ -304,73 +205,18 @@ function theme.at_screen_connect(s)
             s.systray,
             keyboardlayout,
             arrow("#FFFFFF00", "#777E76"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget {
-                        memicon,
-                        mem.widget,
-                        layout = wibox.layout.align.horizontal
-                    }, dpi(2), dpi(3)
-                ), "#777E76"
-            ),
+            utils.widget_wrapper(memory.widget, "#777E76"),
             arrow("#777E76", "#4B696D"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget {
-                        cpuicon,
-                        cpu.widget,
-                        layout = wibox.layout.align.horizontal
-                    }, dpi(3), dpi(4)
-                ), "#4B696D"
-            ),
+            utils.widget_wrapper(cpu.widget, "#4B696D"),
             arrow("#4B696D", "#4B3B51"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget {
-                        tempicon,
-                        temp.widget,
-                        layout = wibox.layout.align.horizontal
-                    }, dpi(4), dpi(4)
-                ), "#4B3B51"
-            ),
+            utils.widget_wrapper(temperature.widget, "#4B3B51"),
             arrow("#4B3B51", "#8DAA9A"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget {
-                        baticon,
-                        bat.widget,
-                        layout = wibox.layout.align.horizontal
-                    }, dpi(3), dpi(3)
-                ), "#8DAA9A"
-            ),
+            utils.widget_wrapper(battery.widget, "#8DAA9A"),
             arrow("#8DAA9A", "#4B696D"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget {
-                        volume.icon,
-                        volume.widget,
-                        layout = wibox.layout.align.horizontal
-                    }, dpi(2), dpi(3)
-                ), "#4B696D"
-            ),
-            wibox.container.background(
-                wibox.container.margin(
-                    brightness_widget{
-                        type = 'icon_and_text',
-                        program = 'custom',
-                        base = 80,
-                        step = 5,
-                        tooltip = false
-                    }, dpi(2), dpi(2)
-                ), "#4B696D"
-            ),
+            utils.widget_wrapper(volume.widget, "#4B696D"),
+            utils.widget_wrapper(brightness.widget, "#4B696D"),
             arrow("#4B696D", "#CB755B"),
-            wibox.container.background(
-                wibox.container.margin(
-                    wibox.widget.textclock(),
-                    dpi(2),dpi(2)
-                ), "#CB755B"
-            ),
+            utils.widget_wrapper(clock.widget, "#CB755B"),
             arrow("#CB755B", theme.bg_normal),
             s.mylayoutbox,
         },

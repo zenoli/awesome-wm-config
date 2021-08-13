@@ -6,7 +6,7 @@ local icons = require("constants.icon_paths")
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.vol)
 
-local volume = lain.widget.alsa({
+local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
     timeout = 1,
     settings = function()
@@ -26,7 +26,6 @@ local volume = lain.widget.alsa({
                 icon_path = icons.widgets.vol
             end
         end
-
         icon:set_image(icon_path)
     end
 })
@@ -36,18 +35,24 @@ local INC_VOLUME_CMD = 'amixer -D pulse sset Master 5%+'
 local DEC_VOLUME_CMD = 'amixer -D pulse sset Master 5%-'
 local TOG_VOLUME_CMD = 'amixer -D pulse sset Master toggle'
 
+local volume = {}
+
 function volume:inc()
-    spawn.easy_async_with_shell(INC_VOLUME_CMD, self.update)
+    spawn.easy_async_with_shell(INC_VOLUME_CMD, alsa.update)
 end
 
 function volume:dec()
-    spawn.easy_async_with_shell(DEC_VOLUME_CMD, volume.update)
+    spawn.easy_async_with_shell(DEC_VOLUME_CMD, alsa.update)
 end
 
 function volume:toggle()
-    spawn.easy_async_with_shell(TOG_VOLUME_CMD, volume.update)
+    spawn.easy_async_with_shell(TOG_VOLUME_CMD, alsa.update)
 end
 
-volume.icon = icon
+volume.widget = wibox.widget {
+    icon,
+    alsa.widget,
+    layout = wibox.layout.align.horizontal
+}
 
 return volume

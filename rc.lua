@@ -13,13 +13,14 @@ beautiful.init(theme_path)
 local awful          = require("awful")
                        require("awful.autofocus")
 local naughty        = require("naughty")
+naughty.config.defaults.border_width = 0
 
 local main_menu      = require("main_menu")
 local rules          = require("rules")
-local global_keys    = require("bindings.global_keys")
 local titlebar_setup = require("titlebar")
 local gears          = require("gears")
 local gears_table    = gears.table
+local global_keys    = require("bindings.global_keys")
 
 
 ---------------------------------------
@@ -90,14 +91,16 @@ end)
 
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+-- for s in screen do
+--    beautiful.at_screen_connect(s) -- do something
+-- end
 
 
 ---------------------------------------
 -- Rules, keys and mouse bindings
 ---------------------------------------
 awful.rules.rules = rules
-global_keys = gears_table.join(global_keys, beautiful.tag_keys)
-root.keys(global_keys)
+root.keys(global_keys())
 root.buttons(gears_table.join(
     awful.button({ }, 3, function () main_menu:toggle() end)
 ))

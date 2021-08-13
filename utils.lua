@@ -1,6 +1,8 @@
 local gears = require("gears")
 local awful = require("awful")
-local keys = require("constants.keys")
+local keys  = require("constants.keys")
+local wibox = require("wibox")
+local dpi   = require("beautiful.xresources").apply_dpi
 local gears_table = gears.table
 
 local utils = {}
@@ -51,6 +53,25 @@ function utils.add_workspace_tag_bindings(tag, tag_desc)
         )
     )
     return gears_table.join(tag_bindings, workspace_tag_bindings)
+end
+
+function utils.widget_wrapper(widget, bg_color)
+    return wibox.container.background(
+        wibox.container.margin(widget, dpi(2), dpi(3)),
+        bg_color
+    )
+end
+
+function utils.create_widget(widget, icon, bg_color)
+    return wibox.container.background(
+        wibox.container.margin(
+            wibox.widget {
+                widget,
+                icon,
+                layout = wibox.layout.align.horizontal
+            }, dpi(2), dpi(3)
+        ), bg_color
+    )
 end
 
 return utils
