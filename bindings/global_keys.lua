@@ -9,7 +9,7 @@ local volume            = require("widgets.volume")
 local settings          = require("settings")
 local keys              = require("constants.keys")
 local programs          = require("constants.programs")
-local taglist           = require("taglist")
+local taglist           = require("components.taglist")
 local utils             = require("utils")
 local naughty        = require("naughty")
 

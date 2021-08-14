@@ -1,9 +1,9 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local taglist = require("taglist")
+local taglist = require("components.taglist")
 local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
-local widgetlist = require("widgetlist")
+local widgetlist = require("components.widgetlist")
 local beautiful = require("beautiful")
 
 
