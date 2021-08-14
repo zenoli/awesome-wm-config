@@ -1,8 +1,8 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Load theme
+---------------------------------------
+-- Theme initialization
+---------------------------------------
 local beautiful         = require("beautiful")
 local theme_path = string.format(
     "%s/awesome/theme.lua",
@@ -15,21 +15,14 @@ local awful          = require("awful")
 local naughty        = require("naughty")
 naughty.config.defaults.border_width = 0
 
-local wibar_setup = require("wibar")
+local gears          = require("gears")
 local main_menu      = require("main_menu")
 local rules          = require("rules")
-local titlebar_setup = require("titlebar")
-local gears          = require("gears")
-local gears_table    = gears.table
 local global_keys    = require("bindings.global_keys")
+local wibar_setup = require("wibar")
+local titlebar_setup = require("titlebar")
 local update_wallpaper      = require("wallpaper")
-
-
----------------------------------------
--- Theme initialization
----------------------------------------
--- local theme_path = string.format( "%s/awesome/theme.lua", os.getenv("XDG_CONFIG_HOME"))
--- beautiful.init(theme_path)
+local gears_table    = gears.table
 
 
 ---------------------------------------
@@ -65,31 +58,14 @@ do
 end
 
 
----------------------------------------
--- Autostart windowless processes
----------------------------------------
--- This function will run once every time Awesome is started
-local function run_once(cmd_arr)
-    for _, cmd in ipairs(cmd_arr) do
-        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
-    end
-end
---
--- run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
-
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", update_wallpaper)
 
 -- Create a wibox for each screen and add it
-awful.screen.connect_for_each_screen(function (s) 
+awful.screen.connect_for_each_screen(function (s)
     update_wallpaper(s)
     wibar_setup(s)
 end)
--- awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
--- for s in screen do
---    beautiful.at_screen_connect(s) -- do something
--- end
 
 
 ---------------------------------------
