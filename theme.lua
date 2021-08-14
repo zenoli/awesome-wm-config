@@ -9,6 +9,7 @@ local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
 local layoutbox_buttons = require("bindings.layoutbox_buttons")
 local utils = require("utils")
+local widgetlist = require("widgetlist")
 
 -- widgets
 local volume = require("widgets.volume")
@@ -194,32 +195,11 @@ function theme.at_screen_connect(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            -- spr,
             s.mytaglist,
             s.mypromptbox,
-            -- spr,
         },
         s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.systray,
-            keyboardlayout,
-            arrow("#FFFFFF00", "#777E76"),
-            utils.widget_wrapper(memory.widget, "#777E76"),
-            arrow("#777E76", "#4B696D"),
-            utils.widget_wrapper(cpu.widget, "#4B696D"),
-            arrow("#4B696D", "#4B3B51"),
-            utils.widget_wrapper(temperature.widget, "#4B3B51"),
-            arrow("#4B3B51", "#8DAA9A"),
-            utils.widget_wrapper(battery.widget, "#8DAA9A"),
-            arrow("#8DAA9A", "#4B696D"),
-            utils.widget_wrapper(volume.widget, "#4B696D"),
-            utils.widget_wrapper(brightness.widget, "#4B696D"),
-            arrow("#4B696D", "#CB755B"),
-            utils.widget_wrapper(clock.widget, "#CB755B"),
-            arrow("#CB755B", theme.bg_normal),
-            s.mylayoutbox,
-        },
+        widgetlist(s)
     }
  end
 
