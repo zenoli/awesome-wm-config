@@ -2,6 +2,7 @@ local lain  = require("lain")
 local wibox = require("wibox")
 local spawn = require("awful.spawn")
 local icons = require("constants.icon_paths")
+local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.vol)
@@ -12,7 +13,7 @@ local bat = lain.widget.bat({
     settings = function()
         if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
-                widget:set_markup(markup.font("Terminus 9", " AC "))
+                widget:set_markup(markup.font(beautiful.font, " AC "))
                 icon:set_image(icons.widgets.ac)
                 return
             elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
@@ -22,7 +23,7 @@ local bat = lain.widget.bat({
             else
                 icon:set_image(icons.widgets.battery)
             end
-            widget:set_markup(markup.font("Terminus 9", " " .. bat_now.perc .. "% "))
+            widget:set_markup(markup.font(beautiful.font, " " .. bat_now.perc .. "% "))
         else
             widget:set_markup()
             icon:set_image(icons.widgets.ac)

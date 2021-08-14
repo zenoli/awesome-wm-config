@@ -1,13 +1,14 @@
-local lain  = require("lain")
-local wibox = require("wibox")
-local icons = require("constants.icon_paths")
+local lain      = require("lain")
+local wibox     = require("wibox")
+local icons     = require("constants.icon_paths")
+local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
 local icon = wibox.widget.imagebox(icons.widgets.mem)
 local mem = lain.widget.mem({
     settings = function()
-        widget:set_markup(markup.font("Terminus 9", " " .. mem_now.used .. "MB "))
+        widget:set_markup(markup.font(beautiful.font, " " .. mem_now.used .. "MB "))
     end
 })
 

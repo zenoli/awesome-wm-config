@@ -1,6 +1,7 @@
 local lain  = require("lain")
 local wibox = require("wibox")
 local icons = require("constants.icon_paths")
+local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
@@ -8,7 +9,7 @@ local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.cpu)
 local lain_cpu = lain.widget.cpu({
     settings = function()
-        widget:set_markup(markup.font("Terminus 9", " " .. cpu_now.usage .. "% "))
+        widget:set_markup(markup.font(beautiful.font, " " .. cpu_now.usage .. "% "))
     end
 })
 local cpu = {

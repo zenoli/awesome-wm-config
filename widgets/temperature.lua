@@ -1,13 +1,14 @@
-local lain  = require("lain")
-local wibox = require("wibox")
-local icons = require("constants.icon_paths")
+local lain      = require("lain")
+local wibox     = require("wibox")
+local icons     = require("constants.icon_paths")
+local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
 local icon = wibox.widget.imagebox(icons.widgets.temp)
 local temp = lain.widget.temp({
     settings = function()
-        widget:set_markup(markup.font("Terminus 9", " " .. coretemp_now .. "°C "))
+        widget:set_markup(markup.font(beautiful.font, " " .. coretemp_now .. "°C "))
     end
 })
 

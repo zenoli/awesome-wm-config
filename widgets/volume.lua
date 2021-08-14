@@ -1,7 +1,8 @@
-local lain  = require("lain")
-local wibox = require("wibox")
-local spawn = require("awful.spawn")
-local icons = require("constants.icon_paths")
+local lain      = require("lain")
+local wibox     = require("wibox")
+local spawn     = require("awful.spawn")
+local icons     = require("constants.icon_paths")
+local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.vol)
@@ -10,7 +11,7 @@ local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
     timeout = 1,
     settings = function()
-        widget:set_markup(markup.font("Terminus 9", " " .. volume_now.level))
+        widget:set_markup(markup.font(beautiful.font, " " .. volume_now.level))
         local icon_path, perc = "", tonumber(volume_now.level) or 0
 
         if volume_now.status == "off" then

@@ -265,7 +265,7 @@ local function init ()
 
 
     -- Add tag bindings
-    for _, tag_desc in pairs(taglist) do
+    for _, tag_desc in pairs(taglist.description) do
         local tag = awful.tag.find_by_name(awful.screen.focused(), tag_desc.icon)
         global_keys = gears_table.join(global_keys, utils.add_tag_bindings(tag, tag_desc))
     end

@@ -4,11 +4,12 @@ local layouts = require("layouts")
 
 local l = awful.layout.suit
 
-local n_workspace_tags = 5
-local workspace_tag_default_layout = l.tile
+local taglist = {}
+taglist.n_workspace_tags = 5
+taglist.workspace_tag_default_layout = l.tile
 
 
-local taglist = {
+taglist.description = {
     {
         icon = " ",
         name = "home",
@@ -97,9 +98,9 @@ local taglist = {
     }
 }
 
-local function setup(s)
+function taglist.setup(s)
     -- Add app specific tags
-    for _, tag_desc in pairs(taglist) do
+    for _, tag_desc in pairs(taglist.description) do
         local selected = tag_desc.name == "home"
 
         local tag = awful.tag.add(tag_desc.icon, {
@@ -110,9 +111,9 @@ local function setup(s)
         })
     end
     -- Add workspace tags
-    for i = 1, n_workspace_tags do
+    for i = 1, taglist.n_workspace_tags do
         local tag = awful.tag.add(tostring(i), {
-            layout = workspace_tag_default_layout,
+            layout = taglist.workspace_tag_default_layout,
             layouts = layouts,
             screen = s,
             selected = false
