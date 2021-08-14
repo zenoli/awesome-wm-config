@@ -5,23 +5,25 @@ local beautiful = require("beautiful")
 local lain      = require("lain")
 
 local arrow = lain.util.separators.arrow_left
-local keyboardlayout = awful.widget.keyboardlayout:new()
 
-local volume      = require("widgets.volume")
-local brightness  = require("widgets.brightness")
-local memory      = require("widgets.memory")
-local cpu         = require("widgets.cpu")
-local temperature = require("widgets.temperature")
-local battery     = require("widgets.battery")
-local clock       = require("widgets.clock")
+local systray        = require("widgets.systray")
+local keyboardlayout = require("widgets.keyboardlayout")
+local volume         = require("widgets.volume")
+local brightness     = require("widgets.brightness")
+local memory         = require("widgets.memory")
+local cpu            = require("widgets.cpu")
+local temperature    = require("widgets.temperature")
+local battery        = require("widgets.battery")
+local clock          = require("widgets.clock")
+local layoutbox      = require("widgets.layoutbox")
 
 
 
 local function setup(s)
     return {
         layout = wibox.layout.fixed.horizontal,
-        s.systray,
-        keyboardlayout,
+        utils.widget_wrapper(systray.widget, "#000000"),
+        utils.widget_wrapper(keyboardlayout.widget, "#00000000"),
         arrow("#FFFFFF00", "#777E76"),
         utils.widget_wrapper(memory.widget, "#777E76"),
         arrow("#777E76", "#4B696D"),
@@ -36,7 +38,7 @@ local function setup(s)
         arrow("#4B696D", "#CB755B"),
         utils.widget_wrapper(clock.widget, "#CB755B"),
         arrow("#CB755B", beautiful.bg_normal),
-        s.mylayoutbox,
+        utils.widget_wrapper(layoutbox(s).widget, "#123456")
     }
 end
 

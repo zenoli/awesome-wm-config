@@ -37,6 +37,7 @@ theme.fg_focus                                  = "#32D6FF"
 theme.fg_urgent                                 = "#C83F11"
 theme.bg_normal                                 = "#22222290"
 theme.bg_systray                                = "#00000000"
+theme.systray_icon_spacing = dpi(3)
 -- theme.bg_normal                                 = "#00000000"
 theme.bg_focus                                  = "#1E232000"
 -- theme.bg_focus                                  = "#00000000"
@@ -170,17 +171,11 @@ function theme.at_screen_connect(s)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(layoutbox_buttons)
-    -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
-    s.systray = wibox.widget.systray()
     -- Create the wibox
     s.mywibox = awful.wibar({
         position = "top",
