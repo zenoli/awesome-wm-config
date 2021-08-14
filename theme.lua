@@ -1,29 +1,6 @@
-local gears = require("gears")
-local lain  = require("lain")
 local awful = require("awful")
-local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
-local layouts = require("layouts")
-local taglist = require("taglist")
-local taglist_buttons = require("bindings.taglist_buttons")
-local tasklist_buttons = require("bindings.tasklist_buttons")
-local layoutbox_buttons = require("bindings.layoutbox_buttons")
-local utils = require("utils")
-local widgetlist = require("widgetlist")
 
--- widgets
-local volume = require("widgets.volume")
-local brightness = require("widgets.brightness")
-local memory = require("widgets.memory")
-local cpu = require("widgets.cpu")
-local temperature = require ("widgets.temperature")
-local battery = require ("widgets.battery")
-local clock = require ("widgets.clock")
-
-
-
-local math, string, os = math, string, os
-local gears_table = gears.table
 
 local theme                                     = {}
 theme.font_size                                 = 9
@@ -123,79 +100,5 @@ theme.titlebar_maximized_button_focus_inactive  = theme.icon_dir .. "/titlebar/m
 theme.titlebar_maximized_button_normal_inactive = theme.icon_dir .. "/titlebar/maximized_normal_inactive.png"
 theme.n_workspace_tags = 5
 theme.workspace_tag_default_layout = awful.layout.suit.tile
-
-
-local markup = lain.util.markup
-local separators = lain.util.separators
-local keyboardlayout = awful.widget.keyboardlayout:new()
-
-
--- Separators
-local arrow = separators.arrow_left
-
-theme.tag_keys = {}
-
-function theme.at_screen_connect(s)
-
-    -- If wallpaper is a function, call it with the screen
-    local wallpaper = theme.wallpaper
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
-
-    -- Add app specific tags
-    for _, tag_desc in pairs(taglist) do
-        local selected = tag_desc.name == "tmux"
-
-        local tag = awful.tag.add(tag_desc.icon, {
-            layout = tag_desc.layout,
-            layouts = tag_desc.layouts,
-            screen = s,
-            selected = selected
-        })
-    end
-    -- Add workspace tags
-    for i = 1, theme.n_workspace_tags do
-        local tag = awful.tag.add(tostring(i), {
-            layout = theme.workspace_tag_default_layout,
-            layouts = layouts,
-            screen = s,
-            selected = false
-        })
-        local tag_desc = {
-            name = "workspace " .. tostring(i),
-            key = "#" .. i + 9
-        }
-    end
-
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
-
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
-
-    -- Create the wibox
-    s.mywibox = awful.wibar({
-        position = "top",
-        screen = s,
-        height = theme.menu_height,
-        bg = theme.bg_normal,
-        fg = theme.fg_normal
-    })
-
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        widgetlist(s)
-    }
- end
 
 return theme

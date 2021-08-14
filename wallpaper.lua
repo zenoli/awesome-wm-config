@@ -9,3 +9,5 @@ function update_wallpaper(s)
     end
     gears.wallpaper.maximized(wallpaper, s, true)
 end
+
+return update_wallpaper

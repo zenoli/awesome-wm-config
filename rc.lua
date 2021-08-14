@@ -15,12 +15,14 @@ local awful          = require("awful")
 local naughty        = require("naughty")
 naughty.config.defaults.border_width = 0
 
+local wibar_setup = require("wibar")
 local main_menu      = require("main_menu")
 local rules          = require("rules")
 local titlebar_setup = require("titlebar")
 local gears          = require("gears")
 local gears_table    = gears.table
 local global_keys    = require("bindings.global_keys")
+local update_wallpaper      = require("wallpaper")
 
 
 ---------------------------------------
@@ -77,20 +79,14 @@ end
 
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", function(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end)
+screen.connect_signal("property::geometry", update_wallpaper)
 
 -- Create a wibox for each screen and add it
-awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+awful.screen.connect_for_each_screen(function (s) 
+    update_wallpaper(s)
+    wibar_setup(s)
+end)
+-- awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 -- for s in screen do
 --    beautiful.at_screen_connect(s) -- do something
 -- end
