@@ -3,9 +3,17 @@ local wibox     = require("wibox")
 local spawn     = require("awful.spawn")
 local icons     = require("constants.icon_paths")
 local beautiful = require("beautiful")
+local p = require("constants.paths")
 
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.widgets.vol)
+
+local new_vol_path = p.widget_icons .. "/volume2"
+local vol_high = new_vol_path .. "/volume-high.svg"
+local vol_medium = new_vol_path .. "/volume-medium.svg"
+local vol_low = new_vol_path .. "/volume-low.svg"
+local vol_off = new_vol_path .. "/volume-off.svg"
+local vol_mute = new_vol_path .. "/volume-mute.svg"
 
 local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
@@ -15,16 +23,16 @@ local alsa = lain.widget.alsa({
         local icon_path, perc = "", tonumber(volume_now.level) or 0
 
         if volume_now.status == "off" then
-            icon_path = icons.widgets.vol_mute
+            icon_path = vol_mute
         else
             if perc <= 5 then
-                icon_path = icons.widgets.vol_no
+                icon_path = vol_off
             elseif perc <= 25 then
-                icon_path = icons.widgets.vol_no
+                icon_path = vol_low
             elseif perc <= 75 then
-                icon_path = icons.widgets.vol_low
+                icon_path = vol_medium
             else
-                icon_path = icons.widgets.vol
+                icon_path = vol_high
             end
         end
         icon:set_image(icon_path)
@@ -51,7 +59,14 @@ function volume:toggle()
 end
 
 volume.widget = wibox.widget {
-    icon,
+    {
+        icon,
+        left   = 0,
+        right  = 0,
+        top    = 2,
+        bottom = 2,
+        layout = wibox.container.margin
+    },
     alsa.widget,
     layout = wibox.layout.align.horizontal
 }
