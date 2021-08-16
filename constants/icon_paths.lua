@@ -12,22 +12,22 @@ local icons = {
     },
     battery = {
         -- Charging
-        charging_10 = widgets_icon_dir .. "/battery/battery-charging_10.svg",
-        charging_20 = widgets_icon_dir .. "/battery/battery-charging_20.svg",
-        charging_30 = widgets_icon_dir .. "/battery/battery-charging_30.svg",
-        charging_50 = widgets_icon_dir .. "/battery/battery-charging_50.svg",
-        charging_60 = widgets_icon_dir .. "/battery/battery-charging_60.svg",
-        charging_80 = widgets_icon_dir .. "/battery/battery-charging_80.svg",
-        charging_90 = widgets_icon_dir .. "/battery/battery-charging_90.svg",
+        charging_10 = widgets_icon_dir .. "/battery/battery-charging-10.svg",
+        charging_20 = widgets_icon_dir .. "/battery/battery-charging-20.svg",
+        charging_30 = widgets_icon_dir .. "/battery/battery-charging-30.svg",
+        charging_50 = widgets_icon_dir .. "/battery/battery-charging-50.svg",
+        charging_60 = widgets_icon_dir .. "/battery/battery-charging-60.svg",
+        charging_80 = widgets_icon_dir .. "/battery/battery-charging-80.svg",
+        charging_90 = widgets_icon_dir .. "/battery/battery-charging-90.svg",
 
         -- Discharging
-        discharging_20 = widgets_icon_dir .. "/battery/battery-discharging_20.svg",
-        discharging_30 = widgets_icon_dir .. "/battery/battery-discharging_30.svg",
-        discharging_50 = widgets_icon_dir .. "/battery/battery-discharging_50.svg",
-        discharging_60 = widgets_icon_dir .. "/battery/battery-discharging_70.svg",
-        discharging_80 = widgets_icon_dir .. "/battery/battery-discharging_80.svg",
-        discharging_90 = widgets_icon_dir .. "/battery/battery-discharging_90.svg",
-        discharging_100 = widgets_icon_dir .. "/battery/battery-discharging_100.svg",
+        discharging_20 = widgets_icon_dir .. "/battery/battery-discharging-20.svg",
+        discharging_30 = widgets_icon_dir .. "/battery/battery-discharging-30.svg",
+        discharging_50 = widgets_icon_dir .. "/battery/battery-discharging-50.svg",
+        discharging_60 = widgets_icon_dir .. "/battery/battery-discharging-70.svg",
+        discharging_80 = widgets_icon_dir .. "/battery/battery-discharging-80.svg",
+        discharging_90 = widgets_icon_dir .. "/battery/battery-discharging-90.svg",
+        discharging_100 = widgets_icon_dir .. "/battery/battery-discharging-100.svg",
 
         -- Other
         alert = widgets_icon_dir .. "/battery/battery-alert.svg",
