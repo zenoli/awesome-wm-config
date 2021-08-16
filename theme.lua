@@ -1,5 +1,7 @@
 local awful = require("awful")
+local shape = require("gears.shape")
 local dpi   = require("beautiful.xresources").apply_dpi
+local colors = require("constants.colors")
 
 
 local theme                                     = {}
@@ -21,6 +23,7 @@ theme.systray_icon_spacing                      = dpi(3)
 theme.menu_height                               = dpi(19)
 theme.menu_width                                = dpi(170)
 theme.tasklist_plain_task_name                  = false
+theme.tasklist_disable_task_name                = true
 theme.tasklist_disable_icon                     = true
 
 
@@ -32,27 +35,24 @@ theme.wallpaper                                 = theme.dir .. "/default_wallpap
 ---------------------------------------
 -- Colors
 ---------------------------------------
-theme.fg_normal                                 = "#FEFEFE"
-theme.fg_focus                                  = "#32D6FF"
-theme.fg_urgent                                 = "#C83F11"
-theme.bg_normal                                 = "#22222290"
-theme.bg_systray                                = "#00000000"
-theme.bg_focus                                  = "#1E232000"
-theme.bg_urgent                                 = "#3F3F3F"
-theme.taglist_fg_focus                          = "#F6784F90"
-theme.tasklist_bg_focus                         = "#22222200"
-theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_fg_focus                         = "#F6784F"
-theme.notification_border_color                 = "#000000"
-theme.border_normal                             = "#3F3F3F00"
+theme.fg_normal                                 = colors.brightgrey
+theme.fg_focus                                  = colors.orange
+theme.fg_urgent                                 = colors.red
+theme.bg_normal                                 = colors.bg_normal .. 90
+theme.bg_focus                                  = colors.transparent
+theme.bg_urgent                                 = colors.darkgrey
+theme.tasklist_bg_normal                        = colors.transparent
+theme.notification_border_color                 = colors.black
+theme.border_normal                             = colors.bg_normal
 theme.border_focus                              = theme.bg_focus
-theme.border_marked                             = "#CC9393"
-theme.titlebar_bg_focus                         = "#3F3F3F"
-theme.titlebar_bg_normal                        = "#3F3F3F"
+theme.border_marked                             = colors.orange
+theme.titlebar_bg_focus                         = theme.bg_focus
+theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
-theme.menu_bg_normal                            = "#22222240"
+theme.menu_bg_normal                            = theme.bg_normal
+theme.bg_systray                                = colors.lightblue
 
 ---------------------------------------
 -- Icons

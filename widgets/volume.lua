@@ -6,14 +6,14 @@ local beautiful = require("beautiful")
 local p = require("constants.paths")
 
 local markup = lain.util.markup
-local icon = wibox.widget.imagebox(icons.widgets.vol)
+local icon = wibox.widget.imagebox(icons.volume.high)
 
-local new_vol_path = p.widget_icons .. "/volume2"
-local vol_high = new_vol_path .. "/volume-high.svg"
-local vol_medium = new_vol_path .. "/volume-medium.svg"
-local vol_low = new_vol_path .. "/volume-low.svg"
-local vol_off = new_vol_path .. "/volume-off.svg"
-local vol_mute = new_vol_path .. "/volume-mute.svg"
+-- local new_vol_path = p.widget_icons .. "/volume2"
+-- local vol_high = new_vol_path .. "/volume-high.svg"
+-- local vol_medium = new_vol_path .. "/volume-medium.svg"
+-- local vol_low = new_vol_path .. "/volume-low.svg"
+-- local vol_off = new_vol_path .. "/volume-off.svg"
+-- local vol_mute = new_vol_path .. "/volume-mute.svg"
 
 local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
@@ -23,16 +23,16 @@ local alsa = lain.widget.alsa({
         local icon_path, perc = "", tonumber(volume_now.level) or 0
 
         if volume_now.status == "off" then
-            icon_path = vol_mute
+            icon_path = icons.volume.mute
         else
             if perc <= 5 then
-                icon_path = vol_off
+                icon_path = icons.volume.off
             elseif perc <= 25 then
-                icon_path = vol_low
+                icon_path = icons.volume.low
             elseif perc <= 75 then
-                icon_path = vol_medium
+                icon_path = icons.volume.medium
             else
-                icon_path = vol_high
+                icon_path = icons.volume.high
             end
         end
         icon:set_image(icon_path)

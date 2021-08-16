@@ -5,7 +5,7 @@ local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
-local icon = wibox.widget.imagebox(icons.widgets.temp)
+local icon = wibox.widget.imagebox(icons.temp)
 local temp = lain.widget.temp({
     settings = function()
         widget:set_markup(markup.font(beautiful.font, " " .. coretemp_now .. "°C "))
