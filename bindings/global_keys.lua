@@ -1,19 +1,17 @@
 local gears             = require("gears")
 local awful             = require("awful")
 local lain              = require("lain")
-local menubar           = require("menubar")
 local hotkeys_popup     = require("awful.hotkeys_popup")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
-local volume_widget     = require('awesome-wm-widgets.volume-widget.volume')
 local volume            = require("widgets.volume")
 local settings          = require("settings")
 local keys              = require("constants.keys")
 local programs          = require("constants.programs")
 local taglist           = require("components.taglist")
 local utils             = require("utils")
-local naughty        = require("naughty")
 
 local gears_table       = gears.table
+local l                 = awful.layout.suit
 
 
 local function init () 
@@ -86,6 +84,30 @@ local function init ()
 
         -- Layout manipulation
         awful.key(
+            { keys.mod, keys.alt }, "t",
+            function () awful.layout.set(l.tile) end,
+            {description = "select tiled layout", group = "layout"}
+        ),
+        awful.key(
+            { keys.mod, keys.alt }, "f",
+            function () awful.layout.set(l.floating) end,
+            {description = "select floating layout", group = "layout"}
+        ),
+        awful.key(
+            { keys.mod, keys.alt }, "m",
+            function () awful.layout.set(l.max) end,
+            {description = "select maximized layout", group = "layout"}
+        ),
+        awful.key(
+            { keys.mod }, keys.space,
+            function () awful.layout.inc(1) end,
+            {description = "select next", group = "layout"}
+        ),
+        awful.key(
+            { keys.mod, keys.shift }, keys.space, function () awful.layout.inc(-1) end,
+            {description = "select previous", group = "layout"}
+        ),
+        awful.key(
             { keys.mod, keys.shift }, "j",
             function () awful.client.swap.byidx(  1) end,
             {description = "swap with next client by index", group = "client"}
@@ -126,6 +148,7 @@ local function init ()
         -- Show/hide wibox
         awful.key(
             { keys.mod, keys.alt }, "b",
+            -- TODO: Fix this, these variables are no longer defined
             function ()
                 for s in screen do
                     s.mywibox.visible = not s.mywibox.visible
@@ -167,23 +190,14 @@ local function init ()
         ),
 
         awful.key(
-            { keys.mod, keys.alt    }, "l",     
+            { keys.mod, keys.alt    }, "l",
             function () awful.tag.incmwfact( 0.05) end,
             {description = "increase master width factor", group = "layout"}
         ),
         awful.key(
-            { keys.mod, keys.alt    }, "h",     
+            { keys.mod, keys.alt    }, "h",
             function () awful.tag.incmwfact(-0.05) end,
             {description = "decrease master width factor", group = "layout"}
-        ),
-        awful.key(
-            { keys.mod }, keys.space,
-            function () awful.layout.inc(1) end,
-            {description = "select next", group = "layout"}
-        ),
-        awful.key(
-            { keys.mod, keys.shift }, keys.space, function () awful.layout.inc(-1) end,
-            {description = "select previous", group = "layout"}
         ),
 
         awful.key(
