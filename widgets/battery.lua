@@ -3,6 +3,7 @@ local wibox = require("wibox")
 local spawn = require("awful.spawn")
 local icons = require("constants.icon_paths")
 local beautiful = require("beautiful")
+local naughty        = require("naughty")
 
 local markup = lain.util.markup
 
@@ -10,6 +11,7 @@ local icon = wibox.widget.imagebox(icons.battery_high)
 local bat = lain.widget.bat({
     timeout = 1,
     settings = function()
+        -- naughty.notify{ text = bat_now.status .. ", " .. bat_now.ac_status  .. ", " .. bat_now.perc}
         if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
                 if     tonumber(bat_now.perc) >= 95 then icon:set_image(icons.battery.fully_charged)
@@ -32,8 +34,8 @@ local bat = lain.widget.bat({
                 elseif tonumber(bat_now.perc) >= 15 then icon:set_image(icons.battery.discharging_20)
                 else                                     icon:set_image(icons.battery.alert_red)
                 end
-                widget:set_markup(markup.font(beautiful.font, " " .. bat_now.perc .. "% "))
-                return
+                -- widget:set_markup(markup.font(beautiful.font, " " .. bat_now.perc .. "% "))
+                -- return
                 -- icon:set_image(icons.ac)
                 -- return
             -- elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then

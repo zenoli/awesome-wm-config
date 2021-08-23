@@ -21,12 +21,12 @@ local icons = {
         charging_90 = widgets_icon_dir .. "/battery/battery-charging-90.svg",
 
         -- Discharging
-        discharging_20 = widgets_icon_dir .. "/battery/battery-discharging-20.svg",
-        discharging_30 = widgets_icon_dir .. "/battery/battery-discharging-30.svg",
-        discharging_50 = widgets_icon_dir .. "/battery/battery-discharging-50.svg",
-        discharging_60 = widgets_icon_dir .. "/battery/battery-discharging-70.svg",
-        discharging_80 = widgets_icon_dir .. "/battery/battery-discharging-80.svg",
-        discharging_90 = widgets_icon_dir .. "/battery/battery-discharging-90.svg",
+        discharging_20  = widgets_icon_dir .. "/battery/battery-discharging-20.svg",
+        discharging_30  = widgets_icon_dir .. "/battery/battery-discharging-30.svg",
+        discharging_50  = widgets_icon_dir .. "/battery/battery-discharging-50.svg",
+        discharging_60  = widgets_icon_dir .. "/battery/battery-discharging-60.svg",
+        discharging_80  = widgets_icon_dir .. "/battery/battery-discharging-80.svg",
+        discharging_90  = widgets_icon_dir .. "/battery/battery-discharging-90.svg",
         discharging_100 = widgets_icon_dir .. "/battery/battery-discharging-100.svg",
 
         -- Other
