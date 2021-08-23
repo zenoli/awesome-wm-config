@@ -6,6 +6,7 @@ keys.control         = "Control"
 keys.shift           = "Shift"
 keys.enter           = "Return"
 keys.space           = "space"
+keys.tab             = "Tab"
 
 keys.left            = "Left"
 keys.right           = "Right"

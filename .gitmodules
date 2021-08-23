@@ -4,3 +4,6 @@
 [submodule "awesome-freedesktop"]
 	path = awesome-freedesktop
 	url = git@github.com:lcpz/awesome-freedesktop.git
+[submodule "awesome-switcher"]
+	path = awesome-switcher
+	url = ./awesome-switcher

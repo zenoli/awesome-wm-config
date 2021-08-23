@@ -9,13 +9,28 @@ local keys              = require("constants.keys")
 local programs          = require("constants.programs")
 local taglist           = require("components.taglist")
 local utils             = require("utils")
+local switcher          = require("awesome-switcher")
 
 local gears_table       = gears.table
 local l                 = awful.layout.suit
 
 
-local function init () 
+local function init ()
     local global_keys = gears_table.join(
+        -- Alt-Tab switcher
+        awful.key(
+            { keys.alt }, keys.tab,
+            function ()
+                switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab")
+            end
+        ),
+        awful.key(
+            { keys.alt, keys.shift}, keys.tab,
+            function ()
+                switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
+            end
+        ),
+
         -- Take a screenshot
         awful.key({          }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -i") end),
         awful.key({ keys.alt }, keys.printscreen, function () awful.util.spawn("gnome-screenshot -a") end),

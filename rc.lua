@@ -15,14 +15,21 @@ local awful          = require("awful")
 local naughty        = require("naughty")
 naughty.config.defaults.border_width = 0
 
-local gears          = require("gears")
-local main_menu      = require("components.main_menu")
-local rules          = require("rules")
-local global_keys    = require("bindings.global_keys")
-local wibar_setup = require("components.wibar")
-local titlebar_setup = require("components.titlebar")
-local update_wallpaper      = require("wallpaper")
-local gears_table    = gears.table
+local gears            = require("gears")
+local main_menu        = require("components.main_menu")
+local rules            = require("rules")
+local global_keys      = require("bindings.global_keys")
+local wibar_setup      = require("components.wibar")
+local titlebar_setup   = require("components.titlebar")
+local update_wallpaper = require("wallpaper")
+local switcher         = require("awesome-switcher")
+local gears_table      = gears.table
+
+---------------------------------------
+-- Alt-tab switcher settings
+---------------------------------------
+switcher.settings.cycle_raise_client = false
+switcher.settings.preview_box_delay = 0
 
 
 ---------------------------------------
