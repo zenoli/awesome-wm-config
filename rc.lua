@@ -70,6 +70,7 @@ screen.connect_signal("property::geometry", update_wallpaper)
 
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function (s)
+    -- naughty.notify {text = "Screen id: " .. s.index }
     update_wallpaper(s)
     wibar_setup(s)
 end)
@@ -110,6 +111,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 ---------------------------------------
 -- Autostart
 ---------------------------------------
-awful.spawn.with_shell("$HOME/picom/build/src/picom")
--- awful.spawn.with_shell("$HOME/picom/build/src/picom --experimental-backends")
+awful.spawn.with_shell("picom")
+-- awful.spawn.with_shell("picom --experimental-backends")
+awful.spawn.with_shell("xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1")
 awful.spawn.with_shell("nitrogen --restore")

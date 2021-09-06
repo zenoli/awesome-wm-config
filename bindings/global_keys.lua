@@ -113,15 +113,15 @@ local function init ()
             function () awful.layout.set(l.max) end,
             {description = "select maximized layout", group = "layout"}
         ),
-        awful.key(
-            { keys.mod }, keys.space,
-            function () awful.layout.inc(1) end,
-            {description = "select next", group = "layout"}
-        ),
-        awful.key(
-            { keys.mod, keys.shift }, keys.space, function () awful.layout.inc(-1) end,
-            {description = "select previous", group = "layout"}
-        ),
+        -- awful.key(
+        --     { keys.mod }, keys.space,
+        --     function () awful.layout.inc(1) end,
+        --     {description = "select next", group = "layout"}
+        -- ),
+        -- awful.key(
+        --     { keys.mod, keys.shift }, keys.space, function () awful.layout.inc(-1) end,
+        --     {description = "select previous", group = "layout"}
+        -- ),
         awful.key(
             { keys.mod, keys.shift }, "j",
             function () awful.client.swap.byidx(  1) end,
@@ -279,6 +279,16 @@ local function init ()
             {description = "run dmenu", group = "launcher"}
         ),
         awful.key(
+            { keys.alt }, "f",
+            function () awful.util.spawn('file_launcher') end,
+            {description = "run dmenu", group = "launcher"}
+        ),
+        awful.key(
+            { keys.mod }, "space",
+            function () awful.util.spawn('switch') end,
+            {description = "run dmenu window switcher", group = "launcher"}
+        ),
+        awful.key(
             { keys.mod }, "x",
             function ()
                 awful.prompt.run {
@@ -293,9 +303,11 @@ local function init ()
     )
 
 
+    local multi_screen = screen.count() == 2
     -- Add tag bindings
     for _, tag_desc in pairs(taglist.description) do
-        local tag = awful.tag.find_by_name(awful.screen.focused(), tag_desc.icon)
+        -- local tag = awful.tag.find_by_name(awful.screen.focused(), tag_desc.icon)
+        local tag = tag_desc.tag
         global_keys = gears_table.join(global_keys, utils.add_tag_bindings(tag, tag_desc))
     end
 
@@ -312,19 +324,3 @@ local function init ()
 end
 
 return init
--- add_tag_bindings(taglist.ids.home, "0", "home")
--- add_tag_bindings(taglist.ids.tmux, "Return", "tmux", "alacritty -e tmux new-session -s main")
--- add_tag_bindings(taglist.ids.web, "b", "web", "qutebrowser")
--- add_tag_bindings(taglist.ids.mail, "m", "mail", "mailspring")
--- add_tag_bindings(taglist.ids.slack, "s", "slack", "slack")
--- add_tag_bindings(taglist.ids.video, "y", "video", "brave-browser")
--- add_tag_bindings(taglist.ids.code, "v", "code", "code")
--- add_tag_bindings(taglist.ids.vim, "w", "vimwiki", "alacritty -e tmux new-session -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'")
--- add_tag_bindings(taglist.ids.countdown, "t", "countdown", "countdown")
--- add_tag_bindings(taglist.ids.calendar, "c", "calendar", "gnome-calendar")
--- add_tag_bindings(taglist.ids.pdf, "p", "pdf")
-
--- add_workspace_tag_bindings(taglist.ids.workspace_1,"#" .. 1 + 9, "1")
--- add_workspace_tag_bindings(taglist.ids.workspace_2,"#" .. 2 + 9, "2")
--- add_workspace_tag_bindings(taglist.ids.workspace_3,"#" .. 3 + 9, "3")
-

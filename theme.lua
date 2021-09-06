@@ -1,5 +1,3 @@
-local awful = require("awful")
-local shape = require("gears.shape")
 local dpi   = require("beautiful.xresources").apply_dpi
 local colors = require("constants.colors")
 
@@ -23,7 +21,7 @@ theme.systray_icon_spacing                      = dpi(3)
 theme.menu_height                               = dpi(19)
 theme.menu_width                                = dpi(170)
 theme.tasklist_plain_task_name                  = false
-theme.tasklist_disable_task_name                = true
+theme.tasklist_disable_task_name                = false
 theme.tasklist_disable_icon                     = true
 
 

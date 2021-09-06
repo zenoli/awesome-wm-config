@@ -1,7 +1,6 @@
 local gears             = require("gears")
 local awful             = require("awful")
 local lain              = require("lain")
-local menubar           = require("menubar")
 local keys              = require("constants.keys")
 
 local gears_table       = gears.table
@@ -16,16 +15,16 @@ local client_keys = gears_table.join(
         lain.util.magnify_client,
         {description = "magnify client", group = "client"}
     ),
+    -- awful.key(
+    --     { keys.alt, keys.control}, "f",
+    --     function (c)
+    --         c.fullscreen = not c.fullscreen
+    --         c:raise()
+    --     end,
+    --     {description = "toggle fullscreen", group = "client"}
+    -- ),
     awful.key(
         { keys.alt, keys.control}, "f",
-        function (c)
-            c.fullscreen = not c.fullscreen
-            c:raise()
-        end,
-        {description = "toggle fullscreen", group = "client"}
-    ),
-    awful.key(
-        { keys.alt, keys.control}, "w",  
         awful.client.floating.toggle,
         {description = "toggle floating", group = "client"}
     ),
@@ -58,7 +57,7 @@ local client_keys = gears_table.join(
         {description = "close", group = "client"}
     ),
     awful.key(
-        { keys.mod, keys.alt }, keys.space, 
+        { keys.mod, keys.alt }, keys.space,
         function (c) c:swap(awful.client.getmaster()) end,
         {description = "move to master", group = "client"}
     ),
