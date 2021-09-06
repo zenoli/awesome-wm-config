@@ -23,7 +23,7 @@ taglist.description = {
         key = keys.enter,
         layouts = layouts,
         layout = l.tile,
-        command = "alacritty -e tmux new-session -s main"
+        command = "alacritty -t 'Tmux' -e tmux new-session -A -s main"
     },
     {
         icon = "爵 ",
@@ -71,7 +71,7 @@ taglist.description = {
         key = "w",
         layouts = layouts,
         layout = l.tile,
-        command =  "alacritty -e tmux new-session -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'"
+        command =  "alacritty -t 'Vimwiki' -e tmux new-session -A -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'"
     },
     {
         icon = "祥 ",
@@ -99,6 +99,7 @@ taglist.description = {
 }
 
 function taglist.setup(s)
+
     -- Add app specific tags
     for _, tag_desc in pairs(taglist.description) do
         local selected = tag_desc.name == "home"

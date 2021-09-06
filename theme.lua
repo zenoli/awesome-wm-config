@@ -1,5 +1,3 @@
-local awful = require("awful")
-local shape = require("gears.shape")
 local dpi   = require("beautiful.xresources").apply_dpi
 local colors = require("constants.colors")
 
