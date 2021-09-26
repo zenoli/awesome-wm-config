@@ -113,4 +113,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 ---------------------------------------
 awful.spawn.with_shell("picom")
 -- awful.spawn.with_shell("picom --experimental-backends")
+awful.spawn.with_shell("xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1")
 awful.spawn.with_shell("nitrogen --restore")

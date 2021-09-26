@@ -12,9 +12,23 @@ function utils.add_tag_bindings(tag, tag_desc)
             { keys.mod }, tag_desc.key,
             function ()
                 tag:view_only()
-                if tag_desc.command and not next(tag:clients()) then
-                    awful.spawn(tag_desc.command)
+                if (tag_desc.screen) then
+                    awful.screen.focus(tag_desc.screen)
                 end
+                local c = next(tag:clients())
+                if not c then
+                    if tag_desc.command then
+                        awful.spawn(tag_desc.command)
+                    end
+                else
+                    local c = tag:clients()[1]
+                    client.focus = c
+                    c:raise()
+                    -- awful.screen.focus(c.screen)
+                end
+                -- if tag_desc.command and not next(tag:clients()) then
+                --     awful.spawn(tag_desc.command)
+                -- end
              end,
             { description = "view " .. tag_desc.name .. " tag" , group = "tag" }
         ),

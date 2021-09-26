@@ -8,13 +8,6 @@ local p = require("constants.paths")
 local markup = lain.util.markup
 local icon = wibox.widget.imagebox(icons.volume.high)
 
--- local new_vol_path = p.widget_icons .. "/volume2"
--- local vol_high = new_vol_path .. "/volume-high.svg"
--- local vol_medium = new_vol_path .. "/volume-medium.svg"
--- local vol_low = new_vol_path .. "/volume-low.svg"
--- local vol_off = new_vol_path .. "/volume-off.svg"
--- local vol_mute = new_vol_path .. "/volume-mute.svg"
-
 local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
     timeout = 1,
