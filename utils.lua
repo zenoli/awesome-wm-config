@@ -82,6 +82,19 @@ function utils.create_widget(widget, icon, bg_color)
     )
 end
 
+---------------------------------------
+-- Screen managment
+---------------------------------------
+function utils.get_laptop_screen() return screen[1] end
+function utils.get_ext_screen() return screen[2] end
+
+
+---------------------------------------
+-- Global Key Actions
+---------------------------------------
+
+
+
 
 ---------------------------------------
 -- Autostart windowless processes

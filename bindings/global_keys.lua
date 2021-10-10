@@ -73,8 +73,8 @@ local function init ()
                 if screen.count() == 2 then
                     local t = awful.screen.focused().selected_tag
                     if not t then return end
-                    local s_laptop = screen[1]
-                    local s_ext = screen[2]
+                    local s_laptop = utils.get_laptop_screen()
+                    local s_ext = utils.get_ext_screen()
                     if t.screen == s_laptop then
                         t.screen = s_ext
                     else
@@ -334,7 +334,6 @@ local function init ()
     )
 
 
-    local multi_screen = screen.count() == 2
     -- Add tag bindings
     for _, tag_desc in pairs(taglist.description) do
         -- local tag = awful.tag.find_by_name(awful.screen.focused(), tag_desc.icon)

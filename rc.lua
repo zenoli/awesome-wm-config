@@ -20,10 +20,11 @@ local main_menu        = require("components.main_menu")
 local rules            = require("rules")
 local global_keys      = require("bindings.global_keys")
 local wibar_setup      = require("components.wibar")
-local taglist      = require("components.taglist")
+local taglist          = require("components.taglist")
 local titlebar_setup   = require("components.titlebar")
 local update_wallpaper = require("wallpaper")
 local switcher         = require("awesome-switcher")
+local utils            = require("utils")
 local gears_table      = gears.table
 
 ---------------------------------------
@@ -66,44 +67,24 @@ do
 end
 
 
--- local geo = screen[1].geometry
--- local new_width = math.ceil(geo.width/2)
--- local new_width2 = geo.width - new_width
--- screen[1]:fake_resize(geo.x, geo.y, new_width, geo.height)
--- screen.fake_add(geo.x + new_width, geo.y, new_width2, geo.height)
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", update_wallpaper)
 
--- Create a wibox for each screen and add it
--- awful.screen.connect_for_each_screen(function (s)
---     -- update_wallpaper(s)
---     naughty.notify {
---         text = "Screen " .. s.index .. " connected!",
---         timeout = 10
---     }
---     wibar_setup(s)
--- end)
--- wibar_setup(awful.screen.focused())
+---------------------------------------
+-- Multi-Screen setup
+---------------------------------------
 
 local function init_screen(s)
     taglist.init(s)
     wibar_setup(s)
 end
 
--- for s in screen do
---     naughty.notify { text = "Laptop screen is: " .. s.index }
--- end
 init_screen(awful.screen.focused())
 
--- awful.screen.disconnect_for_each_screen(function (s)
---     naughty.notify { text = "Screen " .. s.index .. " disconnected!" }
--- end)
 
-screen.connect_signal("list",    function (s) naughty.notify { text = "List " } end )
 screen.connect_signal(
     "added",
     function (s)
-        naughty.notify { text = "Added "   .. s.index }
+        -- naughty.notify { text = "Added "   .. s.index }
         taglist.rearrange_tags(true)
         wibar_setup(s)
     end
@@ -111,7 +92,7 @@ screen.connect_signal(
 screen.connect_signal(
     "removed",
     function (s)
-        naughty.notify { text = "Removed " .. s.index }
+        -- naughty.notify { text = "Removed " .. s.index }
         taglist.rearrange_tags(false)
     end
 )
@@ -119,7 +100,7 @@ screen.connect_signal(
 tag.connect_signal(
     "request::screen",
     function(t)
-        t.screen = screen[1]
+        t.screen = utils.get_laptop_screen()
     end
 )
 
