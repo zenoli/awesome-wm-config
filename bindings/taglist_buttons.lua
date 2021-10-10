@@ -2,10 +2,11 @@ local awful       = require("awful")
 local keys        = require("constants.keys")
 local gears       = require("gears")
 local gears_table = gears.table
+local naughty        = require("naughty")
 
 local taglist_buttons = gears_table.join(
     awful.button(
-        { }, 1, 
+        { }, 1,
         function(t) t:view_only() end
     ),
     awful.button(

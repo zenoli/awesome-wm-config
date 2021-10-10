@@ -46,13 +46,44 @@ local function init ()
         -- Non-empty tag browsing
         awful.key(
             { keys.mod }, keys.left,
-            function () lain.util.tag_view_nonempty(-1) end,
+            function ()
+                local t = awful.screen.focused().selected_tag
+                if not t then
+                    awful.screen.focused().tags[1]:view_only()
+                end
+
+                lain.util.tag_view_nonempty(-1) 
+            end,
             {description = "view  previous nonempty", group = "tag"}
         ),
         awful.key(
             { keys.mod }, keys.right,
-            function () lain.util.tag_view_nonempty(1) end,
+            function ()
+                local t = awful.screen.focused().selected_tag
+                if not t then
+                    awful.screen.focused().tags[1]:view_only()
+                end
+                lain.util.tag_view_nonempty(1)
+            end,
             {description = "view  previous nonempty", group = "tag"}
+        ),
+        awful.key(
+            { keys.mod }, "o",
+            function ()
+                if screen.count() == 2 then
+                    local t = awful.screen.focused().selected_tag
+                    if not t then return end
+                    local s_laptop = screen[1]
+                    local s_ext = screen[2]
+                    if t.screen == s_laptop then
+                        t.screen = s_ext
+                    else
+                        t.screen = s_laptop
+                    end
+                    awful.screen.focus(t.screen.index)
+                end
+            end,
+            {description = "Reorder tags", group = "tag"}
         ),
 
         -- By-direction client focus

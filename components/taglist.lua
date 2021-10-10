@@ -106,10 +106,6 @@ taglist.description = {
 function taglist.setup(s)
 
     local multi_screen = screen.count() == 2
-    -- naughty.notify { text = "Screen count is: " .. screen.count() }
-    -- if multi_screen then
-    --     naughty.notify {text = "Multi screen setup!" }
-    -- end
     -- Add app specific tags
     for _, tag_desc in pairs(taglist.description) do
         local selected = tag_desc.name == "home"
@@ -140,6 +136,54 @@ function taglist.setup(s)
                 key = "#" .. i + 9,
                 tag = tag,
             }
+            table.insert(taglist.description, tag_desc)
+        end
+    end
+end
+
+function taglist.init(s)
+     -- Add app specific tags
+    for _, tag_desc in pairs(taglist.description) do
+        -- local selected = tag_desc.name == "home"
+        local selected = false
+        local tag = awful.tag.add(tag_desc.icon, {
+            layout = tag_desc.layout,
+            layouts = tag_desc.layouts,
+            screen = s,
+            selected = selected
+        })
+        tag_desc.tag = tag
+        tag_desc.screen = s
+    end
+    -- Add workspace tags
+    for i = 1, taglist.n_workspace_tags do
+        local tag = awful.tag.add(tostring(i), {
+            layout = taglist.workspace_tag_default_layout,
+            layouts = layouts,
+            screen = s,
+            selected = false
+        })
+        local tag_desc = {
+            name = "workspace " .. tostring(i),
+            key = "#" .. i + 9,
+            tag = tag,
+        }
+        table.insert(taglist.description, tag_desc)
+    end
+end
+
+function taglist.rearrange_tags(multi_screen)
+    local s_laptop = screen[1]
+    local s_ext = multi_screen and screen[2]
+    for i, tag_desc in pairs(taglist.description) do
+        if multi_screen and not tag_desc.secondary then
+            -- naughty.notify { text = "(" .. i .. ")" .. tag_desc.name .. " --> ext", timeout = 10}
+            tag_desc.tag.screen = s_ext
+            -- tag_desc.tag.index = i
+        else
+            -- naughty.notify { text = "(" .. i .. ")" .. tag_desc.name .. " --> laptop", timeout = 10}
+            tag_desc.tag.screen = s_laptop
+            -- tag_desc.tag.index = i
         end
     end
 end

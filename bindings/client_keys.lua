@@ -60,11 +60,6 @@ local client_keys = gears_table.join(
         { keys.mod, keys.alt }, keys.space,
         function (c) c:swap(awful.client.getmaster()) end,
         {description = "move to master", group = "client"}
-    ),
-    awful.key(
-        { keys.mod }, "o",
-        function (c) c:move_to_screen() end,
-        {description = "move to screen", group = "client"}
     )
 )
 

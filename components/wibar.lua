@@ -8,7 +8,7 @@ local beautiful = require("beautiful")
 
 
 local function setup(s)
-    taglist.setup(s)
+    -- taglist.setup(s)
 
     -- Create a promptbox for each screen
     s.promptbox = awful.widget.prompt()
