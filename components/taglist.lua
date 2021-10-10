@@ -41,7 +41,8 @@ taglist.description = {
         key = "m",
         layouts = layouts,
         layout = l.tile,
-        command = "mailspring",
+        -- command = "mailspring",
+        command = "gtk-launch chrome-pkooggnaalmfkidjmlhoelhdllpphaga-Default.desktop",
         secondary = true
     } ,
     {
@@ -92,7 +93,8 @@ taglist.description = {
         key = "c",
         layouts = layouts,
         layout = l.tile,
-        command = "gnome-calendar",
+        -- command = "gnome-calendar",
+        command = "gtk-launch chrome-pkooggnaalmfkidjmlhoelhdllpphaga-Default.desktop",
         secondary = true
     },
     {
