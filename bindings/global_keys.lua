@@ -46,85 +46,39 @@ local function init ()
         -- Non-empty tag browsing
         awful.key(
             { keys.mod }, keys.left,
-            function ()
-                local t = awful.screen.focused().selected_tag
-                if not t then
-                    awful.screen.focused().tags[1]:view_only()
-                end
-
-                lain.util.tag_view_nonempty(-1) 
-            end,
+            function () utils.navigate_nonempty_tags(-1) end,
             {description = "view  previous nonempty", group = "tag"}
         ),
         awful.key(
             { keys.mod }, keys.right,
-            function ()
-                local t = awful.screen.focused().selected_tag
-                if not t then
-                    awful.screen.focused().tags[1]:view_only()
-                end
-                lain.util.tag_view_nonempty(1)
-            end,
+            function () utils.navigate_nonempty_tags(1) end,
             {description = "view  previous nonempty", group = "tag"}
         ),
         awful.key(
             { keys.mod }, "o",
-            function ()
-                if screen.count() == 2 then
-                    local t = awful.screen.focused().selected_tag
-                    if not t then return end
-                    local s_laptop = utils.get_laptop_screen()
-                    local s_ext = utils.get_ext_screen()
-                    if t.screen == s_laptop then
-                        t.screen = s_ext
-                    else
-                        t.screen = s_laptop
-                    end
-                    awful.screen.focus(t.screen.index)
-                end
-            end,
+            utils.move_tag_to_other_screen,
             {description = "Reorder tags", group = "tag"}
         ),
 
         -- By-direction client focus
         awful.key(
             { keys.mod }, "j",
-            function()
-                if (awful.screen.focused().selected_tag.layout == awful.layout.suit.floating) or (awful.screen.focused().selected_tag.layout == awful.layout.suit.max) then
-                    awful.client.focus.byidx(-1)
-                else
-                    awful.client.focus.global_bydirection("down")
-                end
-                if client.focus then client.focus:raise() end
-            end,
+            function () utils.navigate_client("down") end,
             {description = "focus down", group = "client"}
         ),
         awful.key(
             { keys.mod }, "k",
-            function()
-                if (awful.screen.focused().selected_tag.layout == awful.layout.suit.floating) or (awful.screen.focused().selected_tag.layout == awful.layout.suit.max) then
-                    awful.client.focus.byidx(1)
-                else
-                    awful.client.focus.global_bydirection("up")
-                end
-                if client.focus then client.focus:raise() end
-            end,
+            function () utils.navigate_client("up") end,
             {description = "focus up", group = "client"}
         ),
         awful.key(
             { keys.mod }, "h",
-            function()
-                awful.client.focus.global_bydirection("left")
-                if client.focus then client.focus:raise() end
-            end,
+            function () utils.navigate_client("left") end,
             {description = "focus left", group = "client"}
         ),
         awful.key(
             { keys.mod }, "l",
-            function()
-                awful.client.focus.global_bydirection("right")
-                if client.focus then client.focus:raise() end
-            end,
+            function () utils.navigate_client("right") end,
             {description = "focus right", group = "client"}
         ),
 
@@ -196,12 +150,12 @@ local function init ()
             { keys.mod, keys.alt }, "b",
             -- TODO: Fix this, these variables are no longer defined
             function ()
-                for s in screen do
-                    s.mywibox.visible = not s.mywibox.visible
-                    if s.mybottomwibox then
-                        s.mybottomwibox.visible = not s.mybottomwibox.visible
-                    end
-                end
+                -- for s in screen do
+                --     s.mywibox.visible = not s.mywibox.visible
+                --     if s.mybottomwibox then
+                --         s.mybottomwibox.visible = not s.mybottomwibox.visible
+                --     end
+                -- end
             end,
             {description = "toggle wibox", group = "awesome"}
         ),

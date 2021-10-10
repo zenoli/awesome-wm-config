@@ -2,10 +2,15 @@ local gears = require("gears")
 local awful = require("awful")
 local keys  = require("constants.keys")
 local wibox = require("wibox")
+local lain = require("lain")
 local dpi   = require("beautiful.xresources").apply_dpi
 local gears_table = gears.table
 
 local utils = {}
+
+---------------------------------------
+-- Tag Bindings
+---------------------------------------
 function utils.add_tag_bindings(tag, tag_desc)
     return gears_table.join(
         awful.key(
@@ -93,8 +98,41 @@ function utils.get_ext_screen() return screen[2] end
 -- Global Key Actions
 ---------------------------------------
 
+function utils.move_tag_to_other_screen()
+    if screen.count() == 2 then
+        local t = awful.screen.focused().selected_tag
+        if not t then return end
+        local s_laptop = utils.get_laptop_screen()
+        local s_ext = utils.get_ext_screen()
+        if t.screen == s_laptop then
+            t.screen = s_ext
+        else
+            t.screen = s_laptop
+        end
+        awful.screen.focus(t.screen.index)
+        t:view_only()
+    end
+end
 
+function utils.navigate_nonempty_tags(d)
+    local t = awful.screen.focused().selected_tag
+    if not t then
+        awful.screen.focused().tags[1]:view_only()
+    end
+    lain.util.tag_view_nonempty(d)
+end
 
+function utils.navigate_client(d)
+    local l = awful.screen.focused().selected_tag.layout
+    if (l == awful.layout.suit.floating) or (l == awful.layout.suit.max) then
+        local idx
+        if d == "up" or d == "right" then idx = 1 else idx = -1 end
+        awful.client.focus.byidx(idx)
+    else
+        awful.client.focus.global_bydirection(d)
+    end
+    if client.focus then client.focus:raise() end
+end
 
 ---------------------------------------
 -- Autostart windowless processes
