@@ -1,4 +1,4 @@
-local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+local spawn     = require("awful.spawn")
 local wibox     = require("wibox")
 local icons     = require("constants.icon_paths")
 
@@ -6,13 +6,9 @@ local brightness = {}
 local icon = wibox.widget.imagebox(icons.brightness)
 local textbox = wibox.widget.textbox()
 
--- brightness.widget = brightness_widget{
---     type = 'icon_and_text',
---     program = 'custom',
---     base = 80,
---     step = 5,
---     tooltip = false
--- }
+local lain      = require("lain")
+local markup = lain.util.markup
+
 brightness.widget = wibox.widget {
     {
         icon,
@@ -35,15 +31,17 @@ local INC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -inc ' .. step
 local DEC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -dec ' .. step
 
 
-function update()
-    return
+local function update(value)
+    textbox:set_markup(markup.font(beautiful.font, " " .. math.tointeger(value)))
 end
 
 function brightness:inc()
-    spawn.easy_async_with_shell(INC_BRIGHTNESS_CMD, alsa.update)
+    spawn.easy_async_with_shell(INC_BRIGHTNESS_CMD, update)
 end
 
 function brightness:dec()
-    spawn.easy_async_with_shell(DEC_BRIGHTNESS_CMD, alsa.update)
+    spawn.easy_async_with_shell(DEC_BRIGHTNESS_CMD, update)
 end
+
+spawn.easy_async_with_shell(GET_BRIGHTNESS_CMD, update)
 return brightness

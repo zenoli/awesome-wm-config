@@ -4,6 +4,7 @@ local lain              = require("lain")
 local hotkeys_popup     = require("awful.hotkeys_popup")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local volume            = require("widgets.volume")
+local brightness         = require("widgets.brightness")
 local settings          = require("settings")
 local keys              = require("constants.keys")
 local programs          = require("constants.programs")
@@ -214,12 +215,12 @@ local function init ()
         -- Screen brightness
         awful.key(
             { }, keys.brightness_up,
-            function () brightness_widget:inc() end,
+            function () brightness:inc() end,
             {description = "increase brightness", group = "custom"}
         ),
         awful.key(
             { },keys.brightness_down,
-            function () brightness_widget:dec() end,
+            function () brightness:dec() end,
             {description = "decrease brightness", group = "custom"}
         ),
 
