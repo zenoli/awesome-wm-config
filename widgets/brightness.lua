@@ -1,6 +1,7 @@
 local spawn     = require("awful.spawn")
 local wibox     = require("wibox")
 local icons     = require("constants.icon_paths")
+local paths     = require("constants.paths")
 
 local brightness = {}
 local icon = wibox.widget.imagebox(icons.brightness)
@@ -22,7 +23,8 @@ brightness.widget = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
-local brightness_script = '/home/olivier/.config/zsh/scripts/adjust_brightness.bash'
+-- local brightness_script = '/home/olivier/.config/zsh/scripts/adjust_brightness.bash'
+local brightness_script = paths.scripts .. "/brightness.bash"
 local step = 5
 
 local GET_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -get '
@@ -32,7 +34,7 @@ local DEC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -dec ' .. step
 
 
 local function update(value)
-    textbox:set_markup(markup.font(beautiful.font, " " .. math.tointeger(value)))
+    textbox:set_markup(markup.font(beautiful.font, " " .. math.ceil(value)))
 end
 
 function brightness:inc()
