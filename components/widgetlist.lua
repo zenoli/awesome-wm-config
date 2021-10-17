@@ -6,6 +6,9 @@ local lain      = require("lain")
 local colors    = require("constants.colors")
 
 local arrow = lain.util.separators.arrow_left
+if not utils.is_zenbook() then
+    lain.util.separators.width = 17
+end
 
 local systray        = require("widgets.systray")
 local keyboardlayout = require("widgets.keyboardlayout")
