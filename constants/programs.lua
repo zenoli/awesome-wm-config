@@ -1,8 +1,8 @@
+local utils = require("utils")
 local programs = {}
 
-local device_name = os.getenv("DEVICE_NAME")
-local term_fontsize = 6
-if device_name == "dell-xps-15" then term_fontsize = 12 end
+local term_fontsize = 12
+if utils.is_zenbook() then term_fontsize = 6 end
 
 programs.terminal = "alacritty --option font.size=" .. term_fontsize
 programs.browser  = "qutebrowser"

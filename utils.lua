@@ -135,7 +135,7 @@ function utils.navigate_client(d)
 end
 
 ---------------------------------------
--- Autostart windowless processes
+-- Misc
 ---------------------------------------
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
@@ -144,5 +144,9 @@ local function run_once(cmd_arr)
 end
 --
 -- run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
+
+function utils.is_zenbook()
+    return os.getenv("DEVICE_NAME") == "zenbook-14"
+end
 
 return utils
