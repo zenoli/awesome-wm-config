@@ -1,5 +1,6 @@
 local awful       = require("awful")
 local keys        = require("constants.keys")
+local programs    = require("constants.programs")
 local layouts     = require("layouts")
 local naughty     = require("naughty")
 local utils       = require("utils")
@@ -25,7 +26,7 @@ taglist.description = {
         key = keys.enter,
         layouts = layouts,
         layout = l.tile,
-        command = "alacritty -t 'Tmux' -e tmux new-session -A -s main"
+        command = programs.terminal .. " -t 'Tmux' -e tmux new-session -A -s main"
     },
     {
         icon = "爵 ",
@@ -77,7 +78,7 @@ taglist.description = {
         key = "w",
         layouts = layouts,
         layout = l.tile,
-        command =  "alacritty -t 'Vimwiki' -e tmux new-session -A -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'"
+        command = programs.terminal .. " -t 'Vimwiki' -e tmux new-session -A -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'"
     },
     {
         icon = "祥 ",
