@@ -15,14 +15,14 @@ local client_keys = gears_table.join(
         lain.util.magnify_client,
         {description = "magnify client", group = "client"}
     ),
-    -- awful.key(
-    --     { keys.alt, keys.control}, "f",
-    --     function (c)
-    --         c.fullscreen = not c.fullscreen
-    --         c:raise()
-    --     end,
-    --     {description = "toggle fullscreen", group = "client"}
-    -- ),
+    awful.key(
+        { }, "F11",
+        function (c)
+            c.fullscreen = not c.fullscreen
+            c:raise()
+        end,
+        {description = "toggle fullscreen", group = "client"}
+    ),
     awful.key(
         { keys.alt, keys.control}, "f",
         awful.client.floating.toggle,
