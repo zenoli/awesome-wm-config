@@ -25,8 +25,8 @@ function utils.add_tag_bindings(tag, tag_desc)
                     end
                 else
                     local c = tag:clients()[1]
-                    client.focus = c
-                    c:raise()
+                    -- client.focus = c
+                    -- c:raise()
                 end
              end,
             { description = "view " .. tag_desc.name .. " tag" , group = "tag" }
@@ -149,4 +149,11 @@ function utils.is_zenbook()
     return os.getenv("DEVICE_NAME") == "zenbook-14"
 end
 
+-- Hide tasklist on tile layout
+function utils.hide_tasklist_on_tiled_layout(t)
+    t.screen.tasklist:set_visible(t.selected and t.layout.name ~= "tile")
+end
+
 return utils
+
+

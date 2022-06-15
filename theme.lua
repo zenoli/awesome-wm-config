@@ -22,7 +22,7 @@ theme.menu_height                               = dpi(19)
 theme.menu_width                                = dpi(170)
 theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_task_name                = false
-theme.tasklist_disable_icon                     = true
+theme.tasklist_disable_icon                     = false
 
 
 -- Paths
@@ -41,8 +41,8 @@ theme.bg_focus                                  = colors.transparent
 theme.bg_urgent                                 = colors.darkgrey
 theme.tasklist_bg_normal                        = colors.transparent
 theme.notification_border_color                 = colors.black
-theme.border_normal                             = colors.bg_normal
-theme.border_focus                              = colors.red
+theme.border_normal                             = colors.transparent
+theme.border_focus                              = colors.white
 theme.border_marked                             = colors.orange
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal

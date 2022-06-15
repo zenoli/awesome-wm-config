@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local taglist = require("components.taglist")
+local tasklist = require("components.tasklist")
 local taglist_buttons = require("bindings.taglist_buttons")
 local tasklist_buttons = require("bindings.tasklist_buttons")
 local widgetlist = require("components.widgetlist")
@@ -15,7 +16,8 @@ local function setup(s)
     s.taglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    s.tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+    -- s.tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+    s.tasklist = tasklist(s)
 
     -- Create the wibox
     s.wibar = awful.wibar({

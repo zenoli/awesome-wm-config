@@ -1,7 +1,7 @@
 local paths = {
     root           = os.getenv("HOME") .. "/.config/awesome",
     icons          = os.getenv("HOME") .. "/.config/awesome/icons",
-    scripts          = os.getenv("HOME") .. "/.config/awesome/scripts",
+    scripts        = os.getenv("HOME") .. "/.config/awesome/scripts",
 }
 
 

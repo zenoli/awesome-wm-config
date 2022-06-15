@@ -122,6 +122,9 @@ client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
+    -- c.shape = function(cr,w,h)
+    --     gears.shape.rounded_rect(cr, w ,h , 10)
+    -- end
     if awesome.startup
         and not c.size_hints.user_position
         and not c.size_hints.program_position then
@@ -135,6 +138,9 @@ client.connect_signal("request::titlebars", titlebar_setup)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+-- Hide tasklist when using the tile layout
+tag.connect_signal("property::selected", utils.hide_tasklist_on_tiled_layout)
+tag.connect_signal("property::layout", utils.hide_tasklist_on_tiled_layout)
 
 ---------------------------------------
 -- Autostart
