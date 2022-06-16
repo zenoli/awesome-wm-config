@@ -7,9 +7,22 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 
 -- Create a launcher widget and a main menu
 local awesome_menu = {
-    { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+    {
+        "Hotkeys",
+        function()
+            hotkeys_popup.show_help(nil, awful.screen.focused())
+        end
+    },
     { "Manual", string.format("%s -e man awesome", programs.terminal) },
-    { "Edit config", string.format("%s -e %s %s", programs.terminal, programs.editor, awesome.conffile) },
+    {
+        "Edit config",
+        string.format(
+            "%s -e %s %s",
+            programs.terminal,
+            programs.editor,
+            awesome.conffile
+        )
+    },
     { "Restart", awesome.restart },
     { "Quit", function() awesome.quit() end },
 }

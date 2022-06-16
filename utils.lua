@@ -62,7 +62,7 @@ function utils.add_workspace_tag_bindings(tag, tag_desc)
                     client.focus:toggle_tag(tag)
                 end
             end,
-            {description = "toggle focused client on tag " .. tag_desc.name, group = "tag"}
+            { description = "toggle focused client on tag " .. tag_desc.name, group = "tag" }
         )
     )
     return gears_table.join(tag_bindings, workspace_tag_bindings)

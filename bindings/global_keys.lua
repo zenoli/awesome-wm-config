@@ -40,92 +40,83 @@ local function init ()
         awful.key(
             { keys.mod }, "F1",
             hotkeys_popup.show_help,
-            {description="show help", group="awesome"}
+            { description="show help", group="awesome" }
         ),
 
         -- Non-empty tag browsing
         awful.key(
             { keys.mod }, keys.left,
             function () utils.navigate_nonempty_tags(-1) end,
-            {description = "view  previous nonempty", group = "tag"}
+            { description = "view  previous nonempty", group = "tag" }
         ),
         awful.key(
             { keys.mod }, keys.right,
             function () utils.navigate_nonempty_tags(1) end,
-            {description = "view  previous nonempty", group = "tag"}
+            { description = "view  previous nonempty", group = "tag" }
         ),
         awful.key(
             { keys.mod }, "o",
             utils.move_tag_to_other_screen,
-            {description = "Reorder tags", group = "tag"}
+            { description = "Reorder tags", group = "tag" }
         ),
 
         -- By-direction client focus
         awful.key(
             { keys.mod }, "j",
             function () utils.navigate_client("down") end,
-            {description = "focus down", group = "client"}
+            { description = "focus down", group = "client" }
         ),
         awful.key(
             { keys.mod }, "k",
             function () utils.navigate_client("up") end,
-            {description = "focus up", group = "client"}
+            { description = "focus up", group = "client" }
         ),
         awful.key(
             { keys.mod }, "h",
             function () utils.navigate_client("left") end,
-            {description = "focus left", group = "client"}
+            { description = "focus left", group = "client" }
         ),
         awful.key(
             { keys.mod }, "l",
             function () utils.navigate_client("right") end,
-            {description = "focus right", group = "client"}
+            { description = "focus right", group = "client" }
         ),
 
         -- Layout manipulation
         awful.key(
             { keys.mod, keys.alt }, "t",
             function () awful.layout.set(l.tile) end,
-            {description = "select tiled layout", group = "layout"}
+            { description = "select tiled layout", group = "layout" }
         ),
         awful.key(
             { keys.mod, keys.alt }, "f",
             function () awful.layout.set(l.floating) end,
-            {description = "select floating layout", group = "layout"}
+            { description = "select floating layout", group = "layout" }
         ),
         awful.key(
             { keys.mod, keys.alt }, "m",
             function () awful.layout.set(l.max) end,
-            {description = "select maximized layout", group = "layout"}
+            { description = "select maximized layout", group = "layout" }
         ),
-        -- awful.key(
-        --     { keys.mod }, keys.space,
-        --     function () awful.layout.inc(1) end,
-        --     {description = "select next", group = "layout"}
-        -- ),
-        -- awful.key(
-        --     { keys.mod, keys.shift }, keys.space, function () awful.layout.inc(-1) end,
-        --     {description = "select previous", group = "layout"}
-        -- ),
         awful.key(
             { keys.mod, keys.shift }, "j",
             function () awful.client.swap.byidx(  1) end,
-            {description = "swap with next client by index", group = "client"}
+            { description = "swap with next client by index", group = "client" }
         ),
         awful.key(
             { keys.mod, keys.shift }, "k",
             function () awful.client.swap.byidx( -1) end,
-            {description = "swap with previous client by index", group = "client"}
+            { description = "swap with previous client by index", group = "client" }
         ),
         awful.key(
             { keys.mod, keys.control }, "j",
             function () awful.screen.focus_relative( 1) end,
-            {description = "focus the next screen", group = "screen"}
+            { description = "focus the next screen", group = "screen" }
         ),
         awful.key(
             { keys.mod, keys.control }, "k",
             function () awful.screen.focus_relative(-1) end,
-            {description = "focus the previous screen", group = "screen"}
+            { description = "focus the previous screen", group = "screen" }
         ),
         awful.key(
             { keys.mod }, "u", awful.client.urgent.jumpto,
@@ -164,40 +155,40 @@ local function init ()
         awful.key(
             { keys.alt, keys.control }, "-",
             function () lain.util.useless_gaps_resize(1) end,
-            {description = "increment useless gaps", group = "tag"}
+            { description = "increment useless gaps", group = "tag" }
         ),
         awful.key(
             { keys.alt, keys.control }, "=",
             function () lain.util.useless_gaps_resize(-1) end,
-            {description = "decrement useless gaps", group = "tag"}
+            { description = "decrement useless gaps", group = "tag" }
         ),
 
         -- Standard program
         awful.key(
             { keys.alt }, keys.enter,
             function () awful.spawn(programs.terminal) end,
-            {description = "open a terminal", group = "launcher"}
+            { description = "open a terminal", group = "launcher" }
         ),
         awful.key(
             { keys.mod, keys.control }, "r",
             awesome.restart,
-            {description = "reload awesome", group = "awesome"}
+            { description = "reload awesome", group = "awesome" }
         ),
         awful.key(
             { keys.mod, keys.shift }, "q",
             awesome.quit,
-            {description = "quit awesome", group = "awesome"}
+            { description = "quit awesome", group = "awesome" }
         ),
 
         awful.key(
             { keys.mod, keys.alt    }, "l",
             function () awful.tag.incmwfact( 0.05) end,
-            {description = "increase master width factor", group = "layout"}
+            { description = "increase master width factor", group = "layout" }
         ),
         awful.key(
             { keys.mod, keys.alt    }, "h",
             function () awful.tag.incmwfact(-0.05) end,
-            {description = "decrease master width factor", group = "layout"}
+            { description = "decrease master width factor", group = "layout" }
         ),
 
         awful.key(
@@ -208,82 +199,82 @@ local function init ()
                 if c then
                     c:emit_signal("request::activate", "key.unminimize", {raise = true})
                 end
-            end, {description = "restore minimized", group = "client"}
+            end, { description = "restore minimized", group = "client" }
         ),
 
         -- Screen brightness
         awful.key(
             { }, keys.brightness_up,
             function () brightness:inc() end,
-            {description = "increase brightness", group = "custom"}
+            { description = "increase brightness", group = "custom" }
         ),
         awful.key(
             { },keys.brightness_down,
             function () brightness:dec() end,
-            {description = "decrease brightness", group = "custom"}
+            { description = "decrease brightness", group = "custom" }
         ),
 
         -- Volume controls
         awful.key(
             { }, keys.vol_up,
             function () volume:inc() end,
-            {description = "volume up", group = "hotkeys"}
+            { description = "volume up", group = "hotkeys" }
         ),
         awful.key(
             { }, keys.vol_down,
             function () volume:dec() end,
-            {description = "volume down", group = "hotkeys"}
+            { description = "volume down", group = "hotkeys" }
         ),
         awful.key(
             { }, keys.vol_mute,
             function () volume:toggle() end,
-            {description = "toggle mute", group = "hotkeys"}
+            { description = "toggle mute", group = "hotkeys" }
         ),
 
         -- User programs
         awful.key(
             { keys.alt }, "b",
             function () awful.util.spawn("qb_launcher") end,
-            {description = "Launch qutebrowser", group = "launcher"}
+            { description = "Launch qutebrowser", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "r",
             function () awful.util.spawn("mranger") end,
-            {description = "Launch ranger", group = "launcher"}
+            { description = "Launch ranger", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "e",
             function () awful.util.spawn("nautilus -w") end,
-            {description = "Launch nautilus", group = "launcher"}
+            { description = "Launch nautilus", group = "launcher" }
         ),
 
         -- Prompt
         awful.key(
             { keys.alt }, "space",
             function () awful.util.spawn('dmenu_run -p Launch') end,
-            {description = "run dmenu", group = "launcher"}
+            { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "f",
             function () awful.util.spawn('file_launcher') end,
-            {description = "run dmenu", group = "launcher"}
+            { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.mod }, "space",
             function () awful.util.spawn('switch') end,
-            {description = "run dmenu window switcher", group = "launcher"}
+            { description = "run dmenu window switcher", group = "launcher" }
         ),
         awful.key(
             { keys.mod }, "x",
             function ()
                 awful.prompt.run {
-                  prompt       = "Run Lua code: ",
-                  textbox      = awful.screen.focused().mypromptbox.widget,
-                  exe_callback = awful.util.eval,
-                  history_path = awful.util.get_cache_dir() .. "/history_eval"
+                    prompt       = "Run Lua code: ",
+                    textbox      = awful.screen.focused().mypromptbox.widget,
+                    exe_callback = awful.util.eval,
+                    history_path = awful.util.get_cache_dir() .. "/history_eval"
                 }
             end,
-            {description = "lua execute prompt", group = "awesome"}
+            { description = "lua execute prompt", group = "awesome" }
         )
     )
 
@@ -292,7 +283,10 @@ local function init ()
     for _, tag_desc in pairs(taglist.description) do
         -- local tag = awful.tag.find_by_name(awful.screen.focused(), tag_desc.icon)
         local tag = tag_desc.tag
-        global_keys = gears_table.join(global_keys, utils.add_tag_bindings(tag, tag_desc))
+        global_keys = gears_table.join(
+            global_keys,
+            utils.add_tag_bindings(tag, tag_desc)
+        )
     end
 
     -- Add worskpace tag bindings
@@ -302,7 +296,10 @@ local function init ()
             name = "workspace " .. tostring(i),
             key = "#" .. i + 9
         }
-        global_keys = gears_table.join(global_keys, utils.add_workspace_tag_bindings(tag, tag_desc))
+        global_keys = gears_table.join(
+            global_keys,
+            utils.add_workspace_tag_bindings(tag, tag_desc)
+        )
     end
     return global_keys
 end
