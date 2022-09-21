@@ -26,7 +26,7 @@ taglist.description = {
         key = keys.enter,
         layouts = layouts,
         layout = l.tile,
-        command = programs.terminal .. " -t 'Tmux' -e tmux new-session -A -s main"
+        command = programs.terminal .. " --name Tmux tmux new-session -A -s main"
     },
     {
         icon = "爵 ",
@@ -78,7 +78,9 @@ taglist.description = {
         key = "w",
         layouts = layouts,
         layout = l.tile,
-        command = programs.terminal .. " -t 'Vimwiki' -e tmux new-session -A -s vimwiki -c /home/olivier/vimwiki 'nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote'"
+        command = programs.terminal .. [[ --name Vimwiki ]]
+            .. [[tmux new-session -c /home/olivier/vimwiki -A -s vimwiki ]]
+            .. [["v +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]]
     },
     {
         icon = "祥 ",
