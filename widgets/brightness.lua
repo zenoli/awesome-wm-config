@@ -2,6 +2,7 @@ local spawn     = require("awful.spawn")
 local wibox     = require("wibox")
 local icons     = require("constants.icon_paths")
 local paths     = require("constants.paths")
+local beautiful = require("beautiful")
 
 local brightness = {}
 local icon = wibox.widget.imagebox(icons.brightness)
