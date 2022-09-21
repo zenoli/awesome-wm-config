@@ -7,3 +7,6 @@
 [submodule "awesome-switcher"]
 	path = awesome-switcher
 	url = git@github.com:zenoli/awesome-switcher.git
+[submodule "theme-switcher"]
+	path = theme-switcher
+	url = git@github.com:zenoli/theme-switcher.git
