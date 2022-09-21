@@ -154,6 +154,10 @@ function utils.hide_tasklist_on_tiled_layout(t)
     t.screen.tasklist:set_visible(t.selected and t.layout.name ~= "tile")
 end
 
+function utils.capitalize(str)
+    return (str:gsub("^%l", string.upper))
+end
+
 return utils
 
 
