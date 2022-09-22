@@ -10,6 +10,7 @@ local programs          = require("constants.programs")
 local taglist           = require("components.taglist")
 local utils             = require("utils")
 local switcher          = require("awesome-switcher")
+local paths             = require("constants.paths")
 
 local gears_table       = gears.table
 local l                 = awful.layout.suit
@@ -234,34 +235,34 @@ local function init ()
         -- User programs
         awful.key(
             { keys.alt }, "b",
-            function () awful.util.spawn("qb_launcher") end,
+            function () awful.spawn("qb_launcher") end,
             { description = "Launch qutebrowser", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "r",
-            function () awful.util.spawn("mranger") end,
+            function () awful.spawn("mranger") end,
             { description = "Launch ranger", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "e",
-            function () awful.util.spawn("nautilus -w") end,
+            function () awful.spawn("nautilus -w") end,
             { description = "Launch nautilus", group = "launcher" }
         ),
 
         -- Prompt
         awful.key(
             { keys.alt }, "space",
-            function () awful.util.spawn('dmenu_run -p Launch') end,
+            function () awful.spawn('dmenu_run -p Launch') end,
             { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "f",
-            function () awful.util.spawn('file_launcher') end,
+            function () awful.spawn('file_launcher') end,
             { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.mod }, "space",
-            function () awful.util.spawn('switch') end,
+            function () awful.spawn('switch') end,
             { description = "run dmenu window switcher", group = "launcher" }
         ),
         awful.key(
@@ -275,6 +276,13 @@ local function init ()
                 }
             end,
             { description = "lua execute prompt", group = "awesome" }
+        ),
+        awful.key(
+            { keys.mod, keys.alt }, "t",
+            function ()
+                awful.spawn.with_shell(paths.root .. "/theme-switcher/theme_prompt.bash")
+            end,
+            { description = "run dmenu window switcher", group = "launcher" }
         )
     )
 
