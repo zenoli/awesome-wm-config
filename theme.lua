@@ -8,17 +8,19 @@ local theme                                     = {}
 -- General
 ---------------------------------------
 -- Fonts
-theme.font_size                                 = 9
+theme.font_size                                 = dpi(9)
 theme.font                                      = "Terminus "       .. theme.font_size
 theme.taglist_font                              = "Hack Nerd Font " .. theme.font_size
 
 -- Misc
-theme.useless_gap                               = 6
-theme.notification_icon_size                    = 30
-theme.notification_border_width                 = 10
+theme.useless_gap                               = dpi(8)
+theme.notification_icon_size                    = dpi(30)
+theme.notification_border_width                 = dpi(10)
 theme.border_width                              = dpi(0)
 theme.systray_icon_spacing                      = dpi(3)
-theme.wibar_height                              = dpi(29)
+theme.wibar_height                              = dpi(30)
+theme.taglist_overline_margin = dpi(4)
+theme.taglist_overline_width = dpi(2)
 theme.wibar_bg = colors.red
 -- theme.wibar_bg = colors.red
 -- theme.menu_height                               = dpi(39)
@@ -54,6 +56,8 @@ theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 theme.menu_bg_normal                            = theme.bg_normal
 theme.bg_systray                                = colors.lightblue
+theme.tag_margin = dpi(5)
+theme.tag_height = theme.wibar_height - 2*theme.tag_margin
 
 ---------------------------------------
 -- Icons
@@ -63,8 +67,21 @@ theme.menu_submenu_icon                         = theme.icon_dir .. "/submenu.pn
 theme.awesome_icon                              = theme.icon_dir .. "/awesome.png"
 
 -- Taglist
+local gears = require "gears"
+local surface = require "gears.surface"
+
+local function unsel_square(cr, width, height)
+    gears.shape.transform(gears.shape.rectangle)
+    :translate(0, 0) (cr, width, height)
+end
+theme.taglist_squares_unsel = surface.load_from_shape(
+    100, 100,
+    unsel_square,
+    -- gears.shape.transform(gears.shape.rectangle):translate(10,10),
+    colors.white
+)
 theme.taglist_squares_sel                       = theme.icon_dir .. "/square_sel.png"
-theme.taglist_squares_unsel                     = theme.icon_dir .. "/square_unsel.png"
+-- theme.taglist_squares_unsel                     = theme.icon_dir .. "/square_unsel.png"
 
 -- Layout
 theme.layout_tile                               = theme.icon_dir .. "/layouts/tile.png"

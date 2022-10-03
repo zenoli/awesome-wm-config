@@ -8,17 +8,68 @@ local widgetlist = require("components.widgetlist")
 local beautiful = require("beautiful")
 local gears            = require("gears")
 local colors    = require("constants.colors")
+local dpi   = require("beautiful.xresources").apply_dpi
+
+local function update_taglist(self, tag, index, tags)
+    local overline = self:get_children_by_id("overline")[1]
+    local has_clients = next(tag:clients())
+    local is_selected = tag.selected
+    if has_clients then
+        if is_selected then
+            overline.bg = beautiful.fg_focus
+        else
+            -- overline.bg = beautiful.fg_focus .. 60
+            overline.bg = beautiful.fg_normal .. 50
+        end
+    else
+        overline.bg = colors.transparent
+    end
+end
 
 
 local function setup(s)
-    -- taglist.setup(s)
-
-    -- Create a promptbox for each screen
     s.promptbox = awful.widget.prompt()
     s.taglist = awful.widget.taglist {
         screen = s,
         filter = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        widget_template = {
+            {
+                {
+                    {
+                        left = beautiful.taglist_overline_margin,
+                        right = beautiful.taglist_overline_margin,
+                        widget = wibox.container.margin,
+                    },
+                    id = "overline",
+                    bg = colors.transparent,
+                    shape = gears.shape.rectangle,
+                    widget = wibox.container.background,
+                    forced_height = beautiful.taglist_overline_width,
+                },
+                {
+                    {
+                        id = "text_role",
+                        align = "center",
+                        valign = "center",
+                        forced_width = 20,
+                        widget = wibox.widget.textbox
+                    },
+                    left = 3,
+                    widget = wibox.container.margin
+                },
+                layout = wibox.layout.fixed.vertical,
+
+            },
+            top = 0,
+            bottom = beautiful.taglist_overline_width,
+            left = 5,
+            right = 5,
+            widget = wibox.container.margin,
+            -- callbacks:
+            create_callback = update_taglist,
+            update_callback = update_taglist
+        }
     }
 
     -- Create a tasklist widget
@@ -29,7 +80,6 @@ local function setup(s)
     s.wibar = awful.wibar({
         position = "top",
         screen = s,
-        height = beautiful.menu_height,
         bg = beautiful.bg_normal,
         fg = beautiful.fg_normal
     })
@@ -38,16 +88,39 @@ local function setup(s)
     s.wibar:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
             {
                 {
                     {
                         s.taglist,
+                        left = beautiful.tag_margin,
+                        right = beautiful.tag_margin,
+                        widget = wibox.container.margin
+                    },
+                    shape = gears.shape.rounded_bar,
+                    bg = colors.black .. "30",
+                    widget = wibox.container.background
+                },
+                margins = beautiful.tag_margin,
+                widget = wibox.container.margin
+            },
+            layout = wibox.layout.fixed.horizontal,
+        },
+        s.tasklist, -- Middle widget
+        { -- Left widgets
+            {
+                {
+                    {
+                        {
+                            require("widgets.volume").widget,
+                            require("widgets.battery").widget,
+                            require("widgets.brightness").widget,
+                            require("widgets.clock").widget,
+                            layout = wibox.layout.fixed.horizontal
+                        },
                         left = 5,
                         right = 5,
                         widget = wibox.container.margin
                     },
-                    -- s.taglist,
                     shape = gears.shape.rounded_bar,
                     bg = colors.black .. "30",
                     widget = wibox.container.background
@@ -55,10 +128,9 @@ local function setup(s)
                 margins = 5,
                 widget = wibox.container.margin
             },
-            s.promptbox,
+            layout = wibox.layout.fixed.horizontal,
         },
-        s.tasklist, -- Middle widget
-        widgetlist(s)
+        -- widgetlist(s)
     }
  end
 

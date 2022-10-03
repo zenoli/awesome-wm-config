@@ -113,8 +113,8 @@ taglist.description = {
 function taglist.init(s)
      -- Add app specific tags
     for _, tag_desc in pairs(taglist.description) do
-        -- local selected = tag_desc.name == "home"
-        local selected = false
+        local selected = tag_desc.name == "home"
+        -- local selected = false
         local tag = awful.tag.add(tag_desc.icon, {
             layout = tag_desc.layout,
             layouts = tag_desc.layouts,
