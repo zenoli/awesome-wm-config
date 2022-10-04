@@ -26,6 +26,28 @@ local function update_taglist(self, tag, index, tags)
     end
 end
 
+local function rounded_container(widget, id)
+    return {
+        {
+            {
+                {
+                    widget,
+                    left = beautiful.tag_margin,
+                    right = beautiful.tag_margin,
+                    widget = wibox.container.margin
+                },
+                id = id or "rounded_container",
+                shape = gears.shape.rounded_bar,
+                bg = colors.black .. "30",
+                widget = wibox.container.background
+            },
+            margins = beautiful.tag_margin,
+            widget = wibox.container.margin
+        },
+        layout = wibox.layout.fixed.horizontal,
+    }
+end
+
 
 local function setup(s)
     s.promptbox = awful.widget.prompt()
@@ -86,51 +108,16 @@ local function setup(s)
 
     -- Add widgets to the wibox
     s.wibar:setup {
+        rounded_container(s.taglist, "taglist_container"),
+        rounded_container(s.tasklist, "tasklist_container"),
+        rounded_container {
+            require("widgets.volume").widget,
+            require("widgets.battery").widget,
+            require("widgets.brightness").widget,
+            require("widgets.clock").widget,
+            layout = wibox.layout.fixed.horizontal
+        },
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            {
-                {
-                    {
-                        s.taglist,
-                        left = beautiful.tag_margin,
-                        right = beautiful.tag_margin,
-                        widget = wibox.container.margin
-                    },
-                    shape = gears.shape.rounded_bar,
-                    bg = colors.black .. "30",
-                    widget = wibox.container.background
-                },
-                margins = beautiful.tag_margin,
-                widget = wibox.container.margin
-            },
-            layout = wibox.layout.fixed.horizontal,
-        },
-        s.tasklist, -- Middle widget
-        { -- Left widgets
-            {
-                {
-                    {
-                        {
-                            require("widgets.volume").widget,
-                            require("widgets.battery").widget,
-                            require("widgets.brightness").widget,
-                            require("widgets.clock").widget,
-                            layout = wibox.layout.fixed.horizontal
-                        },
-                        left = 5,
-                        right = 5,
-                        widget = wibox.container.margin
-                    },
-                    shape = gears.shape.rounded_bar,
-                    bg = colors.black .. "30",
-                    widget = wibox.container.background
-                },
-                margins = 5,
-                widget = wibox.container.margin
-            },
-            layout = wibox.layout.fixed.horizontal,
-        },
-        -- widgetlist(s)
     }
  end
 
