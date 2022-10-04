@@ -252,7 +252,7 @@ local function init ()
         -- Prompt
         awful.key(
             { keys.alt }, "space",
-            function () awful.spawn('dmenu_run -p Launch') end,
+            function () awful.spawn('dmenu_run -h 30 -p Launch') end,
             { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
