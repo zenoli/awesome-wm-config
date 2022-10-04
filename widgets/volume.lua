@@ -1,34 +1,42 @@
 local lain      = require("lain")
-local wibox     = require("wibox")
 local spawn     = require("awful.spawn")
-local icons     = require("constants.icon_paths")
 local beautiful = require("beautiful")
-local p = require("constants.paths")
 
 local markup = lain.util.markup
-local icon = wibox.widget.imagebox(icons.volume.high)
+
+local icons = {
+    mute = "婢",
+    low = "奄",
+    mid = "奔",
+    high = "墳",
+}
 
 local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
     timeout = 1,
     settings = function()
-        widget:set_markup(markup.font(beautiful.font, " " .. volume_now.level))
-        local icon_path, perc = "", tonumber(volume_now.level) or 0
+        local function update_icon(icon)
+            widget:set_markup(
+                markup.font(
+                    beautiful.taglist_font,
+                    icon .. " " .. volume_now.level
+                )
+            )
+        end
+        update_icon(icons.high)
+        local perc = tonumber(volume_now.level) or 0
 
         if volume_now.status == "off" then
-            icon_path = icons.volume.mute
+            update_icon(icons.mute)
         else
-            if perc <= 5 then
-                icon_path = icons.volume.off
-            elseif perc <= 25 then
-                icon_path = icons.volume.low
-            elseif perc <= 75 then
-                icon_path = icons.volume.medium
+            if perc <= 25 then
+                update_icon(icons.low)
+            elseif perc <= 50 then
+                update_icon(icons.mid)
             else
-                icon_path = icons.volume.high
+                update_icon(icons.high)
             end
         end
-        icon:set_image(icon_path)
     end
 })
 
@@ -51,17 +59,6 @@ function volume:toggle()
     spawn.easy_async_with_shell(TOG_VOLUME_CMD, alsa.update)
 end
 
-volume.widget = wibox.widget {
-    {
-        icon,
-        left   = 0,
-        right  = 0,
-        top    = 2,
-        bottom = 2,
-        layout = wibox.container.margin
-    },
-    alsa.widget,
-    layout = wibox.layout.align.horizontal
-}
+volume.widget = alsa.widget
 
 return volume
