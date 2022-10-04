@@ -4,6 +4,8 @@ local keys  = require("constants.keys")
 local wibox = require("wibox")
 local lain = require("lain")
 local dpi   = require("beautiful.xresources").apply_dpi
+local colors    = require("constants.colors")
+local beautiful = require "beautiful"
 local gears_table = gears.table
 
 local utils = {}
@@ -142,8 +144,6 @@ local function run_once(cmd_arr)
         awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
     end
 end
---
--- run_once({ "urxvtd", "unclutter -root" }) -- comma-separated entries
 
 function utils.is_zenbook()
     return os.getenv("DEVICE_NAME") == "zenbook-14"
@@ -151,7 +151,14 @@ end
 
 -- Hide tasklist on tile layout
 function utils.hide_tasklist_on_tiled_layout(t)
-    t.screen.tasklist:set_visible(t.selected and t.layout.name ~= "tile")
+    local show_tasklist = t.selected and t.layout.name ~= "tile"
+    local tasklist_container = t.screen.wibar:get_children_by_id("tasklist_container")[1]
+    t.screen.tasklist:set_visible(show_tasklist)
+    if show_tasklist then
+        tasklist_container.bg = colors.black .. 30
+    else
+        tasklist_container.bg = colors.black .. 00
+    end
 end
 
 function utils.capitalize(str)

@@ -12,24 +12,24 @@ local function setup(s)
         style    = {
             -- shape_border_width = 3,
             -- shape_border_color = colors.darkblue,
-            bg_focus = colors.darkblue,
-            fg_focus = colors.white,
-            bg_normal = colors.white .. "20",
-            fg_normal = colors.bg_normal,
-            shape  = gears.shape.powerline
+            -- bg_focus = colors.darkblue,
+            -- fg_focus = colors.white,
+            -- bg_normal = colors.white .. "20",
+            -- fg_normal = colors.bg_normal,
+            -- shape  = gears.shape.powerline
         },
         layout   = {
-            -- spacing = 10,
-            -- spacing_widget = {
-            --     {
-            --         forced_width = 5,
-            --         shape        = gears.shape.circle,
-            --         widget       = wibox.widget.separator
-            --     },
-            --     valign = 'center',
-            --     halign = 'center',
-            --     widget = wibox.container.place,
-            -- },
+            spacing = 5,
+            spacing_widget = {
+                {
+                    forced_width = 5,
+                    shape        = gears.shape.circle,
+                    widget       = wibox.widget.separator
+                },
+                valign = 'center',
+                halign = 'center',
+                widget = wibox.container.place,
+            },
             layout  = wibox.layout.fixed.horizontal
         },
         -- Notice that there is *NO* wibox.wibox prefix, it is a template,
