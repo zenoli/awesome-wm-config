@@ -3,6 +3,6 @@ local lain      = require("lain")
 local beautiful = require "beautiful"
 
 local markup = lain.util.markup
-local clk = wibox.widget.textclock(markup.font(beautiful.taglist_font, " %H:%M"))
+local date =  wibox.widget.textclock(markup.font(beautiful.taglist_font, " %a %b %d"))
 
-return { widget = clk }
+return  { widget = date }

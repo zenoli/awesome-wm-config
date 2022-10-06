@@ -81,7 +81,6 @@ local function setup(s)
                     widget = wibox.container.margin
                 },
                 layout = wibox.layout.fixed.vertical,
-
             },
             top = 0,
             bottom = beautiful.taglist_overline_width,
@@ -95,7 +94,6 @@ local function setup(s)
     }
 
     -- Create a tasklist widget
-    -- s.tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
     s.tasklist = tasklist(s)
 
     -- Create the wibox
@@ -114,7 +112,9 @@ local function setup(s)
             require("widgets.volume").widget,
             require("widgets.battery").widget,
             require("widgets.brightness").widget,
+            require("widgets.date").widget,
             require("widgets.clock").widget,
+            spacing = 10,
             layout = wibox.layout.fixed.horizontal
         },
         layout = wibox.layout.align.horizontal,
