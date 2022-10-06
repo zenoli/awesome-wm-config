@@ -1,58 +1,71 @@
 local lain  = require("lain")
 local wibox = require("wibox")
-local icons = require("constants.icon_paths")
 local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
-local icon = wibox.widget.imagebox(icons.battery_high)
+local icons = {
+    discharging_0 = "",
+    discharging_10 = " ",
+    discharging_20 = " ",
+    discharging_30 = " ",
+    discharging_40 = " ",
+    discharging_50 = " ",
+    discharging_60 = " ",
+    discharging_70 = " ",
+    discharging_80 = " ",
+    discharging_90 = " ",
+    discharging_100 = " ",
+
+    charging_20 = " ",
+    charging_30 = " ",
+    charging_40 = " ",
+    charging_60 = " ",
+    charging_80 = " ",
+    charging_90 = " ",
+    charging_100 = " ",
+}
+
 local bat = lain.widget.bat({
     timeout = 1,
     settings = function()
+        local function update_icon(icon)
+            widget:set_markup(
+                markup.font(
+                    beautiful.taglist_font,
+                    icon  .. bat_now.perc .. "% "
+                )
+            )
+        end
         if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
-                if     tonumber(bat_now.perc) >= 95 then icon:set_image(icons.battery.fully_charged)
-                elseif tonumber(bat_now.perc) >= 85 then icon:set_image(icons.battery.charging_90)
-                elseif tonumber(bat_now.perc) >= 65 then icon:set_image(icons.battery.charging_80)
-                elseif tonumber(bat_now.perc) >= 55 then icon:set_image(icons.battery.charging_60)
-                elseif tonumber(bat_now.perc) >= 35 then icon:set_image(icons.battery.charging_50)
-                elseif tonumber(bat_now.perc) >= 25 then icon:set_image(icons.battery.charging_30)
-                elseif tonumber(bat_now.perc) >= 15 then icon:set_image(icons.battery.charging_20)
-                elseif tonumber(bat_now.perc) >=  5 then icon:set_image(icons.battery.charging_10)
-                else                                     icon:set_image(icons.battery.alert)
+                if     tonumber(bat_now.perc) >= 95 then update_icon(icons.charging_100)
+                elseif tonumber(bat_now.perc) >= 85 then update_icon(icons.charging_90)
+                elseif tonumber(bat_now.perc) >= 65 then update_icon(icons.charging_80)
+                elseif tonumber(bat_now.perc) >= 55 then update_icon(icons.charging_60)
+                elseif tonumber(bat_now.perc) >= 35 then update_icon(icons.charging_40)
+                elseif tonumber(bat_now.perc) >= 25 then update_icon(icons.charging_30)
+                else                                     update_icon(icons.charging_20)
                 end
             else
-                if     tonumber(bat_now.perc) >= 95 then icon:set_image(icons.battery.discharging_100)
-                elseif tonumber(bat_now.perc) >= 85 then icon:set_image(icons.battery.discharging_90)
-                elseif tonumber(bat_now.perc) >= 65 then icon:set_image(icons.battery.discharging_80)
-                elseif tonumber(bat_now.perc) >= 55 then icon:set_image(icons.battery.discharging_60)
-                elseif tonumber(bat_now.perc) >= 35 then icon:set_image(icons.battery.discharging_50)
-                elseif tonumber(bat_now.perc) >= 25 then icon:set_image(icons.battery.discharging_30)
-                elseif tonumber(bat_now.perc) >= 15 then icon:set_image(icons.battery.discharging_20)
-                else                                     icon:set_image(icons.battery.alert_red)
+                if     tonumber(bat_now.perc) >= 95 then update_icon(icons.discharging_100)
+                elseif tonumber(bat_now.perc) >= 85 then update_icon(icons.discharging_90)
+                elseif tonumber(bat_now.perc) >= 65 then update_icon(icons.discharging_80)
+                elseif tonumber(bat_now.perc) >= 55 then update_icon(icons.discharging_60)
+                elseif tonumber(bat_now.perc) >= 35 then update_icon(icons.discharging_50)
+                elseif tonumber(bat_now.perc) >= 25 then update_icon(icons.discharging_30)
+                elseif tonumber(bat_now.perc) >= 15 then update_icon(icons.discharging_20)
+                else                                     update_icon(icons.discharging_0)
                 end
             end
-            widget:set_markup(markup.font(beautiful.font, " " .. bat_now.perc .. "% "))
         else
             widget:set_markup()
-            icon:set_image(icons.ac)
         end
     end
 })
 
 local battery = {
-    widget = wibox.widget {
-        {
-            icon,
-            left   = 0,
-            right  = 0,
-            top    = 2,
-            bottom = 2,
-            layout = wibox.container.margin
-        },
-        bat.widget,
-        layout = wibox.layout.align.horizontal
-    }
+    widget = bat.widget
 }
 
 return battery

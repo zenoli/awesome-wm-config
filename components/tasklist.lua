@@ -23,7 +23,9 @@ local function setup(s)
             spacing_widget = {
                 {
                     forced_width = 5,
-                    shape        = gears.shape.circle,
+                    -- shape        = gears.shape.rectangle,
+                    thickness = 2,
+                    color = colors.white .. 30,
                     widget       = wibox.widget.separator
                 },
                 valign = 'center',

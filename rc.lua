@@ -131,7 +131,9 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    utils.hide_tasklist_on_tiled_layout(c.first_tag)
 end)
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", titlebar_setup)
@@ -141,6 +143,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Hide tasklist when using the tile layout
 tag.connect_signal("property::selected", utils.hide_tasklist_on_tiled_layout)
 tag.connect_signal("property::layout", utils.hide_tasklist_on_tiled_layout)
+client.connect_signal("untagged", utils.hide_tasklist_on_tiled_layout)
 
 ---------------------------------------
 -- Autostart

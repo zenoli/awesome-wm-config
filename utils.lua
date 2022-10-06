@@ -151,7 +151,7 @@ end
 
 -- Hide tasklist on tile layout
 function utils.hide_tasklist_on_tiled_layout(t)
-    local show_tasklist = t.selected and t.layout.name ~= "tile"
+    local show_tasklist = t.selected and t.layout.name ~= "tile" and next(t:clients())
     local tasklist_container = t.screen.wibar:get_children_by_id("tasklist_container")[1]
     t.screen.tasklist:set_visible(show_tasklist)
     if show_tasklist then
