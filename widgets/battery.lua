@@ -33,7 +33,7 @@ local bat = lain.widget.bat({
             widget:set_markup(
                 markup.font(
                     beautiful.taglist_font,
-                    icon  .. bat_now.perc .. "% "
+                    icon  .. bat_now.perc .. "%"
                 )
             )
         end
