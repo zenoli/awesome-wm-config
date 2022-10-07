@@ -1,6 +1,6 @@
-local lain  = require("lain")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local lain = require "lain"
+local wibox = require "wibox"
+local beautiful = require "beautiful"
 
 local markup = lain.util.markup
 

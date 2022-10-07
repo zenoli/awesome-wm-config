@@ -1,7 +1,7 @@
-local lain = require("lain")
+local lain = require "lain"
 local wibox = require "wibox"
-local spawn = require("awful.spawn")
-local beautiful = require("beautiful")
+local spawn = require "awful.spawn"
+local beautiful = require "beautiful"
 
 local markup = lain.util.markup
 
@@ -15,23 +15,13 @@ local icons = {
 local text_widget = wibox.widget.textbox()
 local icon_widget = wibox.widget.textbox()
 
-local alsa = lain.widget.alsa({
+local alsa = lain.widget.alsa {
     cmd = "amixer -D pulse",
     timeout = 1,
     settings = function()
         local function update_icon(icon)
-            icon_widget:set_markup(
-                markup.font(
-                    beautiful.taglist_font,
-                    icon .. " "
-                )
-            )
-            text_widget:set_markup(
-                markup.font(
-                    beautiful.font,
-                    volume_now.level
-                )
-            )
+            icon_widget:set_markup(markup.font(beautiful.taglist_font, icon .. " "))
+            text_widget:set_markup(markup.font(beautiful.font, volume_now.level))
         end
         update_icon(icons.high)
         local perc = tonumber(volume_now.level) or 0
@@ -47,8 +37,8 @@ local alsa = lain.widget.alsa({
                 update_icon(icons.high)
             end
         end
-    end
-})
+    end,
+}
 
 local GET_VOLUME_CMD = 'amixer -D pulse sget Master'
 local INC_VOLUME_CMD = 'amixer -D pulse sset Master 5%+'

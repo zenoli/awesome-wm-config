@@ -1,16 +1,15 @@
-local spawn     = require("awful.spawn")
-local wibox     = require("wibox")
-local paths     = require("constants.paths")
-local beautiful = require("beautiful")
+local spawn = require "awful.spawn"
+local wibox = require "wibox"
+local paths = require "constants.paths"
+local beautiful = require "beautiful"
 
 local brightness = {}
 
-local lain      = require("lain")
+local lain = require "lain"
 local markup = lain.util.markup
 
 local text_widget = wibox.widget.textbox()
 local icon_widget = wibox.widget.textbox()
-
 
 local icons = {
     low = " ",
@@ -27,17 +26,16 @@ local icons = {
 brightness.widget = wibox.widget {
     icon_widget,
     text_widget,
-    layout = wibox.layout.fixed.horizontal
+    layout = wibox.layout.fixed.horizontal,
 }
 
 local brightness_script = paths.scripts .. "/brightness.bash"
 local step = 5
 
-local GET_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -get '
-local SET_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -set '
-local INC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -inc ' .. step
-local DEC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -dec ' .. step
-
+local GET_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -get "
+local SET_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -set "
+local INC_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -inc " .. step
+local DEC_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -dec " .. step
 
 local function update(value)
     local function update_icon(icon)
