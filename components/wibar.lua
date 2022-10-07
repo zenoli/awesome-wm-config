@@ -116,7 +116,19 @@ local function setup(s)
                 require("widgets.brightness").widget,
                 require("widgets.date").widget,
                 require("widgets.clock").widget,
-                spacing = 10,
+                spacing_widget = {
+                    {
+                        forced_width = 5,
+                        shape        = gears.shape.circle,
+                        thickness = 2,
+                        color = colors.white .. 30,
+                        widget = wibox.widget.separator
+                    },
+                    valign = 'center',
+                    halign = 'center',
+                    widget = wibox.container.place,
+                },
+                spacing = 25,
                 layout = wibox.layout.fixed.horizontal
             },
             rounded_container (
