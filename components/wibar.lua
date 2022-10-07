@@ -119,12 +119,15 @@ local function setup(s)
                 spacing = 10,
                 layout = wibox.layout.fixed.horizontal
             },
-            rounded_container ({
-                require("widgets.systray").widget,
-                require("widgets.layoutbox")(s).widget,
-                -- spacing = 10,
-                layout = wibox.layout.fixed.horizontal
-            }, "systray_layout_container", colors.bg_normal),
+            rounded_container (
+                {
+                    require("widgets.systray").widget,
+                    require("widgets.layoutbox")(s).widget,
+                    layout = wibox.layout.fixed.horizontal
+                },
+                "systray_layout_container",
+                colors.bg_normal
+            ),
             layout = wibox.layout.fixed.horizontal
         },
         layout = wibox.layout.align.horizontal,

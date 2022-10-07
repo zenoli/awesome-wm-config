@@ -13,11 +13,11 @@ theme.font                                      = "Terminus "       .. theme.fon
 theme.taglist_font                              = "Hack Nerd Font " .. theme.font_size
 
 -- Misc
-theme.useless_gap                               = dpi(8)
+theme.useless_gap                               = dpi(6)
 theme.notification_icon_size                    = dpi(30)
 theme.notification_border_width                 = dpi(10)
 theme.border_width                              = dpi(0)
-theme.systray_icon_spacing                      = dpi(8)
+theme.systray_icon_spacing                      = dpi(2)
 theme.wibar_height                              = dpi(30)
 theme.taglist_overline_margin = dpi(4)
 theme.taglist_overline_width = dpi(2)
