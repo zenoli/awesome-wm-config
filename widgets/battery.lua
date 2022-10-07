@@ -4,6 +4,9 @@ local beautiful = require("beautiful")
 
 local markup = lain.util.markup
 
+local text_widget = wibox.widget.textbox()
+local icon_widget = wibox.widget.textbox()
+
 local icons = {
     discharging_0 = "",
     discharging_10 = " ",
@@ -26,14 +29,20 @@ local icons = {
     charging_100 = " ",
 }
 
-local bat = lain.widget.bat({
+lain.widget.bat({
     timeout = 1,
     settings = function()
         local function update_icon(icon)
-            widget:set_markup(
+            icon_widget:set_markup(
                 markup.font(
                     beautiful.taglist_font,
-                    icon  .. bat_now.perc .. "%"
+                    icon
+                )
+            )
+            text_widget:set_markup(
+                markup.font(
+                    beautiful.font,
+                    bat_now.perc .. "%"
                 )
             )
         end
@@ -65,7 +74,11 @@ local bat = lain.widget.bat({
 })
 
 local battery = {
-    widget = bat.widget
+    widget = {
+        icon_widget,
+        text_widget,
+        layout = wibox.layout.fixed.horizontal
+    }
 }
 
 return battery

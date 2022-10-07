@@ -1,5 +1,6 @@
-local lain      = require("lain")
-local spawn     = require("awful.spawn")
+local lain = require("lain")
+local wibox = require "wibox"
+local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 
 local markup = lain.util.markup
@@ -11,15 +12,24 @@ local icons = {
     high = "墳",
 }
 
+local text_widget = wibox.widget.textbox()
+local icon_widget = wibox.widget.textbox()
+
 local alsa = lain.widget.alsa({
     cmd = "amixer -D pulse",
     timeout = 1,
     settings = function()
         local function update_icon(icon)
-            widget:set_markup(
+            icon_widget:set_markup(
                 markup.font(
                     beautiful.taglist_font,
-                    icon .. " " .. volume_now.level
+                    icon .. " "
+                )
+            )
+            text_widget:set_markup(
+                markup.font(
+                    beautiful.font,
+                    volume_now.level
                 )
             )
         end
@@ -45,7 +55,13 @@ local INC_VOLUME_CMD = 'amixer -D pulse sset Master 5%+'
 local DEC_VOLUME_CMD = 'amixer -D pulse sset Master 5%-'
 local TOG_VOLUME_CMD = 'amixer -D pulse sset Master toggle'
 
-local volume = {}
+local volume = {
+    widget = {
+        icon_widget,
+        text_widget,
+        layout = wibox.layout.fixed.horizontal
+    }
+}
 
 function volume:inc()
     spawn.easy_async_with_shell(INC_VOLUME_CMD, alsa.update)
@@ -59,6 +75,6 @@ function volume:toggle()
     spawn.easy_async_with_shell(TOG_VOLUME_CMD, alsa.update)
 end
 
-volume.widget = alsa.widget
+-- volume.widget = alsa.widget
 
 return volume

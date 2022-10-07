@@ -4,10 +4,13 @@ local paths     = require("constants.paths")
 local beautiful = require("beautiful")
 
 local brightness = {}
-local textbox = wibox.widget.textbox()
 
 local lain      = require("lain")
 local markup = lain.util.markup
+
+local text_widget = wibox.widget.textbox()
+local icon_widget = wibox.widget.textbox()
+
 
 local icons = {
     low = " ",
@@ -22,8 +25,9 @@ local icons = {
 -- }
 
 brightness.widget = wibox.widget {
-    textbox,
-    layout = wibox.layout.align.horizontal
+    icon_widget,
+    text_widget,
+    layout = wibox.layout.fixed.horizontal
 }
 
 local brightness_script = paths.scripts .. "/brightness.bash"
@@ -36,13 +40,17 @@ local DEC_BRIGHTNESS_CMD= 'sudo ' .. brightness_script .. ' -dec ' .. step
 
 
 local function update(value)
+    local function update_icon(icon)
+        icon_widget:set_markup(markup.font(beautiful.taglist_font, icon))
+        text_widget:set_markup(markup.font(beautiful.font, value))
+    end
     value = math.ceil(value)
     if value <= 25 then
-        textbox:set_markup(markup.font(beautiful.taglist_font, icons.low .. value))
+        update_icon(icons.low)
     elseif value <= 75 then
-        textbox:set_markup(markup.font(beautiful.taglist_font, icons.mid .. value))
+        update_icon(icons.mid)
     else
-        textbox:set_markup(markup.font(beautiful.taglist_font, icons.high .. value))
+        update_icon(icons.high)
     end
 end
 
