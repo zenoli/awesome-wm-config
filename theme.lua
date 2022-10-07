@@ -17,7 +17,7 @@ theme.useless_gap                               = dpi(8)
 theme.notification_icon_size                    = dpi(30)
 theme.notification_border_width                 = dpi(10)
 theme.border_width                              = dpi(0)
-theme.systray_icon_spacing                      = dpi(3)
+theme.systray_icon_spacing                      = dpi(8)
 theme.wibar_height                              = dpi(30)
 theme.taglist_overline_margin = dpi(4)
 theme.taglist_overline_width = dpi(2)
@@ -55,7 +55,7 @@ theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 theme.menu_bg_normal                            = theme.bg_normal
-theme.bg_systray                                = colors.lightblue
+theme.bg_systray                                = colors.bg_normal
 theme.tag_margin = dpi(5)
 theme.tag_height = theme.wibar_height - 2*theme.tag_margin
 

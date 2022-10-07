@@ -1,3 +1,5 @@
 local wibox = require("wibox")
-return { widget = wibox.widget.systray() }
 
+local systray = wibox.widget.systray()
+
+return { widget = systray }

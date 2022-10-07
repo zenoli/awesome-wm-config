@@ -26,19 +26,19 @@ local function update_taglist(self, tag, index, tags)
     end
 end
 
-local function rounded_container(widget, id)
+local function rounded_container(widget, id, bg_color)
     return {
         {
             {
                 {
                     widget,
-                    left = beautiful.tag_margin,
-                    right = beautiful.tag_margin,
+                    left = 8,
+                    right = 8,
                     widget = wibox.container.margin
                 },
                 id = id or "rounded_container",
                 shape = gears.shape.rounded_bar,
-                bg = colors.black .. "30",
+                bg = bg_color or colors.black .. 30,
                 widget = wibox.container.background
             },
             margins = beautiful.tag_margin,
@@ -74,7 +74,7 @@ local function setup(s)
                         id = "text_role",
                         align = "center",
                         valign = "center",
-                        forced_width = 20,
+                        forced_width = 15,
                         widget = wibox.widget.textbox
                     },
                     left = 3,
@@ -108,13 +108,23 @@ local function setup(s)
     s.wibar:setup {
         rounded_container(s.taglist, "taglist_container"),
         rounded_container(s.tasklist, "tasklist_container"),
-        rounded_container {
-            require("widgets.volume").widget,
-            require("widgets.battery").widget,
-            require("widgets.brightness").widget,
-            require("widgets.date").widget,
-            require("widgets.clock").widget,
-            spacing = 10,
+        {
+            rounded_container {
+                require("widgets.keyboardlayout").widget,
+                require("widgets.volume").widget,
+                require("widgets.battery").widget,
+                require("widgets.brightness").widget,
+                require("widgets.date").widget,
+                require("widgets.clock").widget,
+                spacing = 10,
+                layout = wibox.layout.fixed.horizontal
+            },
+            rounded_container ({
+                require("widgets.systray").widget,
+                require("widgets.layoutbox")(s).widget,
+                -- spacing = 10,
+                layout = wibox.layout.fixed.horizontal
+            }, "systray_layout_container", colors.bg_normal),
             layout = wibox.layout.fixed.horizontal
         },
         layout = wibox.layout.align.horizontal,
