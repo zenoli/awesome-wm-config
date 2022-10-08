@@ -13,8 +13,8 @@ local switcher = require "awesome-switcher"
 local paths = require "constants.paths"
 local beautiful = require "beautiful"
 
-local gears_table       = gears.table
-local l                 = awful.layout.suit
+local gears_table = gears.table
+local l = awful.layout.suit
 
 local function init ()
     local global_keys = gears_table.join(
