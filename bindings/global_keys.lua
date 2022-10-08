@@ -11,6 +11,7 @@ local taglist = require "components.taglist"
 local utils = require "utils"
 local switcher = require "awesome-switcher"
 local paths = require "constants.paths"
+local beautiful = require "beautiful"
 
 local gears_table       = gears.table
 local l                 = awful.layout.suit
@@ -279,7 +280,10 @@ local function init ()
         awful.key(
             { keys.mod, keys.alt }, "t",
             function ()
-                awful.spawn.with_shell(paths.root .. "/theme-switcher/theme_prompt.bash")
+        awful.spawn.with_shell(
+            paths.root .. "/theme-switcher/theme_prompt.bash "
+            .. tostring(beautiful.wibar_height)
+        )
             end,
             { description = "run dmenu window switcher", group = "launcher" }
         )
