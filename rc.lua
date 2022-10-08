@@ -15,16 +15,6 @@ naughty.config.defaults.border_width = 0
 naughty.config.spacing = 15
 naughty.config.padding = 35
 
-naughty.notify {
-    preset = naughty.config.presets.normal,
-    text = "Hello",
-    title = "Some title",
-}
-naughty.notify {
-    preset = naughty.config.presets.normal,
-    text = "Hello 2",
-    title = "Some title 2",
-}
 local gears = require "gears"
 local main_menu = require "components.main_menu"
 local rules = require "rules"
