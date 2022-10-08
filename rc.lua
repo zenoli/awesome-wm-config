@@ -110,7 +110,7 @@ client.connect_signal("manage", function(c)
     -- c.shape = function(cr,w,h)
     --     gears.shape.rounded_rect(cr, w ,h , 10)
     -- end
-    if awesome.startup 
+    if awesome.startup
         and not c.size_hints.user_position
         and not c.size_hints.program_position
     then

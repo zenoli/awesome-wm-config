@@ -25,7 +25,7 @@ function utils.add_tag_bindings(tag, tag_desc)
                         awful.spawn(tag_desc.command)
                     end
                 else
-                    local c = tag:clients()[1]
+                    -- c = tag:clients()[1]
                     -- client.focus = c
                     -- c:raise()
                 end
