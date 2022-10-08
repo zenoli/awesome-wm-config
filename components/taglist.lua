@@ -4,14 +4,19 @@ local programs = require "constants.programs"
 local layouts = require "layouts"
 local naughty = require "naughty"
 local utils = require "utils"
+local beautiful = require "beautiful"
+local wibox = require "wibox"
+local colors = require "constants.colors"
+local gears = require "gears"
+local taglist_buttons = require "bindings.taglist_buttons"
 
 local l = awful.layout.suit
 
-local taglist = {}
-taglist.n_workspace_tags = 5
-taglist.workspace_tag_default_layout = l.tile
+local M = {}
+M.n_workspace_tags = 5
+M.workspace_tag_default_layout = l.tile
 
-taglist.description = {
+M.description = {
     {
         icon = " ",
         name = "home",
@@ -109,9 +114,9 @@ taglist.description = {
     },
 }
 
-function taglist.init(s)
+function M.init(s)
     -- Add app specific tags
-    for _, tag_desc in pairs(taglist.description) do
+    for _, tag_desc in pairs(M.description) do
         local selected = tag_desc.name == "home"
         -- local selected = false
         local tag = awful.tag.add(tag_desc.icon, {
@@ -123,9 +128,9 @@ function taglist.init(s)
         tag_desc.tag = tag
     end
     -- Add workspace tags
-    for i = 1, taglist.n_workspace_tags do
+    for i = 1, M.n_workspace_tags do
         local tag = awful.tag.add(tostring(i), {
-            layout = taglist.workspace_tag_default_layout,
+            layout = M.workspace_tag_default_layout,
             layouts = layouts,
             screen = s,
             selected = false,
@@ -135,14 +140,14 @@ function taglist.init(s)
             key = "#" .. i + 9,
             tag = tag,
         }
-        table.insert(taglist.description, tag_desc)
+        table.insert(M.description, tag_desc)
     end
 end
 
-function taglist.rearrange_tags(multi_screen)
+function M.rearrange_tags(multi_screen)
     local s_laptop = utils.get_laptop_screen()
     local s_ext = multi_screen and utils.get_ext_screen()
-    for _, tag_desc in pairs(taglist.description) do
+    for _, tag_desc in pairs(M.description) do
         if multi_screen and not tag_desc.secondary then
             tag_desc.tag.screen = s_ext
         else
@@ -151,4 +156,63 @@ function taglist.rearrange_tags(multi_screen)
     end
 end
 
-return taglist
+local function update_taglist(self, tag, index, tags)
+    local overline = self:get_children_by_id("overline")[1]
+    local has_clients = next(tag:clients())
+    local is_selected = tag.selected
+    if has_clients then
+        if is_selected then
+            overline.bg = beautiful.fg_focus
+        else
+            overline.bg = beautiful.fg_normal .. 50
+        end
+    else
+        overline.bg = colors.transparent
+    end
+end
+
+function M.setup(s)
+    return awful.widget.taglist {
+        screen = s,
+        filter = awful.widget.taglist.filter.all,
+        buttons = taglist_buttons,
+        widget_template = {
+            {
+                {
+                    {
+                        left = beautiful.taglist_overline_margin,
+                        right = beautiful.taglist_overline_margin,
+                        widget = wibox.container.margin,
+                    },
+                    id = "overline",
+                    bg = colors.transparent,
+                    shape = gears.shape.rectangle,
+                    widget = wibox.container.background,
+                    forced_height = beautiful.taglist_overline_thickness,
+                },
+                {
+                    {
+                        id = "text_role",
+                        align = "center",
+                        valign = "center",
+                        forced_width = 15,
+                        widget = wibox.widget.textbox,
+                    },
+                    left = 3,
+                    widget = wibox.container.margin,
+                },
+                layout = wibox.layout.fixed.vertical,
+            },
+            top = 0,
+            bottom = beautiful.taglist_overline_width,
+            left = 5,
+            right = 5,
+            widget = wibox.container.margin,
+            -- callbacks:
+            create_callback = update_taglist,
+            update_callback = update_taglist,
+        },
+    }
+end
+
+return M

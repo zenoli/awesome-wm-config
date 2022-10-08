@@ -2,29 +2,9 @@ local awful = require "awful"
 local wibox = require "wibox"
 local taglist = require "components.taglist"
 local tasklist = require "components.tasklist"
-local taglist_buttons = require "bindings.taglist_buttons"
-local tasklist_buttons = require "bindings.tasklist_buttons"
-local widgetlist = require "components.widgetlist"
 local beautiful = require "beautiful"
 local gears = require "gears"
 local colors = require "constants.colors"
-local dpi = require("beautiful.xresources").apply_dpi
-
-local function update_taglist(self, tag, index, tags)
-    local overline = self:get_children_by_id("overline")[1]
-    local has_clients = next(tag:clients())
-    local is_selected = tag.selected
-    if has_clients then
-        if is_selected then
-            overline.bg = beautiful.fg_focus
-        else
-            -- overline.bg = beautiful.fg_focus .. 60
-            overline.bg = beautiful.fg_normal .. 50
-        end
-    else
-        overline.bg = colors.transparent
-    end
-end
 
 local function rounded_container(widget, id, bg_color)
     return {
@@ -50,52 +30,9 @@ end
 
 local function setup(s)
     s.promptbox = awful.widget.prompt()
-    s.taglist = awful.widget.taglist {
-        screen = s,
-        filter = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons,
-        widget_template = {
-            {
-                {
-                    {
-                        left = beautiful.taglist_overline_margin,
-                        right = beautiful.taglist_overline_margin,
-                        widget = wibox.container.margin,
-                    },
-                    id = "overline",
-                    bg = colors.transparent,
-                    shape = gears.shape.rectangle,
-                    widget = wibox.container.background,
-                    forced_height = beautiful.taglist_overline_thickness,
-                },
-                {
-                    {
-                        id = "text_role",
-                        align = "center",
-                        valign = "center",
-                        forced_width = 15,
-                        widget = wibox.widget.textbox,
-                    },
-                    left = 3,
-                    widget = wibox.container.margin,
-                },
-                layout = wibox.layout.fixed.vertical,
-            },
-            top = 0,
-            bottom = beautiful.taglist_overline_width,
-            left = 5,
-            right = 5,
-            widget = wibox.container.margin,
-            -- callbacks:
-            create_callback = update_taglist,
-            update_callback = update_taglist,
-        },
-    }
+    s.taglist = taglist.setup(s)
+    s.tasklist = tasklist.setup(s)
 
-    -- Create a tasklist widget
-    s.tasklist = tasklist(s)
-
-    -- Create the wibox
     s.wibar = awful.wibar {
         position = "top",
         screen = s,
@@ -107,8 +44,10 @@ local function setup(s)
     s.wibar:setup {
         rounded_container(s.taglist, "taglist_container"),
         rounded_container(s.tasklist, "tasklist_container"),
+        -- widgets
         {
-            rounded_container {
+            -- info-widgets
+            rounded_container({
                 require("widgets.keyboardlayout").widget,
                 require("widgets.volume").widget,
                 require("widgets.battery").widget,
@@ -129,7 +68,8 @@ local function setup(s)
                 },
                 spacing = 25,
                 layout = wibox.layout.fixed.horizontal,
-            },
+            }, "widgets_container"),
+            -- systray/layouts
             rounded_container({
                 require("widgets.systray").widget,
                 require "widgets.layoutbox"(s).widget,

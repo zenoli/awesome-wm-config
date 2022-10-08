@@ -4,7 +4,9 @@ local gears = require "gears"
 local tasklist_buttons = require "bindings.tasklist_buttons"
 local colors = require "constants.colors"
 
-local function setup(s)
+local M = {}
+
+ function M.setup(s)
     local mytasklist = awful.widget.tasklist {
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
@@ -57,4 +59,4 @@ local function setup(s)
     return mytasklist
 end
 
-return setup
+return M
