@@ -9,15 +9,6 @@ local function setup(s)
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-        style = {
-            -- shape_border_width = 3,
-            -- shape_border_color = colors.darkblue,
-            -- bg_focus = colors.darkblue,
-            -- fg_focus = colors.white,
-            -- bg_normal = colors.white .. "20",
-            -- fg_normal = colors.bg_normal,
-            -- shape  = gears.shape.powerline
-        },
         layout = {
             spacing = 5,
             spacing_widget = {
@@ -34,8 +25,6 @@ local function setup(s)
             },
             layout = wibox.layout.fixed.horizontal,
         },
-        -- Notice that there is *NO* wibox.wibox prefix, it is a template,
-        -- not a widget instance.
         widget_template = {
             {
                 {

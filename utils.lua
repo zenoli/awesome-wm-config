@@ -1,11 +1,10 @@
-local gears = require("gears")
-local awful = require("awful")
-local keys  = require("constants.keys")
-local wibox = require("wibox")
-local lain = require("lain")
-local dpi   = require("beautiful.xresources").apply_dpi
-local colors    = require("constants.colors")
-local beautiful = require "beautiful"
+local gears = require "gears"
+local awful = require "awful"
+local keys = require "constants.keys"
+local wibox = require "wibox"
+local lain = require "lain"
+local dpi = require("beautiful.xresources").apply_dpi
+local colors = require "constants.colors"
 local gears_table = gears.table
 
 local utils = {}
@@ -53,7 +52,6 @@ function utils.add_tag_bindings(tag, tag_desc)
         )
     )
 end
-
 
 function utils.add_workspace_tag_bindings(tag, tag_desc)
     local tag_bindings = utils.add_tag_bindings(tag, tag_desc)
@@ -141,7 +139,9 @@ end
 ---------------------------------------
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
-        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
+        awful.spawn.with_shell(
+            string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd)
+        )
     end
 end
 
@@ -166,5 +166,3 @@ function utils.capitalize(str)
 end
 
 return utils
-
-

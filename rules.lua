@@ -1,14 +1,13 @@
-local awful          = require("awful")
-local beautiful      = require("beautiful")
-local lain           = require("lain")
-local client_buttons = require("bindings.client_buttons")
-local client_keys    = require("bindings.client_keys")
+local awful = require "awful"
+local beautiful = require "beautiful"
+local client_buttons = require "bindings.client_buttons"
+local client_keys = require "bindings.client_keys"
 
 local rules = {
     -- All clients will match this rule.
-    { 
-        rule = { },
-        properties = { 
+    {
+        rule = {},
+        properties = {
             border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
@@ -16,17 +15,17 @@ local rules = {
             keys = client_keys,
             buttons = client_buttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
             size_hints_honor = false,
-        }
+        },
     },
 
     -- Floating clients.
     {
         rule_any = {
             instance = {
-                "DTA",  -- Firefox addon DownThemAll.
-                "copyq",  -- Includes session name in class.
+                "DTA", -- Firefox addon DownThemAll.
+                "copyq", -- Includes session name in class.
                 "pinentry",
             },
             class = {
@@ -35,26 +34,26 @@ local rules = {
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
-                "MessageWin",  -- kalarm.
+                "MessageWin", -- kalarm.
                 "Sxiv",
                 "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
                 "Wpa_gui",
                 "veromix",
-                "xtightvncviewer"
+                "xtightvncviewer",
             },
 
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown there might not match defined rules here.
             name = {
-                "Event Tester",  -- xev.
+                "Event Tester", -- xev.
             },
             role = {
-                "AlarmWindow",  -- Thunderbird's calendar.
-                "ConfigManager",  -- Thunderbird's about:config.
+                "AlarmWindow", -- Thunderbird's calendar.
+                "ConfigManager", -- Thunderbird's about:config.
                 -- "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-            }
+            },
         },
-        properties = { floating = true }
+        properties = { floating = true },
     },
     -- Spawn all pdfs on pdf tag
     -- {
@@ -69,19 +68,19 @@ local rules = {
     -- },
     {
         rule_any = {
-            type = { "normal", "dialog" }
+            type = { "normal", "dialog" },
         },
-        properties = { titlebars_enabled = false }
+        properties = { titlebars_enabled = false },
     },
     {
         rule_any = {
-            type = { "dialog" }
+            type = { "dialog" },
         },
-        properties = { titlebars_enabled = false, placement = awful.placement.centered }
+        properties = { titlebars_enabled = false, placement = awful.placement.centered },
     },
     {
         rule_any = {
-            class = { "countdown" }
+            class = { "countdown" },
         },
         properties = {
             placement = awful.placement.centered,
@@ -89,38 +88,38 @@ local rules = {
             -- height = 350,
             ontop = true,
             floating = true,
-            callback = function (c) 
+            callback = function(c)
                 local w = 500
                 local h = 350
 
                 local W = awful.screen.focused().geometry.width
                 local H = awful.screen.focused().geometry.height
 
-                local x = (W - w)/2
-                local y = (H - h)/2
+                local x = (W - w) / 2
+                local y = (H - h) / 2
 
-                c:geometry({ x = x, y = y, width = w, height = h })
-            end
-        }
+                c:geometry { x = x, y = y, width = w, height = h }
+            end,
+        },
     },
     {
         rule_any = {
             class = {
-                "wifi", 
+                "wifi",
                 -- "ranger",
                 "htop",
-                "qutebrowser_edit"
-            }
+                "qutebrowser_edit",
+            },
         },
         properties = {
             placement = awful.placement.centered,
             ontop = true,
             floating = true,
-            -- callback = function (c) 
+            -- callback = function (c)
             --     lain.util.magnify_client(c)
             -- end
-        }
-    }
+        },
+    },
 }
 
 return rules

@@ -1,27 +1,23 @@
-local awful     = require("awful")
-local beautiful = require("beautiful")
-local utils     = require("utils")
-local wibox     = require("wibox")
-local lain      = require("lain")
-local colors    = require("constants.colors")
+local awful = require "awful"
+local beautiful = require "beautiful"
+local utils = require "utils"
+local wibox = require "wibox"
+local lain = require "lain"
+local colors = require "constants.colors"
 
 local arrow = lain.util.separators.arrow_left
-if not utils.is_zenbook() then
-    lain.util.separators.width = 17
-end
+if not utils.is_zenbook() then lain.util.separators.width = 17 end
 
-local systray        = require("widgets.systray")
-local keyboardlayout = require("widgets.keyboardlayout")
-local volume         = require("widgets.volume")
-local brightness     = require("widgets.brightness")
-local memory         = require("widgets.memory")
-local cpu            = require("widgets.cpu")
-local temperature    = require("widgets.temperature")
-local battery        = require("widgets.battery")
-local clock          = require("widgets.clock")
-local layoutbox      = require("widgets.layoutbox")
-
-
+local systray = require "widgets.systray"
+local keyboardlayout = require "widgets.keyboardlayout"
+local volume = require "widgets.volume"
+local brightness = require "widgets.brightness"
+local memory = require "widgets.memory"
+local cpu = require "widgets.cpu"
+local temperature = require "widgets.temperature"
+local battery = require "widgets.battery"
+local clock = require "widgets.clock"
+local layoutbox = require "widgets.layoutbox"
 
 local function setup(s)
     return {
@@ -40,13 +36,11 @@ local function setup(s)
         -- arrow("#8DAA9A", "#4B696D"),
         utils.widget_wrapper(volume.widget, colors.darkblue),
         utils.widget_wrapper(brightness.widget, colors.darkblue),
-        arrow( colors.darkblue, colors.darkgrey),
+        arrow(colors.darkblue, colors.darkgrey),
         utils.widget_wrapper(clock.widget, colors.darkgrey),
         arrow(colors.darkgrey, colors.layoutbox_bg),
-        utils.widget_wrapper(layoutbox(s).widget, colors.layoutbox_bg)
+        utils.widget_wrapper(layoutbox(s).widget, colors.layoutbox_bg),
     }
 end
 
-
 return setup
-

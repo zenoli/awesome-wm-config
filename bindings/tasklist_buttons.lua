@@ -1,5 +1,5 @@
-local gears       = require("gears")
-local awful       = require("awful")
+local gears = require "gears"
+local awful = require "awful"
 local gears_table = gears.table
 
 local tasklist_buttons = gears_table.join(

@@ -1,20 +1,19 @@
-local gears             = require("gears")
-local awful             = require("awful")
-local lain              = require("lain")
-local hotkeys_popup     = require("awful.hotkeys_popup")
-local volume            = require("widgets.volume")
-local brightness        = require("widgets.brightness")
-local settings          = require("settings")
-local keys              = require("constants.keys")
-local programs          = require("constants.programs")
-local taglist           = require("components.taglist")
-local utils             = require("utils")
-local switcher          = require("awesome-switcher")
-local paths             = require("constants.paths")
+local gears = require "gears"
+local awful = require "awful"
+local lain = require "lain"
+local hotkeys_popup = require "awful.hotkeys_popup"
+local volume = require "widgets.volume"
+local brightness = require "widgets.brightness"
+local settings = require "settings"
+local keys = require "constants.keys"
+local programs = require "constants.programs"
+local taglist = require "components.taglist"
+local utils = require "utils"
+local switcher = require "awesome-switcher"
+local paths = require "constants.paths"
 
 local gears_table       = gears.table
 local l                 = awful.layout.suit
-
 
 local function init ()
     local global_keys = gears_table.join(

@@ -10,9 +10,7 @@ local colors = {
     bg_normal = "#222222",
     orange = "#F6784F",
     transparent = "#00000000",
-    layoutbox_bg = "#1A1A1A"
+    layoutbox_bg = "#1A1A1A",
 }
-
-
 
 return colors

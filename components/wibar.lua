@@ -41,7 +41,7 @@ local function rounded_container(widget, id, bg_color)
                 bg = bg_color or colors.black .. 30,
                 widget = wibox.container.background,
             },
-            margins = beautiful.tag_margin,
+            margins = beautiful.wibar_margin,
             widget = wibox.container.margin,
         },
         layout = wibox.layout.fixed.horizontal,
@@ -66,7 +66,7 @@ local function setup(s)
                     bg = colors.transparent,
                     shape = gears.shape.rectangle,
                     widget = wibox.container.background,
-                    forced_height = beautiful.taglist_overline_width,
+                    forced_height = beautiful.taglist_overline_thickness,
                 },
                 {
                     {

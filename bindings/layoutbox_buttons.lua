@@ -1,7 +1,6 @@
-local gears       = require("gears")
-local awful       = require("awful")
+local gears = require "gears"
+local awful = require "awful"
 local gears_table = gears.table
-
 
 local layoutbox_buttons = gears_table.join(
     awful.button({}, 1, function () awful.layout.inc( 1) end),

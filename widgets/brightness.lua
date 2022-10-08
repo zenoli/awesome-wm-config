@@ -52,13 +52,9 @@ local function update(value)
     end
 end
 
-function brightness:inc()
-    spawn.easy_async_with_shell(INC_BRIGHTNESS_CMD, update)
-end
+function brightness:inc() spawn.easy_async_with_shell(INC_BRIGHTNESS_CMD, update) end
 
-function brightness:dec()
-    spawn.easy_async_with_shell(DEC_BRIGHTNESS_CMD, update)
-end
+function brightness:dec() spawn.easy_async_with_shell(DEC_BRIGHTNESS_CMD, update) end
 
 spawn.easy_async_with_shell(GET_BRIGHTNESS_CMD, update)
 return brightness

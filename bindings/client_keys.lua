@@ -1,9 +1,9 @@
-local gears             = require("gears")
-local awful             = require("awful")
-local lain              = require("lain")
-local keys              = require("constants.keys")
+local gears = require "gears"
+local awful = require "awful"
+local lain = require "lain"
+local keys = require "constants.keys"
 
-local gears_table       = gears.table
+local gears_table = gears.table
 
 
 local client_keys = gears_table.join(

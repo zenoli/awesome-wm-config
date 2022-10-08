@@ -1,4 +1,4 @@
-local awful = require("awful")
+local awful = require "awful"
 local l = awful.layout.suit
 
 local layouts = {
@@ -7,7 +7,7 @@ local layouts = {
     l.magnifier,
     l.tile.top,
     l.fair,
-    l.max
+    l.max,
 }
 
 return layouts

@@ -1,9 +1,9 @@
-local awful       = require("awful")
-local keys        = require("constants.keys")
-local programs    = require("constants.programs")
-local layouts     = require("layouts")
-local naughty     = require("naughty")
-local utils       = require("utils")
+local awful = require "awful"
+local keys = require "constants.keys"
+local programs = require "constants.programs"
+local layouts = require "layouts"
+local naughty = require "naughty"
+local utils = require "utils"
 
 local l = awful.layout.suit
 
@@ -11,14 +11,13 @@ local taglist = {}
 taglist.n_workspace_tags = 5
 taglist.workspace_tag_default_layout = l.tile
 
-
 taglist.description = {
     {
         icon = " ",
         name = "home",
         key = "0",
         layouts = layouts,
-        layout = l.floating
+        layout = l.floating,
     },
     {
         icon = " ",
@@ -26,7 +25,7 @@ taglist.description = {
         key = keys.enter,
         layouts = layouts,
         layout = l.tile,
-        command = programs.terminal .. " --name Tmux tmux new-session -A -s main"
+        command = programs.terminal .. " --name Tmux tmux new-session -A -s main",
     },
     {
         icon = "爵 ",
@@ -34,7 +33,7 @@ taglist.description = {
         key = "b",
         layouts = layouts,
         layout = l.tile,
-        command = "qutebrowser"
+        command = "qutebrowser",
     },
     {
         icon = " ",
@@ -44,8 +43,8 @@ taglist.description = {
         layout = l.tile,
         -- command = "mailspring",
         command = "gtk-launch chrome-pkooggnaalmfkidjmlhoelhdllpphaga-Default.desktop",
-        secondary = true
-    } ,
+        secondary = true,
+    },
     {
         icon = " ",
         name = "slack",
@@ -53,7 +52,7 @@ taglist.description = {
         layouts = layouts,
         layout = l.tile,
         command = "slack",
-        secondary = true
+        secondary = true,
     },
     {
         icon = " ",
@@ -62,7 +61,7 @@ taglist.description = {
         layouts = layouts,
         layout = l.tile,
         command = "brave-browser",
-        secondary = true
+        secondary = true,
     },
     {
         icon = "﬏ ",
@@ -70,7 +69,7 @@ taglist.description = {
         key = "v",
         layouts = layouts,
         layout = l.magnifier,
-        command = "code"
+        command = "code",
     },
     {
         icon = " ",
@@ -78,9 +77,10 @@ taglist.description = {
         key = "w",
         layouts = layouts,
         layout = l.tile,
-        command = programs.terminal .. [[ --name Vimwiki ]]
+        command = programs.terminal
+            .. [[ --name Vimwiki ]]
             .. [[tmux new-session -c /home/olivier/vimwiki -A -s vimwiki ]]
-            .. [["v +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]]
+            .. [["v +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]],
     },
     {
         icon = "祥 ",
@@ -88,7 +88,7 @@ taglist.description = {
         key = "t",
         layouts = layouts,
         layout = l.tile,
-        command = "countdown"
+        command = "countdown",
     },
     {
         icon = " ",
@@ -96,22 +96,21 @@ taglist.description = {
         key = "c",
         layouts = layouts,
         layout = l.tile,
-        -- command = "gnome-calendar",
-        command = "gtk-launch chrome-pkooggnaalmfkidjmlhoelhdllpphaga-Default.desktop",
-        secondary = true
+        command = "gnome-calendar",
+        -- command = "gtk-launch chrome-pkooggnaalmfkidjmlhoelhdllpphaga-Default.desktop",
+        secondary = true,
     },
     {
         icon = " ",
         name = "pdf",
         key = "p",
         layouts = layouts,
-        layout = l.max
-    }
+        layout = l.max,
+    },
 }
 
-
 function taglist.init(s)
-     -- Add app specific tags
+    -- Add app specific tags
     for _, tag_desc in pairs(taglist.description) do
         local selected = tag_desc.name == "home"
         -- local selected = false
@@ -119,7 +118,7 @@ function taglist.init(s)
             layout = tag_desc.layout,
             layouts = tag_desc.layouts,
             screen = s,
-            selected = selected
+            selected = selected,
         })
         tag_desc.tag = tag
     end
@@ -129,7 +128,7 @@ function taglist.init(s)
             layout = taglist.workspace_tag_default_layout,
             layouts = layouts,
             screen = s,
-            selected = false
+            selected = false,
         })
         local tag_desc = {
             name = "workspace " .. tostring(i),
@@ -151,6 +150,5 @@ function taglist.rearrange_tags(multi_screen)
         end
     end
 end
-
 
 return taglist

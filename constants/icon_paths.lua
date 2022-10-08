@@ -1,7 +1,7 @@
-local icon_dir = os.getenv("HOME") .. "/.config/awesome/icons"
-local layouts_icon_dir = icon_dir .. "/layouts"
+local icon_dir = os.getenv "HOME" .. "/.config/awesome/icons"
 local widgets_icon_dir = icon_dir .. "/widgets"
 
+-- stylua: ignore
 local icons = {
     volume = {
         high   = widgets_icon_dir .. "/volume/volume-high.svg",

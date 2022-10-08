@@ -1,6 +1,6 @@
-local gears       = require("gears")
-local awful       = require("awful")
-local keys        = require("constants.keys")
+local gears = require "gears"
+local awful = require "awful"
+local keys = require "constants.keys"
 local gears_table = gears.table
 
 local client_buttons = gears_table.join(

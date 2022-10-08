@@ -29,23 +29,14 @@ local icons = {
     charging_100 = " ",
 }
 
-lain.widget.bat({
+lain.widget.bat {
     timeout = 1,
     settings = function()
         local function update_icon(icon)
-            icon_widget:set_markup(
-                markup.font(
-                    beautiful.taglist_font,
-                    icon
-                )
-            )
-            text_widget:set_markup(
-                markup.font(
-                    beautiful.font,
-                    bat_now.perc .. "%"
-                )
-            )
+            icon_widget:set_markup(markup.font(beautiful.taglist_font, icon))
+            text_widget:set_markup(markup.font(beautiful.font, bat_now.perc .. "%"))
         end
+        -- stylua: ignore
         if bat_now.status and bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
                 if     tonumber(bat_now.perc) >= 95 then update_icon(icons.charging_100)
@@ -70,15 +61,15 @@ lain.widget.bat({
         else
             widget:set_markup()
         end
-    end
-})
+    end,
+}
 
 local battery = {
     widget = {
         icon_widget,
         text_widget,
-        layout = wibox.layout.fixed.horizontal
-    }
+        layout = wibox.layout.fixed.horizontal,
+    },
 }
 
 return battery
