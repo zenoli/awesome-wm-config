@@ -244,6 +244,11 @@ local function init ()
             { description = "Launch ranger", group = "launcher" }
         ),
         awful.key(
+            { keys.alt }, "l",
+            function () awful.spawn("kitty lf") end,
+            { description = "Launch lf", group = "launcher" }
+        ),
+        awful.key(
             { keys.alt }, "e",
             function () awful.spawn("nautilus -w") end,
             { description = "Launch nautilus", group = "launcher" }
