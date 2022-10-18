@@ -6,6 +6,6 @@ if utils.is_zenbook() then term_fontsize = 6 end
 
 programs.terminal = "kitty"
 programs.browser = "qutebrowser"
-programs.editor = "v"
+programs.editor = "nvim"
 
 return programs

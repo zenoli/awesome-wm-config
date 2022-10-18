@@ -85,7 +85,7 @@ M.description = {
         command = programs.terminal
             .. [[ --name Vimwiki ]]
             .. [[tmux new-session -c /home/olivier/vimwiki -A -s vimwiki ]]
-            .. [["v +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]],
+            .. [["nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]],
     },
     {
         icon = "祥 ",

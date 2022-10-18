@@ -10,7 +10,6 @@ local programs = require "constants.programs"
 local taglist = require "components.taglist"
 local utils = require "utils"
 local switcher = require "awesome-switcher"
-local paths = require "constants.paths"
 local beautiful = require "beautiful"
 
 local gears_table = gears.table
@@ -235,17 +234,12 @@ local function init ()
         -- User programs
         awful.key(
             { keys.alt }, "b",
-            function () awful.spawn("qb_launcher") end,
+            function () awful.spawn("zeno-qb-launcher") end,
             { description = "Launch qutebrowser", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "r",
-            function () awful.spawn("mranger") end,
-            { description = "Launch ranger", group = "launcher" }
-        ),
-        awful.key(
-            { keys.alt }, "l",
-            function () awful.spawn("kitty lf") end,
+            function () awful.spawn("kitty lfrun") end,
             { description = "Launch lf", group = "launcher" }
         ),
         awful.key(
@@ -257,17 +251,17 @@ local function init ()
         -- Prompt
         awful.key(
             { keys.alt }, "space",
-            function () awful.spawn('dmenu_run -h 30 -p Launch') end,
+            function () awful.spawn("dmenu_run -h " .. tostring(beautiful.wibar_height) .. " -p Launch") end,
             { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.alt }, "f",
-            function () awful.spawn('file_launcher') end,
+            function () awful.spawn("zeno-file-launcher") end,
             { description = "run dmenu", group = "launcher" }
         ),
         awful.key(
             { keys.mod }, "space",
-            function () awful.spawn('switch') end,
+            function () awful.spawn("zeno-window-switcher") end,
             { description = "run dmenu window switcher", group = "launcher" }
         ),
         awful.key(
@@ -286,7 +280,7 @@ local function init ()
             { keys.mod, keys.alt }, "t",
             function ()
         awful.spawn.with_shell(
-            paths.root .. "/theme-switcher/theme_prompt.bash "
+            "zeno-theme-switcher "
             .. tostring(beautiful.wibar_height)
         )
             end,
