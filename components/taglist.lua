@@ -30,7 +30,7 @@ M.description = {
         key = keys.enter,
         layouts = layouts,
         layout = l.tile,
-        command = programs.terminal .. " --name Tmux tmux new-session -A -s main",
+        command = programs.terminal .. " --name Tmux --title Tmux tmux new-session -A -s main",
     },
     {
         icon = "爵 ",
@@ -83,7 +83,7 @@ M.description = {
         layouts = layouts,
         layout = l.tile,
         command = programs.terminal
-            .. [[ --name Vimwiki ]]
+            .. [[ --name Vimwiki --title Vimwiki ]]
             .. [[tmux new-session -c /home/olivier/vimwiki -A -s vimwiki ]]
             .. [["nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]],
     },
