@@ -2,7 +2,6 @@ local awful = require "awful"
 local keys = require "constants.keys"
 local programs = require "constants.programs"
 local layouts = require "layouts"
-local naughty = require "naughty"
 local utils = require "utils"
 local beautiful = require "beautiful"
 local wibox = require "wibox"
@@ -93,7 +92,7 @@ M.description = {
         key = "t",
         layouts = layouts,
         layout = l.tile,
-        command = "countdown",
+        command = "zeno-countdown",
     },
     {
         icon = " ",
