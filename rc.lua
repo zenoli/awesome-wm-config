@@ -98,7 +98,7 @@ client.connect_signal("manage", function(c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
     -- c.shape = function(cr,w,h)
-    --     gears.shape.rounded_rect(cr, w ,h , 10)
+    --     gears.shape.rounded_rect(cr, w ,h , 8)
     -- end
     if awesome.startup
         and not c.size_hints.user_position
@@ -109,6 +109,7 @@ client.connect_signal("manage", function(c)
     end
     utils.hide_tasklist_on_tiled_layout(c.first_tag)
 end)
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", titlebar_setup)

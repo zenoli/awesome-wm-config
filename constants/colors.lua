@@ -11,6 +11,7 @@ local colors = {
     orange = "#F6784F",
     transparent = "#00000000",
     layoutbox_bg = "#1A1A1A",
+    border_focus = "#2ac3de",
 }
 
 return colors
