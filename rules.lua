@@ -2,6 +2,21 @@ local awful = require "awful"
 local beautiful = require "beautiful"
 local client_buttons = require "bindings.client_buttons"
 local client_keys = require "bindings.client_keys"
+local tag_descriptions = require("components.taglist").description
+
+local function add_centered_floating_rule(class, width, height) 
+    if type(class) == "string" then class = { class } end
+    return {
+        rule_any = { class = class },
+        properties = {
+            ontop = true,
+            floating = true,
+            callback = function(c)
+                require("utils").place_centered(c, width, height)
+            end
+        },
+    }
+end
 
 local rules = {
     -- All clients will match this rule.
@@ -55,17 +70,16 @@ local rules = {
         },
         properties = { floating = true },
     },
-    -- Spawn all pdfs on pdf tag
-    -- {
-    --     rule_any = {
-    --         class = { "Zathura" },
-    --     },
-    --     properties = {
-    --         tags = { m_icons[m_tag_ids.tag_home], m_icons[m_tag_ids.tag_pdf] },
-    --         focus = true,
-    --         switch_to_tags = true
-    --     }
-    -- },
+    {
+        rule_any = {
+            class = { "Zathura" },
+        },
+        properties = {
+            focus = true,
+            focusable = true,
+            -- switch_to_tags = true
+        }
+    },
     {
         rule_any = {
             type = { "normal", "dialog" },
@@ -78,48 +92,9 @@ local rules = {
         },
         properties = { titlebars_enabled = false, placement = awful.placement.centered },
     },
-    {
-        rule_any = {
-            class = { "countdown" },
-        },
-        properties = {
-            placement = awful.placement.centered,
-            -- width = 500,
-            -- height = 350,
-            ontop = true,
-            floating = true,
-            callback = function(c)
-                local w = 500
-                local h = 350
-
-                local W = awful.screen.focused().geometry.width
-                local H = awful.screen.focused().geometry.height
-
-                local x = (W - w) / 2
-                local y = (H - h) / 2
-
-                c:geometry { x = x, y = y, width = w, height = h }
-            end,
-        },
-    },
-    {
-        rule_any = {
-            class = {
-                "wifi",
-                -- "ranger",
-                "htop",
-                "qutebrowser_edit",
-            },
-        },
-        properties = {
-            placement = awful.placement.centered,
-            ontop = true,
-            floating = true,
-            -- callback = function (c)
-            --     lain.util.magnify_client(c)
-            -- end
-        },
-    },
+    add_centered_floating_rule("countdown", 500, 350),
+    add_centered_floating_rule("wifi", 400, 550),
+    add_centered_floating_rule({ "htop", "qutebrowser_edit" }, 1000, 70
 }
 
 return rules

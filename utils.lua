@@ -135,6 +135,20 @@ function utils.navigate_client(d)
 end
 
 ---------------------------------------
+-- Client placement
+---------------------------------------
+function utils.place_centered(c, w, h)
+    local W = awful.screen.focused().geometry.width
+    local H = awful.screen.focused().geometry.height
+
+    local x = (W - w) / 2
+    local y = (H - h) / 2
+
+    c:geometry { x = x, y = y, width = w, height = h }
+end
+
+
+---------------------------------------
 -- Misc
 ---------------------------------------
 local function run_once(cmd_arr)
@@ -164,5 +178,8 @@ end
 function utils.capitalize(str)
     return (str:gsub("^%l", string.upper))
 end
+
+
+
 
 return utils
