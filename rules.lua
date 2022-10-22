@@ -4,16 +4,14 @@ local client_buttons = require "bindings.client_buttons"
 local client_keys = require "bindings.client_keys"
 local tag_descriptions = require("components.taglist").description
 
-local function add_centered_floating_rule(class, width, height) 
+local function add_centered_floating_rule(class, width, height)
     if type(class) == "string" then class = { class } end
     return {
         rule_any = { class = class },
         properties = {
             ontop = true,
             floating = true,
-            callback = function(c)
-                require("utils").place_centered(c, width, height)
-            end
+            callback = function(c) require("utils").place_centered(c, width, height) end,
         },
     }
 end
@@ -78,7 +76,7 @@ local rules = {
             focus = true,
             focusable = true,
             -- switch_to_tags = true
-        }
+        },
     },
     {
         rule_any = {
@@ -94,7 +92,7 @@ local rules = {
     },
     add_centered_floating_rule("countdown", 500, 350),
     add_centered_floating_rule("wifi", 400, 550),
-    add_centered_floating_rule({ "htop", "qutebrowser_edit" }, 1000, 70
+    add_centered_floating_rule({ "htop", "qutebrowser_edit" }, 1000, 70),
 }
 
 return rules
