@@ -88,14 +88,11 @@ local rules = {
         rule_any = {
             type = { "dialog" },
         },
-        properties = {
-            titlebars_enabled = false,
-            placement = awful.placement.centered,
-        },
+        properties = { titlebars_enabled = false, placement = awful.placement.centered },
     },
+    add_centered_floating_rule("Dragon"),
     add_centered_floating_rule("countdown", 500, 350),
     add_centered_floating_rule("wifi", 400, 550),
-    add_centered_floating_rule("Dragon"),
     add_centered_floating_rule({ "htop", "qutebrowser_edit" }, 1000, 70),
 }
 
