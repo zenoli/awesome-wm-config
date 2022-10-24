@@ -141,6 +141,9 @@ function utils.place_centered(c, w, h)
     local W = awful.screen.focused().geometry.width
     local H = awful.screen.focused().geometry.height
 
+    w = w or c.width
+    h = h or c.height
+
     local x = (W - w) / 2
     local y = (H - h) / 2
 
