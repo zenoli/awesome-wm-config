@@ -93,7 +93,7 @@ local rules = {
     add_centered_floating_rule("Dragon"),
     add_centered_floating_rule("countdown", 500, 350),
     add_centered_floating_rule("wifi", 400, 550),
-    add_centered_floating_rule({ "htop", "qutebrowser_edit" }, 1000, 70),
+    add_centered_floating_rule({ "htop", "qutebrowser_edit", "lazydocker" }, 1000, 700),
 }
 
 return rules
