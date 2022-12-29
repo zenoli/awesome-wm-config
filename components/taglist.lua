@@ -118,21 +118,32 @@ function M.init(s)
     -- Add app specific tags
     for _, tag_desc in pairs(M.description) do
         local selected = tag_desc.name == "home"
+        local selected_secondary = utils.is_multiscreen() and tag_desc.name == "web"
+        local screen
+        if utils.is_multiscreen() and not tag_desc.secondary then
+            screen = utils.get_ext_screen()
+        else
+            screen = utils.get_laptop_screen()
+        end
         -- local selected = false
         local tag = awful.tag.add(tag_desc.icon, {
             layout = tag_desc.layout,
             layouts = tag_desc.layouts,
-            screen = s,
-            selected = selected,
+            screen = screen,
+            selected = selected or selected_secondary,
         })
         tag_desc.tag = tag
     end
     -- Add workspace tags
     for i = 1, M.n_workspace_tags do
+        local screen = utils.is_multiscreen()
+            and utils.get_ext_screen()
+            or utils.get_laptop_screen()
+
         local tag = awful.tag.add(tostring(i), {
             layout = M.workspace_tag_default_layout,
             layouts = layouts,
-            screen = s,
+            screen = screen,
             selected = false,
         })
         local tag_desc = {

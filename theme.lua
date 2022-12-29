@@ -2,7 +2,6 @@ local colors = require "constants.colors"
 local paths = require "constants.paths"
 local dpi = require("beautiful.xresources").apply_dpi
 
-
 local theme                                     = {}
 
 ---------------------------------------

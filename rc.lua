@@ -61,7 +61,7 @@ do
     end)
 end
 
-screen.connect_signal("property::geometry", update_wallpaper)
+-- screen.connect_signal("property::geometry", update_wallpaper)
 
 ---------------------------------------
 -- Multi-Screen setup
@@ -69,16 +69,22 @@ screen.connect_signal("property::geometry", update_wallpaper)
 
 local function init_screen(s)
     taglist.init(s)
-    wibar_setup(s)
+    -- wibar_setup(s)
 end
+
+awful.screen.connect_for_each_screen(function(s) wibar_setup(s) end)
 
 init_screen(awful.screen.focused())
 
 screen.connect_signal("added", function(s)
     taglist.rearrange_tags(true)
-    wibar_setup(s)
+    awful.spawn.with_shell "nitrogen --restore"
+    -- wibar_setup(s)
 end)
-screen.connect_signal("removed", function() taglist.rearrange_tags(false) end)
+screen.connect_signal("removed", function()
+    taglist.rearrange_tags(false)
+    awful.spawn.with_shell "nitrogen --restore"
+end)
 
 tag.connect_signal("request::screen", function(t) t.screen = utils.get_laptop_screen() end)
 

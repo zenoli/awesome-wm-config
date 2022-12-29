@@ -90,6 +90,7 @@ end
 ---------------------------------------
 -- Screen managment
 ---------------------------------------
+function utils.is_multiscreen() return screen:count() == 2 end
 function utils.get_laptop_screen() return screen[1] end
 function utils.get_ext_screen() return screen[2] end
 
@@ -123,7 +124,8 @@ function utils.navigate_nonempty_tags(d)
 end
 
 function utils.navigate_client(d)
-    local l = awful.screen.focused().selected_tag.layout
+    local selected_tag = awful.screen.focused().selected_tag
+    local l = selected_tag and selected_tag.layout
     if (l == awful.layout.suit.floating) or (l == awful.layout.suit.max) then
         local idx
         if d == "up" or d == "right" then idx = 1 else idx = -1 end
