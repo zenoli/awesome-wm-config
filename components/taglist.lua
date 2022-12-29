@@ -38,6 +38,7 @@ M.description = {
         layouts = layouts,
         layout = l.tile,
         command = "qutebrowser",
+        secondary = true,
     },
     {
         icon = " ",
