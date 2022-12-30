@@ -42,7 +42,17 @@ local function init ()
             hotkeys_popup.show_help,
             { description="show help", group="awesome" }
         ),
-
+        -- Change display layout
+        awful.key(
+            { keys.mod }, "F8",
+            function () awful.spawn("zeno-display") end,
+            { description="change display layout", group="awesome" }
+        ),
+        awful.key(
+            { keys.mod }, "F12",
+            function () awful.spawn("zeno-lock") end,
+            { description="change display layout", group="awesome" }
+        ),
         -- Non-empty tag browsing
         awful.key(
             { keys.mod }, keys.left,
@@ -98,58 +108,58 @@ local function init ()
             function () awful.layout.set(l.max) end,
             { description = "select maximized layout", group = "layout" }
         ),
-        awful.key(
-            { keys.mod, keys.shift }, "j",
-            function () awful.client.swap.byidx(  1) end,
-            { description = "swap with next client by index", group = "client" }
-        ),
-        awful.key(
-            { keys.mod, keys.shift }, "k",
-            function () awful.client.swap.byidx( -1) end,
-            { description = "swap with previous client by index", group = "client" }
-        ),
-        awful.key(
-            { keys.mod, keys.control }, "j",
-            function () awful.screen.focus_relative( 1) end,
-            { description = "focus the next screen", group = "screen" }
-        ),
-        awful.key(
-            { keys.mod, keys.control }, "k",
-            function () awful.screen.focus_relative(-1) end,
-            { description = "focus the previous screen", group = "screen" }
-        ),
-        awful.key(
-            { keys.mod }, "u", awful.client.urgent.jumpto,
-                  {description = "jump to urgent client", group = "client"}),
-        awful.key(
-            { keys.mod }, "Tab",
-            function ()
-                if settings.cycle_prev then
-                    awful.client.focus.history.previous()
-                else
-                    awful.client.focus.byidx(-1)
-                end
-                if client.focus then
-                    client.focus:raise()
-                end
-            end,
-            {description = "cycle with previous/go back", group = "client"}
-        ),
+        -- awful.key(
+        --     { keys.mod, keys.shift }, "j",
+        --     function () awful.client.swap.byidx(  1) end,
+        --     { description = "swap with next client by index", group = "client" }
+        -- ),
+        -- awful.key(
+        --     { keys.mod, keys.shift }, "k",
+        --     function () awful.client.swap.byidx( -1) end,
+        --     { description = "swap with previous client by index", group = "client" }
+        -- ),
+        -- awful.key(
+        --     { keys.mod, keys.control }, "j",
+        --     function () awful.screen.focus_relative( 1) end,
+        --     { description = "focus the next screen", group = "screen" }
+        -- ),
+        -- awful.key(
+        --     { keys.mod, keys.control }, "k",
+        --     function () awful.screen.focus_relative(-1) end,
+        --     { description = "focus the previous screen", group = "screen" }
+        -- ),
+        -- awful.key(
+        --     { keys.mod }, "u", awful.client.urgent.jumpto,
+        --           {description = "jump to urgent client", group = "client"}),
+        -- awful.key(
+        --     { keys.mod }, "Tab",
+        --     function ()
+        --         if settings.cycle_prev then
+        --             awful.client.focus.history.previous()
+        --         else
+        --             awful.client.focus.byidx(-1)
+        --         end
+        --         if client.focus then
+        --             client.focus:raise()
+        --         end
+        --     end,
+        --     {description = "cycle with previous/go back", group = "client"}
+        -- ),
 
         -- Show/hide wibox
-        awful.key(
-            { keys.mod, keys.alt }, "b",
-            -- TODO: Fix this, these variables are no longer defined
-            function ()
-                -- for s in screen do
-                --     s.mywibox.visible = not s.mywibox.visible
-                --     if s.mybottomwibox then
-                --         s.mybottomwibox.visible = not s.mybottomwibox.visible
-                --     end
-                -- end
-            end,
-            {description = "toggle wibox", group = "awesome"}
-        ),
+        -- awful.key(
+        --     { keys.mod, keys.alt }, "b",
+        --     -- TODO: Fix this, these variables are no longer defined
+        --     function ()
+        --         -- for s in screen do
+        --         --     s.mywibox.visible = not s.mywibox.visible
+        --         --     if s.mybottomwibox then
+        --         --         s.mybottomwibox.visible = not s.mybottomwibox.visible
+        --         --     end
+        --         -- end
+        --     end,
+        --     {description = "toggle wibox", group = "awesome"}
+        -- ),
 
         -- On-the-fly useless gaps change
         awful.key(
@@ -264,30 +274,29 @@ local function init ()
             function () awful.spawn("zeno-window-switcher") end,
             { description = "run dmenu window switcher", group = "launcher" }
         ),
+        -- awful.key(
+        --     { keys.mod }, "x",
+        --     function ()
+        --         awful.prompt.run {
+        --             prompt       = "Run Lua code: ",
+        --             textbox      = awful.screen.focused().mypromptbox.widget,
+        --             exe_callback = awful.util.eval,
+        --             history_path = awful.util.get_cache_dir() .. "/history_eval"
+        --         }
+        --     end,
+        --     { description = "lua execute prompt", group = "awesome" }
+        -- ),
         awful.key(
-            { keys.mod }, "x",
+            { keys.mod }, "F2",
             function ()
-                awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                }
-            end,
-            { description = "lua execute prompt", group = "awesome" }
-        ),
-        awful.key(
-            { keys.mod, keys.alt }, "t",
-            function ()
-        awful.spawn.with_shell(
-            "zeno-theme-switcher "
-            .. tostring(beautiful.wibar_height)
-        )
+                awful.spawn.with_shell(
+                    "zeno-theme-switcher "
+                    .. tostring(beautiful.wibar_height)
+                )
             end,
             { description = "run dmenu window switcher", group = "launcher" }
         )
     )
-
 
     -- Add tag bindings
     for _, tag_desc in pairs(taglist.description) do
