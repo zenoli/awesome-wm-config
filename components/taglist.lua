@@ -114,7 +114,7 @@ M.description = {
     },
 }
 
-function M.init(s)
+function M.init()
     -- Add app specific tags
     for _, tag_desc in pairs(M.description) do
         local selected = tag_desc.name == "home"

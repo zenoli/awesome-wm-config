@@ -13,7 +13,7 @@ theme.font                                      = "Terminus "       .. theme.fon
 theme.taglist_font                              = "Hack Nerd Font " .. theme.font_size
 
 -- Misc
-theme.use_picom = true
+theme.use_picom = false
 theme.useless_gap                               = dpi(6)
 theme.notification_icon_size                    = dpi(30)
 theme.border_width                              = not theme.use_picom and dpi(2) or dpi(0)
