@@ -8,25 +8,25 @@ local text_widget = wibox.widget.textbox()
 local icon_widget = wibox.widget.textbox()
 
 local icons = {
-    discharging_0 = "",
-    discharging_10 = " ",
-    discharging_20 = " ",
-    discharging_30 = " ",
-    discharging_40 = " ",
-    discharging_50 = " ",
-    discharging_60 = " ",
-    discharging_70 = " ",
-    discharging_80 = " ",
-    discharging_90 = " ",
-    discharging_100 = " ",
+    discharging_0 = "󰂎",
+    discharging_10 = "󰁺 ",
+    discharging_20 = "󰁻 ",
+    discharging_30 = "󰁼 ",
+    discharging_40 = "󰁽 ",
+    discharging_50 = "󰁾 ",
+    discharging_60 = "󰁿 ",
+    discharging_70 = "󰂀 ",
+    discharging_80 = "󰂁 ",
+    discharging_90 = "󰂂 ",
+    discharging_100 = "󰁹 ",
 
-    charging_20 = " ",
-    charging_30 = " ",
-    charging_40 = " ",
-    charging_60 = " ",
-    charging_80 = " ",
-    charging_90 = " ",
-    charging_100 = " ",
+    charging_20 = "󰂆 ",
+    charging_30 = "󰂇 ",
+    charging_40 = "󰂈 ",
+    charging_60 = "󰂉 ",
+    charging_80 = "󰂊 ",
+    charging_90 = "󰂋 ",
+    charging_100 = "󰂅 ",
 }
 
 lain.widget.bat {

@@ -32,7 +32,7 @@ M.description = {
         command = programs.terminal .. " --name Tmux --title Tmux tmux new-session -A -s main",
     },
     {
-        icon = "爵 ",
+        icon = "󰖟 ",
         name = "web",
         key = "b",
         layouts = layouts,
@@ -41,7 +41,7 @@ M.description = {
         secondary = true,
     },
     {
-        icon = " ",
+        icon = " ",
         name = "mail",
         key = "m",
         layouts = layouts,
@@ -69,7 +69,7 @@ M.description = {
         secondary = true,
     },
     {
-        icon = "﬏ ",
+        icon = "󰨞 ",
         name = "code",
         key = "v",
         layouts = layouts,
@@ -88,7 +88,7 @@ M.description = {
             .. [["nvim +VimwikiDiaryIndex +vs +VimwikiMakeDiaryNote"]],
     },
     {
-        icon = "祥 ",
+        icon = " ",
         name = "timer",
         key = "t",
         layouts = layouts,
@@ -96,7 +96,7 @@ M.description = {
         command = "zeno-countdown",
     },
     {
-        icon = " ",
+        icon = " ",
         name = "calendar",
         key = "c",
         layouts = layouts,

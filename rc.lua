@@ -68,7 +68,7 @@ end
 ---------------------------------------
 
 local function init_screen()
-    awful.spawn "zeno-display-manager"
+    -- awful.spawn "zeno-display-manager"
     taglist.init()
 end
 

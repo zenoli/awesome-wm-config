@@ -6,10 +6,10 @@ local beautiful = require "beautiful"
 local markup = lain.util.markup
 
 local icons = {
-    mute = "婢",
-    low = "奄",
-    mid = "奔",
-    high = "墳",
+    mute = "󰖁 ",
+    low = "󰕿 ",
+    mid = "󰖀 ",
+    high = "󰕾 ",
 }
 
 local text_widget = wibox.widget.textbox()

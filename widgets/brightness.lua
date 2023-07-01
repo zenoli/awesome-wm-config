@@ -12,9 +12,9 @@ local text_widget = wibox.widget.textbox()
 local icon_widget = wibox.widget.textbox()
 
 local icons = {
-    low = " ",
-    mid = " ",
-    high = " ",
+    low = "󰃞 ",
+    mid = "󰃟 ",
+    high = "󰃠 ",
 }
 
 -- local icons = {
