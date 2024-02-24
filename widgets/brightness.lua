@@ -17,12 +17,6 @@ local icons = {
     high = "󰃠 ",
 }
 
--- local icons = {
---     low = " ",
---     mid = " ",
---     high = " ",
--- }
-
 brightness.widget = wibox.widget {
     icon_widget,
     text_widget,
@@ -32,10 +26,10 @@ brightness.widget = wibox.widget {
 local brightness_script = paths.scripts .. "/brightness.bash"
 local step = 5
 
-local GET_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -get "
-local SET_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -set "
-local INC_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -inc " .. step
-local DEC_BRIGHTNESS_CMD = "sudo " .. brightness_script .. " -dec " .. step
+local GET_BRIGHTNESS_CMD = brightness_script .. " -get "
+local SET_BRIGHTNESS_CMD = brightness_script .. " -set "
+local INC_BRIGHTNESS_CMD = brightness_script .. " -inc " .. step
+local DEC_BRIGHTNESS_CMD = brightness_script .. " -dec " .. step
 
 local function update(value)
     local function update_icon(icon)

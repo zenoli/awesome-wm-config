@@ -16,7 +16,7 @@ local text_widget = wibox.widget.textbox()
 local icon_widget = wibox.widget.textbox()
 
 local alsa = lain.widget.alsa {
-    cmd = "amixer -D pulse",
+    cmd = "amixer",
     timeout = 1,
     settings = function()
         local function update_icon(icon)
@@ -40,10 +40,10 @@ local alsa = lain.widget.alsa {
     end,
 }
 
-local GET_VOLUME_CMD = "amixer -D pulse sget Master"
-local INC_VOLUME_CMD = "amixer -D pulse sset Master 5%+"
-local DEC_VOLUME_CMD = "amixer -D pulse sset Master 5%-"
-local TOG_VOLUME_CMD = "amixer -D pulse sset Master toggle"
+local GET_VOLUME_CMD = "amixer  sget Master"
+local INC_VOLUME_CMD = "amixer  sset Master 5%+"
+local DEC_VOLUME_CMD = "amixer  sset Master 5%-"
+local TOG_VOLUME_CMD = "amixer  sset Master toggle"
 
 local volume = {
     widget = {
